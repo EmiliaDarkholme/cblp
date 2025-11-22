@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>МедТесты — ГОТОВО</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; padding: 1rem; }
+    #app { max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.95); border-radius: 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden; }
+    .page { transition: all 0.4s ease; }
+    .page.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; }
+    .page:not(.hidden) { opacity: 1; transform: translateY(0); }
+    .btn { transition: all 0.2s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    .option { transition: all 0.2s; cursor: pointer; }
+    .option:hover { background-color: #f3e8ff; }
+    #timer { font-size: 1.5rem; font-weight: bold; color: #7c3aed; }
+    #timer.warning { color: #f59e0b; }
+    #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-600 to-blue-600">
+  <div id="app" class="min-h-screen flex flex-col">
+
+    <!-- Регистрация -->
+    <div id="register" class="page p-8 text-center flex flex-col justify-center flex-1">
+      <i class="fas fa-user-graduate text-8xl text-purple-600 mb-6"></i>
+      <h1 class="text-4xl font-bold text-gray-800 mb-6">Добро пожаловать!</h1>
+      <input type="text" id="name-input" placeholder="Ваше имя" class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-300 mb-5">
+      <select id="course-input" class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-300 mb-5">
+        <option value="" disabled selected>Курс</option>
+        <option value="1">1 курс</option><option value="2">2 курс</option><option value="3">3 курс</option>
+        <option value="4">4 курс</option><option value="5">5 курс</option><option value="6">6 курс</option>
+      </select>
+      <select id="faculty-input" class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-300 mb-8">
+        <option value="" disabled selected>Факультет</option>
+        <option value="Лечебный">Лечебный</option>
+        <option value="Педиатрический">Педиатрический</option>
+        <option value="Медико-психологический">Медико-психологический</option>
+        <option value="Медико-диагностический">Медико-диагностический</option>
+      </select>
+      <button onclick="saveUser()" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">
+        Продолжить
+      </button>
+    </div>
+
+    <!-- Главное меню -->
+    <div id="welcome" class="page hidden p-8 text-center flex-1 flex flex-col justify-center">
+      <h1 class="text-4xl font-bold text-gray-800 mb-4">Привет, <span id="welcome-name" class="text-purple-600"></span>!</h1>
+      <p class="text-lg text-gray-700 mb-10" id="welcome-info"></p>
+      <button onclick="navigate('test-selection')" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">
+        Начать тест
+      </button>
+      <button onclick="navigate('profile')" class="btn bg-gray-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">
+        Профиль
+      </button>
+    </div>
+
+    <!-- Настройки теста -->
+    <div id="test-selection" class="page hidden p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Настройки теста</h2>
+
+      <div class="mb-6 bg-white p-5 rounded-xl border-2 border-gray-200">
+        <label class="block text-lg mb-3">Количество вопросов:</label>
+        <input type="number" id="question-count-custom" min="1" placeholder="Любое число" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
+        <div class="grid grid-cols-3 gap-2 mt-3">
+          <button onclick="document.getElementById('question-count-custom').value=10" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">10</button>
+          <button onclick="document.getElementById('question-count-custom').value=25" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">25</button>
+          <button onclick="document.getElementById('question-count-custom').value=50" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">50</button>
+          <button onclick="document.getElementById('question-count-custom').value=100" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">100</button>
+          <button onclick="document.getElementById('question-count-custom').value=''" class="bg-gray-200 hover:bg-gray-300 py-2 rounded col-span-2">Все</button>
+        </div>
+      </div>
+
+      <div class="mb-6 bg-white p-5 rounded-xl border-2 border-gray-200">
+        <label class="flex items-center justify-between">
+          <span class="text-lg">Таймер</span>
+          <input type="checkbox" id="use-timer" class="h-6 w-6 text-purple-600">
+        </label>
+        <input type="number" id="timer-minutes" value="30" min="1" max="180" class="w-full mt-3 px-4 py-3 rounded-lg border-2 border-gray-300" placeholder="Минут">
+      </div>
+
+      <div class="mb-6 bg-white p-5 rounded-xl border-2 border-gray-200">
+        <label class="flex items-center justify-between">
+          <span class="text-lg">Режим «вслепую»</span>
+          <input type="checkbox" id="blind-mode" class="h-6 w-6 text-purple-600">
+        </label>
+      </div>
+
+      <div class="mb-6">
+        <label class="flex items-center justify-center text-lg">
+          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" class="mr-3 h-6 w-6 text-purple-600">
+          <span>Все курсы и факультеты</span>
+        </label>
+      </div>
+
+      <h3 class="text-2xl font-bold mb-4">Темы</h3>
+      <div id="topics" class="space-y-3 mb-8 max-h-96 overflow-y-auto"></div>
+
+      <button onclick="startTest()" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-4 rounded-xl text-xl font-bold w-full">
+        Начать тест
+      </button>
+      <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-3 rounded-xl w-full text-sm mt-3">
+        ← Назад
+      </button>
+    </div>
+
+    <!-- Тест -->
+    <div id="test" class="page hidden p-8 flex flex-col flex-1">
+      <div class="flex justify-between items-center mb-4">
+        <div class="text-sm text-gray-600">
+          Вопрос <span id="current-num">1</span> / <span id="total-num">0</span>
+        </div>
+        <div id="timer" class="hidden"></div>
+      </div>
+      <div class="w-full bg-gray-300 rounded-full h-3 mb-6">
+        <div id="progress" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all" style="width: 0%"></div>
+      </div>
+      <h3 id="question" class="text-xl font-medium text-gray-800 mb-6"></h3>
+      <div id="options" class="space-y-4 flex-1"></div>
+      <div class="flex gap-3 mt-6">
+        <button id="answer-btn" onclick="checkAnswer()" disabled class="btn bg-gray-400 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1 cursor-not-allowed">
+          Ответить
+        </button>
+        <button onclick="endTest()" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-xl text-lg font-semibold">
+          Завершить
+        </button>
+      </div>
+    </div>
+
+    <!-- Результаты -->
+    <div id="results" class="page hidden p-8 text-center flex flex-col justify-center flex-1">
+      <i class="fas fa-medal text-9xl text-yellow-500 mb-8"></i>
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">Тест завершён, <span id="results-name"></span>!</h2>
+      <div class="bg-white rounded-2xl p-8 shadow-lg">
+        <p class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
+          <span id="final-score">0</span> / <span id="final-total">0</span>
+        </p>
+        <p class="text-3xl mb-4">Точность: <span id="final-percent">0</span>%</p>
+        <p class="text-xl text-gray-600" id="time-spent"></p>
+      </div>
+      <button onclick="navigate('welcome')" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-4 rounded-xl text-xl font-semibold w-full mt-8">
+        На главную
+      </button>
+    </div>
+
+    <!-- Профиль -->
+    <div id="profile" class="page hidden p-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Профиль</h2>
+      <div class="bg-gray-100 rounded-2xl p-6 text-left">
+        <p class="text-lg mb-2"><strong>Имя:</strong> <span id="profile-name"></span></p>
+        <p class="text-lg mb-2"><strong>Курс:</strong> <span id="profile-course"></span></p>
+        <p class="text-lg mb-4"><strong>Факультет:</strong> <span id="profile-faculty"></span></p>
+        <hr class="my-4">
+        <p class="text-lg mb-2">Тестов пройдено: <strong id="tests-completed">0</strong></p>
+        <p class="text-lg mb-2">Правильных: <strong id="correct-total">0</strong></p>
+        <p class="text-lg">Точность: <strong id="avg-percent">0</strong>%</p>
+      </div>
+      <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-4 rounded-xl w-full mt-8">
+        ← Назад
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let user = JSON.parse(localStorage.getItem('medtests_user'));
+    let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
+    let allTests = {}, currentTest = [], currentIndex = 0, correctInSession = 0;
+    let timerInterval, startTime, testSettings = {};
+
+    const courses = ['1','2','3','4','5','6'];
+    const faculties = ['Лечебный','Педиатрический','Медико-психологический','Медико-диагностический'];
+
+    if (!user || !user.name || !user.course || !user.faculty) {
+      document.getElementById('register').classList.remove('hidden');
+    } else {
+      showWelcome(); loadTests();
+    }
+
+    function saveUser() {
+      const name = document.getElementById('name-input').value.trim();
+      const course = document.getElementById('course-input').value;
+      const faculty = document.getElementById('faculty-input').value;
+      if (!name || !course || !faculty) return alert('Заполните все поля');
+      user = { name, course, faculty };
+      localStorage.setItem('medtests_user', JSON.stringify(user));
+      showWelcome(); loadTests();
+    }
+
+    function showWelcome() {
+      document.getElementById('welcome-name').textContent = user.name;
+      document.getElementById('welcome-info').textContent = `${user.course} курс • ${user.faculty} факультет`;
+      document.getElementById('results-name').textContent = user.name;
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('profile-course').textContent = user.course + ' курс';
+      document.getElementById('profile-faculty').textContent = user.faculty;
+      navigate('welcome');
+    }
+
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      document.getElementById(page).classList.remove('hidden');
+      if (page === 'profile') updateProfile();
+    }
+
+    async function loadTests() {
+      allTests = {};
+      for (const c of courses) for (const f of faculties) {
+        try {
+          const res = await fetch(`questions/course_${c}/${f}/tests.json?t=${Date.now()}`);
+          if (res.ok) { allTests[c] = allTests[c] || {}; allTests[c][f] = await res.json(); }
+        } catch(e) {}
+      }
+      buildTopicList();
+    }
+
+    function buildTopicList() {
+      const topics = new Set();
+      const showAll = document.getElementById('show-all-toggle')?.checked || false;
+      if (allTests[user.course]?.[user.faculty]) Object.keys(allTests[user.course][user.faculty]).forEach(t => topics.add(t));
+      if (showAll) for (const c in allTests) for (const f in allTests[c]) Object.keys(allTests[c][f]).forEach(t => topics.add(t));
+
+      document.getElementById('topics').innerHTML = topics.size === 0 ?
+        '<p class="text-center py-8 text-gray-600">Вопросы не найдены</p>' :
+        Array.from(topics).sort().map(t => `
+          <label class="flex items-center bg-white p-4 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition">
+            <input type="checkbox" value="${t}" class="mr-4 h-6 w-6 text-purple-600 rounded">
+            <span class="text-lg">${t}</span>
+          </label>
+        `).join('');
+    }
+
+    function startTest() {
+      const selected = [...document.querySelectorAll('#topics input:checked')].filter(el => el.value).map(el => el.value);
+      if (selected.length === 0) return alert('Выберите темы!');
+
+      const customCount = parseInt(document.getElementById('question-count-custom').value) || 0;
+
+      testSettings = {
+        count: customCount > 0 ? customCount : 0,
+        timer: document.getElementById('use-timer').checked,
+        timerMinutes: parseInt(document.getElementById('timer-minutes').value) || 30,
+        blind: document.getElementById('blind-mode').checked
+      };
+
+      currentTest = [];
+      for (const c in allTests) for (const f in allTests[c]) {
+        if (!testSettings.showAll && (c !== user.course || f !== user.faculty)) continue;
+        selected.forEach(t => { if (allTests[c][f][t]) currentTest.push(...allTests[c][f][t].map(q => ({...q, topic: t}))); });
+      }
+
+      if (currentTest.length === 0) return alert('Нет вопросов');
+      currentTest.sort(() => Math.random() - 0.5);
+      if (testSettings.count > 0 && testSettings.count < currentTest.length) currentTest = currentTest.slice(0, testSettings.count);
+
+      currentIndex = 0; correctInSession = 0; startTime = Date.now();
+      if (testSettings.timer) {
+        let seconds = testSettings.timerMinutes * 60;
+        timerInterval = setInterval(() => {
+          seconds--;
+          const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const s = String(seconds % 60).padStart(2, '0');
+          const timerEl = document.getElementById('timer');
+          timerEl.textContent = `${m}:${s}`;
+          timerEl.className = seconds < 60 ? 'danger' : seconds < 300 ? 'warning' : '';
+          if (seconds <= 0) { clearInterval(timerInterval); endTest(); }
+        }, 1000);
+        document.getElementById('timer').classList.remove('hidden');
+      }
+      showQuestion();
+      navigate('test');
+    }
+
+    function showQuestion() {
+      if (currentIndex >= currentTest.length) { endTest(); return; }
+
+      const q = currentTest[currentIndex];
+      document.getElementById('question').innerHTML = q.question;
+      document.getElementById('current-num').textContent = currentIndex + 1;
+      document.getElementById('total-num').textContent = currentTest.length;
+      document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length) * 100 + '%';
+
+      const isMultiple = Array.isArray(q.correct);
+
+      document.getElementById('options').innerHTML = q.options.map((opt, i) => `
+        <label class="option flex items-center bg-white p-5 rounded-xl border-2 border-gray-200">
+          <input type="${isMultiple ? 'checkbox' : 'radio'}" name="answer" value="${i}"
+                 onchange="toggleAnswerBtn()" class="mr-4 h-6 w-6 text-purple-600 rounded">
+          <span class="text-lg">${opt}</span>
+        </label>
+      `).join('');
+
+      // Полный сброс стилей
+      document.querySelectorAll('#options label').forEach(l => l.className = 'option flex items-center bg-white p-5 rounded-xl border-2 border-gray-200');
+      document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
+
+      document.getElementById('answer-btn').disabled = true;
+      document.getElementById('answer-btn').textContent = 'Ответить';
+      document.getElementById('answer-btn').className = 'btn bg-gray-400 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1 cursor-not-allowed';
+      document.getElementById('answer-btn').onclick = checkAnswer;
+    }
+
+    function toggleAnswerBtn() {
+      const checked = document.querySelector('#options input:checked');
+      const btn = document.getElementById('answer-btn');
+      if (checked) {
+        btn.disabled = false;
+        btn.className = 'btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1';
+      } else {
+        btn.disabled = true;
+        btn.className = 'btn bg-gray-400 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1 cursor-not-allowed';
+      }
+    }
+
+    function checkAnswer() {
+      const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
+      const q = currentTest[currentIndex];
+      const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
+
+      if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
+
+      if (!testSettings.blind) {
+        document.querySelectorAll('#options label').forEach((label, i) => {
+          const input = label.querySelector('input');
+          input.disabled = true;
+          if (correct.includes(i)) label.classList.add('bg-green-100', 'border-green-500');
+          if (selected.includes(i) && !correct.includes(i)) label.classList.add('bg-red-100', 'border-red-500');
+        });
+      }
+
+      const btn = document.getElementById('answer-btn');
+      btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее →';
+      btn.onclick = () => { currentIndex++; showQuestion(); };
+    }
+
+    function endTest() {
+      clearInterval(timerInterval);
+      const percent = Math.round((correctInSession / currentTest.length) * 100);
+      const timeSpent = Math.round((Date.now() - startTime) / 1000);
+      const mins = Math.floor(timeSpent / 60);
+      const secs = timeSpent % 60;
+
+      document.getElementById('final-score').textContent = correctInSession;
+      document.getElementById('final-total').textContent = currentTest.length;
+      document.getElementById('final-percent').textContent = percent;
+      document.getElementById('time-spent').textContent = `Время: ${mins} мин ${secs} сек`;
+
+      stats.tests += 1;
+      stats.correct += correctInSession;
+      localStorage.setItem('medtests_stats', JSON.stringify(stats));
+
+      navigate('results');
+    }
+
+    function updateProfile() {
+      document.getElementById('tests-completed').textContent = stats.tests;
+      document.getElementById('correct-total').textContent = stats.correct;
+      const avg = stats.tests > 0 ? Math.round((stats.correct / (stats.tests * 50)) * 100) : 0;
+      document.getElementById('avg-percent').textContent = avg;
+    }
+  </script>
+</body>
+</html>
