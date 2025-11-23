@@ -3,30 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>МедТесты</title>
+  <title>МедТесты — Финал</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    html, body { margin:0; padding:0; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); overflow-x:hidden; }
-    #app { min-height:100vh; max-width:100vw; background:rgba(255,255,255,0.95); display:flex; flex-direction:column; }
-    .page { flex:1; padding:1.5rem; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-    .page::-webkit-scrollbar { width:6px; }
-    .page::-webkit-scrollbar-thumb { background:#c4b5fd; border-radius:3px; }
-    .btn { transition:all .2s; }
-    .btn:active { transform:scale(0.95); }
-    .option:active { background:#e0d4ff; }
-    #timer { font-size:1.6rem; font-weight:bold; color:#7c3aed; }
-    #timer.warning { color:#f59e0b; }
-    #timer.danger { color:#dc2626; animation:pulse 1s infinite; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
-    @media (max-width:480px) {
-      .page { padding:1rem; }
-      h1 { font-size:1.9rem; }
-      h2 { font-size:1.6rem; }
-      h3 { font-size:1.2rem; }
-      .text-6xl { font-size:3.5rem; }
-      .py-4 { padding:0.75rem 0; }
-      .px-8 { padding-left:1.5rem; padding-right:1.5rem; }
+    body {
+      margin: 0; padding: 0; height: 100vh;
+      background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    #app {
+      min-height: 100vh; max-width: 100vw;
+      background: rgba(255,255,255,0.93);
+      display: flex; flex-direction: column;
+    }
+    .page { flex: 1; padding: 1.5rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .page::-webkit-scrollbar { width: 6px; }
+    .page::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 3px; }
+    .btn { transition: all 0.2s; }
+    .btn:active { transform: scale(0.95); }
+    .option:active { background: #e0d4ff; }
+    #timer { font-size: 1.6rem; font-weight: bold; color: #7c3aed; }
+    #timer.warning { color: #f59e0b; }
+    #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+    @media (max-width: 480px) {
+      .page { padding: 1rem; }
+      h1 { font-size: 1.9rem; }
+      h2 { font-size: 1.6rem; }
+      .text-6xl { font-size: 3.5rem; }
     }
   </style>
 </head>
@@ -50,15 +62,21 @@
       <option value="Медико-психологический">Медико-психологический</option>
       <option value="Медико-диагностический">Медико-диагностический</option>
     </select>
-    <button onclick="saveUser()" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">Продолжить</button>
+    <button onclick="saveUser()" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">
+      Продолжить
+    </button>
   </div>
 
   <!-- Главное меню -->
   <div id="welcome" class="page hidden p-8 text-center flex flex-col justify-center">
     <h1 class="text-4xl font-bold text-gray-800 mb-4">Привет, <span id="welcome-name" class="text-purple-600"></span>!</h1>
     <p class="text-lg text-gray-700 mb-10" id="welcome-info"></p>
-    <button onclick="navigate('test-selection')" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">Начать тест</button>
-    <button onclick="navigate('profile')" class="btn bg-gray-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">Профиль</button>
+    <button onclick="navigate('test-selection')" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">
+      Начать тест
+    </button>
+    <button onclick="navigate('profile')" class="btn bg-gray-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">
+      Профиль
+    </button>
   </div>
 
   <!-- Настройки теста -->
@@ -87,7 +105,7 @@
     </div>
     <h3 class="text-2xl font-bold mb-4">Темы</h3>
     <div id="topics" class="space-y-3 mb-8 max-h-96 overflow-y-auto"></div>
-    <button onclick="startTest()" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">Начать тест</button>
+    <button onclick="startTest()" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">На, Начать тест</button>
     <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-3 rounded-xl w-full text-sm mt-3">Назад</button>
   </div>
 
@@ -127,7 +145,7 @@
       <p class="text-lg mb-4"><strong>Факультет:</strong> <span id="profile-faculty"></span></p>
       <hr class="my-4">
       <p class="text-lg mb-2">Тестов пройдено: <strong id="tests-completed">0</strong></p>
-      <p class="text-lg mb-2">Правильных: <strong id="correct-total">0</strong></p>
+      <p class="text-lg mb-2">Баллов набрано: <strong id="correct-total">0</strong></p>
       <p class="text-lg">Точность: <strong id="avg-percent">0</strong>%</p>
     </div>
     <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-5 rounded-xl w-full mt-8">Назад</button>
@@ -136,8 +154,8 @@
 
 <script>
   let user = JSON.parse(localStorage.getItem('medtests_user'));
-  let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
-  let allTests = {}, currentTest = [], currentIndex = 0, correctInSession = 0;
+  let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, points: 0, totalQuestions: 0 };
+  let allTests = {}, currentTest = [], currentIndex = 0, pointsInSession = 0;
   let timerInterval, startTime, testSettings = {};
 
   const courses = ['1','2','3','4','5','6'];
@@ -169,7 +187,7 @@
   function navigate(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     document.getElementById(page).classList.remove('hidden');
-    if (page === 'profile') updateProfile();
+    if (page === 'profile') update10Profile();
   }
 
   async function loadTests() {
@@ -216,7 +234,7 @@
     if (currentTest.length === 0) return alert('Нет вопросов');
     currentTest.sort(() => Math.random() - 0.5);
     if (testSettings.count > 0 && testSettings.count < currentTest.length) currentTest = currentTest.slice(0, testSettings.count);
-    currentIndex = 0; correctInSession = 0; startTime = Date.now();
+    currentIndex = 0; pointsInSession = 0; startTime = Date.now();
     if (testSettings.timer) {
       let s = testSettings.timerMinutes * 60;
       timerInterval = setInterval(() => {
@@ -268,7 +286,18 @@
     const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
     const q = currentTest[currentIndex];
     const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
-    if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
+
+    let score = 0;
+    const hasExtra = selected.some(i => !correct.includes(i)); // выбран лишний?
+    const correctSelected = selected.filter(i => correct.includes(i)).length;
+
+    if (!hasExtra) {
+      if (correctSelected === correct.length) score = 1; // всё верно
+      else if (correctSelected > correct.length * 0.5) score = 0.5; // частично
+    }
+
+    pointsInSession += score;
+
     if (!testSettings.blind) {
       document.querySelectorAll('#options label').forEach((l,i) => {
         const input = l.querySelector('input'); input.disabled = true;
@@ -276,6 +305,7 @@
         if (selected.includes(i) && !correct.includes(i)) l.classList.add('bg-red-100','border-red-500');
       });
     }
+
     const btn = document.getElementById('answer-btn');
     btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее';
     btn.onclick = () => { currentIndex++; showQuestion(); };
@@ -283,22 +313,28 @@
 
   function endTest() {
     clearInterval(timerInterval);
-    const percent = Math.round((correctInSession / currentTest.length) * 100);
+    const maxPoints = currentTest.length;
+    const percent = Math.round((pointsInSession / maxPoints) * 100);
     const timeSpent = Math.round((Date.now() - startTime) / 1000);
     const mins = Math.floor(timeSpent / 60), secs = timeSpent % 60;
-    document.getElementById('final-score').textContent = correctInSession;
-    document.getElementById('final-total').textContent = currentTest.length;
+
+    document.getElementById('final-score').textContent = pointsInSession.toFixed(1);
+    document.getElementById('final-total').textContent = maxPoints;
     document.getElementById('final-percent').textContent = percent;
     document.getElementById('time-spent').textContent = `Время: ${mins} мин ${secs} сек`;
-    stats.tests += 1; stats.correct += correctInSession;
+
+    stats.tests += 1;
+    stats.points += pointsInSession;
+    stats.totalQuestions += maxPoints;
     localStorage.setItem('medtests_stats', JSON.stringify(stats));
+
     navigate('results');
   }
 
   function updateProfile() {
     document.getElementById('tests-completed').textContent = stats.tests;
-    document.getElementById('correct-total').textContent = stats.correct;
-    const avg = stats.tests > 0 ? Math.round((stats.correct / (stats.tests * 50)) * 100) : 0;
+    document.getElementById('correct-total').textContent = stats.points.toFixed(1);
+    const avg = stats.tests > 0 ? Math.round((stats.points / stats.totalQuestions) * 100) : 0;
     document.getElementById('avg-percent').textContent = avg;
   }
 </script>
