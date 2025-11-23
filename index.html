@@ -7,11 +7,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body {
-      margin: 0; padding: 0; height: 100vh;
-      background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
+    /* Красивый переливающийся фон */
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #43e97b);
+      background-size: 600% 600%;
+      animation: gradient 20s ease infinite;
       font-family: 'Inter', system-ui, sans-serif;
     }
     @keyframes gradient {
@@ -19,26 +20,41 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     #app {
-      min-height: 100vh; max-width: 100vw;
-      background: rgba(255,255,255,0.93);
-      display: flex; flex-direction: column;
+      min-height: 100vh;
+      max-width: 100vw;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
     }
-    .page { flex: 1; padding: 1.5rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+    .page {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .page::-webkit-scrollbar { width: 6px; }
-    .page::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 3px; }
+    .page::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.5); border-radius: 3px; }
+
     .btn { transition: all 0.2s; }
     .btn:active { transform: scale(0.95); }
     .option:active { background: #e0d4ff; }
+
     #timer { font-size: 1.6rem; font-weight: bold; color: #7c3aed; }
     #timer.warning { color: #f59e0b; }
     #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
     @media (max-width: 480px) {
       .page { padding: 1rem; }
       h1 { font-size: 1.9rem; }
       h2 { font-size: 1.6rem; }
       .text-6xl { font-size: 3.5rem; }
+      .py-5 { padding: 0.75rem 0; }
     }
   </style>
 </head>
@@ -82,7 +98,7 @@
   <!-- Настройки теста -->
   <div id="test-selection" class="page hidden p-8">
     <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Настройки теста</h2>
-    <div class="mb-6 bg-white p-5 rounded-xl border-2 border-gray-200">
+    <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
       <label class="block text-lg mb-3">Количество вопросов:</label>
       <input type="number" id="question-count-custom" min="1" placeholder="Любое число" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
       <div class="grid grid-cols-3 gap-2 mt-3 text-sm">
@@ -93,11 +109,11 @@
         <button onclick="document.getElementById('question-count-custom').value=''" class="bg-gray-200 hover:bg-gray-300 py-2 rounded col-span-2">Все</button>
       </div>
     </div>
-    <div class="mb-6 bg-white p-5 rounded-xl border-2 border-gray-200">
+    <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
       <label class="flex items-center justify-between"><span class="text-lg">Таймер</span><input type="checkbox" id="use-timer" class="h-6 w-6 text-purple-600"></label>
       <input type="number" id="timer-minutes" value="30" min="1" max="180" class="w-full mt-3 px-4 py-3 rounded-lg border-2 border-gray-300" placeholder="Минут">
     </div>
-    <div class="mb-6 bg-white p-5 rounded-xl border-2 border-gray-200">
+    <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
       <label class="flex items-center justify-between"><span class="text-lg">Режим «вслепую»</span><input type="checkbox" id="blind-mode" class="h-6 w-6 text-purple-600"></label>
     </div>
     <div class="mb-6">
@@ -128,7 +144,7 @@
   <div id="results" class="page hidden p-8 text-center flex flex-col justify-center flex-1">
     <i class="fas fa-medal text-9xl text-yellow-500 mb-8"></i>
     <h2 class="text-4xl font-bold text-gray-800 mb-6">Тест завершён, <span id="results-name"></span>!</h2>
-    <div class="bg-white rounded-2xl p-8 shadow-lg">
+    <div class="bg-white/90 backdrop-blur rounded-2xl p-8 shadow-lg">
       <p class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4"><span id="final-score">0</span> / <span id="final-total">0</span></p>
       <p class="text-3xl mb-4">Точность: <span id="final-percent">0</span>%</p>
       <p class="text-xl text-gray-600" id="time-spent"></p>
@@ -139,7 +155,7 @@
   <!-- Профиль -->
   <div id="profile" class="page hidden p-8">
     <h2 class="text-3xl font-bold text-gray-800 mb-6">Профиль</h2>
-    <div class="bg-gray-100 rounded-2xl p-6 text-left">
+    <div class="bg-white/90 backdrop-blur rounded-2xl p-6 text-left">
       <p class="text-lg mb-2"><strong>Имя:</strong> <span id="profile-name"></span></p>
       <p class="text-lg mb-2"><strong>Курс:</strong> <span id="profile-course"></span></p>
       <p class="text-lg mb-4"><strong>Факультет:</strong> <span id="profile-faculty"></span></p>
@@ -187,7 +203,7 @@
   function navigate(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     document.getElementById(page).classList.remove('hidden');
-    if (page === 'profile') update10Profile();
+    if (page === 'profile') updateProfile();
   }
 
   async function loadTests() {
@@ -209,7 +225,7 @@
     document.getElementById('topics').innerHTML = topics.size === 0 ?
       '<p class="text-center py-8 text-gray-600">Вопросы не найдены</p>' :
       Array.from(topics).sort().map(t => `
-        <label class="flex items-center bg-white p-4 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition">
+        <label class="flex items-center bg-white/90 p-4 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition">
           <input type="checkbox" value="${t}" class="mr-4 h-6 w-6 text-purple-600 rounded">
           <span class="text-lg">${t}</span>
         </label>
@@ -257,12 +273,12 @@
     document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length) * 100 + '%';
     const multiple = Array.isArray(q.correct);
     document.getElementById('options').innerHTML = q.options.map((opt,i) => `
-      <label class="option flex items-center bg-white p-5 rounded-xl border-2 border-gray-200">
+      <label class="option flex items-center bg-white/90 p-5 rounded-xl border-2 border-gray-200">
         <input type="${multiple?'checkbox':'radio'}" name="answer" value="${i}" onchange="toggleAnswerBtn()" class="mr-4 h-6 w-6 text-purple-600 rounded">
         <span class="text-lg">${opt}</span>
       </label>
     `).join('');
-    document.querySelectorAll('#options label').forEach(l => l.className = 'option flex items-center bg-white p-5 rounded-xl border-2 border-gray-200');
+    document.querySelectorAll('#options label').forEach(l => l.className = 'option flex items-center bg-white/90 p-5 rounded-xl border-2 border-gray-200');
     document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
     document.getElementById('answer-btn').disabled = true;
     document.getElementById('answer-btn').textContent = 'Ответить';
@@ -288,14 +304,13 @@
     const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
 
     let score = 0;
-    const hasExtra = selected.some(i => !correct.includes(i)); // выбран лишний?
+    const hasExtra = selected.some(i => !correct.includes(i));
     const correctSelected = selected.filter(i => correct.includes(i)).length;
 
     if (!hasExtra) {
-      if (correctSelected === correct.length) score = 1; // всё верно
-      else if (correctSelected > correct.length * 0.5) score = 0.5; // частично
+      if (correctSelected === correct.length) score = 1;
+      else if (correctSelected > correct.length * 0.5) score = 0.5;
     }
-
     pointsInSession += score;
 
     if (!testSettings.blind) {
@@ -340,4 +355,3 @@
 </script>
 </body>
 </html>
-
