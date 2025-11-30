@@ -3,67 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>МедТесты — КРАСИВО!</title>
+  <title>РАБОТАЙ ХУЙНЯ ЕБАНАЯ</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* САМЫЙ КРАСИВЫЙ ГРАДИЕНТ 2025 */
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      background: linear-gradient(-45deg, 
-        #ff6b6b, #feca57, #48dbfb, #1dd1a1, #5f27cd, #ff9ff3, #f368e0);
-      background-size: 600% 600%;
-      animation: rainbow 25s ease infinite;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-    @keyframes rainbow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    #app {
-      min-height: 100vh;
-      max-width: 100vw;
-      background: rgba(255, 255, 255, 0.85); /* Чуть прозрачнее — градиент ярче видно */
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-    }
-
-    .page {
-      flex: 1;
-      padding: 1.5rem;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .page::-webkit-scrollbar { width: 6px; }
-    .page::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.6); border-radius: 3px; }
-
-    .btn { transition: all 0.2s; }
-    .btn:active { transform: scale(0.95); }
-    .option:active { background: #e0d4ff; }
-
-    #timer { font-size: 1.6rem; font-weight: bold; color: #7c3aed; }
-    #timer.warning { color: #f59e0b; }
-    #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
-
-    @media (max-width: 480px) {
-      .page { padding: 1rem; }
-      h1 { font-size: 1.9rem; }
-      h2 { font-size: 1.6rem; }
-      .text-6xl { font-size: 3.5rem; }
-    }
+    html, body {margin:0;padding:0;min-height:100vh;background:linear-gradient(-45deg,#ff6b6b,#feca57,#48dbfb,#1dd1a1,#5f27cd,#ff9ff3,#f368e0);background-size:600% 600%;animation:rainbow 25s ease infinite;font-family:'Inter',system-ui,sans-serif;}
+    @keyframes rainbow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    #app{min-height:100vh;max-width:100vw;background:rgba(255,255,255,0.85);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+    .page{flex:1;padding:1.5rem;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+    .page::-webkit-scrollbar{width:6px}.page::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.6);border-radius:3px}
+    .btn{transition:all .2s}.btn:active{transform:scale(.95)}
+    .option:active{background:#e0d4ff}
+    #timer{font-size:1.6rem;font-weight:bold;color:#7c3aed}
+    #timer.warning{color:#f59e0b}#timer.danger{color:#dc2626;animation:pulse 1s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+    @media(max-width:480px){.page{padding:1rem}h1{font-size:1.9rem}h2{font-size:1.6rem}.text-6xl{font-size:3.5rem}}
   </style>
 </head>
 <body>
 <div id="app" class="flex flex-col">
-
   <!-- Регистрация -->
   <div id="register" class="page p-8 text-center flex flex-col justify-center">
     <i class="fas fa-user-graduate text-8xl text-purple-600 mb-6"></i>
@@ -114,7 +72,7 @@
     </div>
     <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
       <label class="flex items-center justify-between"><span class="text-lg">Таймер</span><input type="checkbox" id="use-timer" class="h-6 w-6 text-purple-600"></label>
-      <input type="number" id="timer-minutes" value="30" min="1" max="180" class="w-full mt-3 px-4 py-3 rounded-lg border-2 border-gray-300" placeholder="Минут">
+      <input type="number" id="timer-minutes" value="30" min="1" max="180" class="w-full mt-3 px-4 py-3 rounded-lg border-2 border-gray-300">
     </div>
     <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
       <label class="flex items-center justify-between"><span class="text-lg">Режим «вслепую»</span><input type="checkbox" id="blind-mode" class="h-6 w-6 text-purple-600"></label>
@@ -128,7 +86,7 @@
     <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-3 rounded-xl w-full text-sm mt-3">Назад</button>
   </div>
 
-  <!-- Тест -->
+  <!-- Остальные страницы без изменений -->
   <div id="test" class="page hidden p-8 flex flex-col flex-1">
     <div class="flex justify-between items-center mb-4">
       <div class="text-sm text-gray-600">Вопрос <span id="current-num">1</span> / <span id="total-num">0</span></div>
@@ -143,7 +101,6 @@
     </div>
   </div>
 
-  <!-- Результаты -->
   <div id="results" class="page hidden p-8 text-center flex flex-col justify-center flex-1">
     <i class="fas fa-medal text-9xl text-yellow-500 mb-8"></i>
     <h2 class="text-4xl font-bold text-gray-800 mb-6">Тест завершён, <span id="results-name"></span>!</h2>
@@ -155,7 +112,6 @@
     <button onclick="navigate('welcome')" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full mt-8">На главную</button>
   </div>
 
-  <!-- Профиль -->
   <div id="profile" class="page hidden p-8">
     <h2 class="text-3xl font-bold text-gray-800 mb-6">Профиль</h2>
     <div class="bg-white/90 backdrop-blur rounded-2xl p-6 text-left">
@@ -172,7 +128,6 @@
 </div>
 
 <script>
-  // Весь скрипт из последней рабочей версии (100% рабочий)
   let user = JSON.parse(localStorage.getItem('medtests_user'));
   let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, points: 0, totalQuestions: 0 };
   let allTests = {}, currentTest = [], currentIndex = 0, pointsInSession = 0;
@@ -181,8 +136,12 @@
   const courses = ['1','2','3','4','5','6'];
   const faculties = ['Лечебный','Педиатрический','Медико-психологический','Медико-диагностический'];
 
-  if (!user || !user.name || !user.course || !user.faculty) document.getElementById('register').classList.remove('hidden');
-  else { showWelcome(); loadTests(); }
+  if (!user || !user.name || !user.course || !user.faculty) {
+    document.getElementById('register').classList.remove('hidden');
+  } else {
+    showWelcome(); 
+    loadTests();
+  }
 
   function saveUser() {
     const name = document.getElementById('name-input').value.trim();
@@ -191,7 +150,8 @@
     if (!name || !course || !faculty) return alert('Заполните все поля');
     user = { name, course, faculty };
     localStorage.setItem('medtests_user', JSON.stringify(user));
-    showWelcome(); loadTests();
+    showWelcome(); 
+    loadTests();
   }
 
   function showWelcome() {
@@ -212,11 +172,19 @@
 
   async function loadTests() {
     allTests = {};
-    for (const c of courses) for (const f of faculties) {
-      try {
-        const res = await fetch(`questions/course_${c}/${f}/tests.json?t=${Date.now()}`);
-        if (res.ok) { allTests[c] = allTests[c] || {}; allTests[c][f] = await res.json(); }
-      } catch(e) {}
+    for (const c of courses) {
+      for (const f of faculties) {
+        try {
+          const res = await fetch(`questions/course_${c}/${f}/tests.json?t=${Date.now()}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (Object.keys(data).length > 0) {
+              allTests[c] = allTests[c] || {};
+              allTests[c][f] = data;
+            }
+          }
+        } catch(e) {}
+      }
     }
     buildTopicList();
   }
@@ -224,10 +192,23 @@
   function buildTopicList() {
     const topics = new Set();
     const showAll = document.getElementById('show-all-toggle')?.checked || false;
-    if (allTests[user.course]?.[user.faculty]) Object.keys(allTests[user.course][user.faculty]).forEach(t => topics.add(t));
-    if (showAll) for (const c in allTests) for (const f in allTests[c]) Object.keys(allTests[c][f]).forEach(t => topics.add(t));
+
+    // свои темы
+    if (allTests[user.course]?.[user.faculty]) {
+      Object.keys(allTests[user.course][user.faculty]).forEach(t => topics.add(t));
+    }
+
+    // все темы, если включено
+    if (showAll) {
+      for (const c in allTests) {
+        for (const f in allTests[c]) {
+          Object.keys(allTests[c][f]).forEach(t => topics.add(t));
+        }
+      }
+    }
+
     document.getElementById('topics').innerHTML = topics.size === 0 ?
-      '<p class="text-center py-8 text-gray-600">Вопросы не найдены</p>' :
+      '<p class="text-center py-8 text-gray-600">Вопросы не найдены<br><small>Проверьте путь questions/course_X/Факультет/tests.json</small></p>' :
       Array.from(topics).sort().map(t => `
         <label class="flex items-center bg-white/90 p-4 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition">
           <input type="checkbox" value="${t}" class="mr-4 h-6 w-6 text-purple-600 rounded">
@@ -237,51 +218,77 @@
   }
 
   function startTest() {
-    const selected = [...document.querySelectorAll('#topics input:checked')].filter(el => el.value).map(el => el.value);
-    if (selected.length === 0) return alert('Выберите темы!');
+    const selected = [...document.querySelectorAll('#topics input:checked')].map(el => el.value);
+    if (selected.length === 0) return alert('Выберите хотя бы одну тему!');
+
     const customCount = parseInt(document.getElementById('question-count-custom').value) || 0;
+
     testSettings = {
       count: customCount > 0 ? customCount : 0,
       timer: document.getElementById('use-timer').checked,
       timerMinutes: parseInt(document.getElementById('timer-minutes').value) || 30,
-      blind: document.getElementById('blind-mode').checked
+      blind: document.getElementById('blind-mode').checked,
+      showAll: document.getElementById('show-all-toggle').checked    // ← ЭТО ГЛАВНОЕ ИСПРАВЛЕНИЕ
     };
+
     currentTest = [];
-    for (const c in allTests) for (const f in allTests[c]) {
-      if (!testSettings.showAll && (c !== user.course || f !== user.faculty)) continue;
-      selected.forEach(t => { if (allTests[c][f][t]) currentTest.push(...allTests[c][f][t].map(q => ({...q, topic: t}))); });
+
+    for (const c in allTests) {
+      for (const f in allTests[c]) {
+        if (!testSettings.showAll && (c !== user.course || f !== user.faculty)) continue;
+        selected.forEach(topic => {
+          if (allTests[c][f][topic]) {
+            currentTest.push(...allTests[c][f][topic].map(q => ({...q, topic})));
+          }
+        });
+      }
     }
-    if (currentTest.length === 0) return alert('Нет вопросов');
+
+    if (currentTest.length === 0) return alert('По выбранным темам нет вопросов');
+
     currentTest.sort(() => Math.random() - 0.5);
-    if (testSettings.count > 0 && testSettings.count < currentTest.length) currentTest = currentTest.slice(0, testSettings.count);
+    if (testSettings.count > 0 && testSettings.count < currentTest.length) {
+      currentTest = currentTest.slice(0, testSettings.count);
+    }
+
     currentIndex = 0; pointsInSession = 0; startTime = Date.now();
+
     if (testSettings.timer) {
       let s = testSettings.timerMinutes * 60;
       timerInterval = setInterval(() => {
-        s--; const m = String(Math.floor(s/60)).padStart(2,'0'); const sec = String(s%60).padStart(2,'0');
-        const el = document.getElementById('timer'); el.textContent = `${m}:${sec}`;
+        s--;
+        const m = String(Math.floor(s/60)).padStart(2,'0');
+        const sec = String(s%60).padStart(2,'0');
+        const el = document.getElementById('timer');
+        el.textContent = `${m}:${sec}`;
         el.className = s < 60 ? 'danger' : s < 300 ? 'warning' : '';
         if (s <= 0) { clearInterval(timerInterval); endTest(); }
       }, 1000);
       document.getElementById('timer').classList.remove('hidden');
     }
-    showQuestion(); navigate('test');
+
+    showQuestion();
+    navigate('test');
   }
 
   function showQuestion() {
     if (currentIndex >= currentTest.length) { endTest(); return; }
     const q = currentTest[currentIndex];
-    document.getElementById('question').innerHTML = q.question;
+    document.getElementById('question').innerHTML = q.question || q.q || 'Вопрос не найден';
     document.getElementById('current-num').textContent = currentIndex + 1;
     document.getElementById('total-num').textContent = currentTest.length;
     document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length) * 100 + '%';
+
     const multiple = Array.isArray(q.correct);
-    document.getElementById('options').innerHTML = q.options.map((opt,i) => `
+    const options = q.options || q.variants || [];
+
+    document.getElementById('options').innerHTML = options.map((opt,i) => `
       <label class="option flex items-center bg-white/90 p-5 rounded-xl border-2 border-gray-200">
         <input type="${multiple?'checkbox':'radio'}" name="answer" value="${i}" onchange="toggleAnswerBtn()" class="mr-4 h-6 w-6 text-purple-600 rounded">
         <span class="text-lg">${opt}</span>
       </label>
     `).join('');
+
     document.querySelectorAll('#options label').forEach(l => l.className = 'option flex items-center bg-white/90 p-5 rounded-xl border-2 border-gray-200');
     document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
     document.getElementById('answer-btn').disabled = true;
@@ -306,7 +313,6 @@
     const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
     const q = currentTest[currentIndex];
     const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
-
     let score = 0;
     const hasExtra = selected.some(i => !correct.includes(i));
     const correctSelected = selected.filter(i => correct.includes(i)).length;
