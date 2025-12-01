@@ -3,223 +3,489 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>РАБОТАЙ ХУЙНЯ ЕБАНАЯ</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>МедТесты</title>
   <style>
-    html, body {margin:0;padding:0;min-height:100vh;background:linear-gradient(-45deg,#ff6b6b,#feca57,#48dbfb,#1dd1a1,#5f27cd,#ff9ff3,#f368e0);background-size:600% 600%;animation:rainbow 25s ease infinite;font-family:'Inter',system-ui,sans-serif;}
-    @keyframes rainbow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    #app{min-height:100vh;max-width:100vw;background:rgba(255,255,255,0.85);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.15);}
-    .page{flex:1;padding:1.5rem;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-    .page::-webkit-scrollbar{width:6px}.page::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.6);border-radius:3px}
-    .btn{transition:all .2s}.btn:active{transform:scale(.95)}
-    .option:active{background:#e0d4ff}
-    #timer{font-size:1.6rem;font-weight:bold;color:#7c3aed}
-    #timer.warning{color:#f59e0b}#timer.danger{color:#dc2626;animation:pulse 1s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
-    @media(max-width:480px){.page{padding:1rem}h1{font-size:1.9rem}h2{font-size:1.6rem}.text-6xl{font-size:3.5rem}}
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: linear-gradient(270deg, #dbe6f6, #e0c3fc, #f9f9f9, #cfd9df);
+      background-size: 400% 400%;
+      animation: gradientAnimation 30s ease infinite;
+    }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 400px;
+      margin-top: 40px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #74ebd5;
+      box-shadow: 0 0 8px rgba(116,235,213,0.6);
+      outline: none;
+    }
+
+    /* Единый стиль кнопок */
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4CAF50, #2E8B57);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      background: linear-gradient(135deg, #45a049, #1e6b43);
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    /* Модальные окна */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 60%;
+      max-width: 600px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #000;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Стили для тестовой системы (адаптированные из index.html без Tailwind) */
+    .page { flex: 1; padding: 1.5rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .page::-webkit-scrollbar { display: none; }
+    .page { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .btn { transition: all 0.2s; }
+    .btn:active { transform: scale(0.95); }
+
+    .option { transition: all 0.2s; cursor: pointer; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 0.5rem; }
+    .option:hover { background-color: #f3e8ff; }
+    .option:active { background-color: #e0d4ff; }
+
+    #timer { font-size: 1.6rem; font-weight: bold; color: #7c3aed; }
+    #timer.warning { color: #f59e0b; }
+    #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+    /* Уменьшаем отступы и шрифты на маленьких экранах */
+    @media (max-width: 480px) {
+      .page { padding: 1rem; }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.5rem; }
+      h3 { font-size: 1.2rem; }
+      .text-xl { font-size: 1.1rem; }
+      .text-lg { font-size: 1rem; }
+      .text-6xl { font-size: 3.5rem; }
+      .text-3xl { font-size: 1.8rem; }
+      .py-4 { padding-top: 0.8rem; padding-bottom: 0.8rem; }
+      .px-8 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .space-y-4 > * + * { margin-top: 0.75rem; }
+    }
+
+    /* Прогресс-бар */
+    .progress-bar { background: #ddd; height: 8px; border-radius: 4px; margin-bottom: 1rem; }
+    .progress-fill { background: linear-gradient(135deg, #667eea, #764ba2); height: 100%; border-radius: 4px; transition: width 0.3s; }
+
+    /* Опции для теста */
+    .options-container { margin-bottom: 1rem; }
+    .result-icon { font-size: 4rem; margin-bottom: 1rem; }
+
+    /* Темы и чекбоксы */
+    .topic-label { display: flex; align-items: center; background: #f9f9f9; padding: 1rem; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 0.5rem; cursor: pointer; }
+    .topic-label:hover { border-color: #74ebd5; }
+    .topic-checkbox { margin-right: 1rem; width: 1.2rem; height: 1.2rem; }
   </style>
 </head>
 <body>
-<div id="app" class="flex flex-col">
-  <!-- Регистрация -->
-  <div id="register" class="page p-8 text-center flex flex-col justify-center">
-    <i class="fas fa-user-graduate text-8xl text-purple-600 mb-6"></i>
-    <h1 class="text-4xl font-bold text-gray-800 mb-6">Добро пожаловать!</h1>
-    <input type="text" id="name-input" placeholder="Ваше имя" class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-300 mb-5">
-    <select id="course-input" class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-300 mb-5">
-      <option value="" disabled selected>Курс</option>
-      <option value="1">1 курс</option><option value="2">2 курс</option><option value="3">3 курс</option>
-      <option value="4">4 курс</option><option value="5">5 курс</option><option value="6">6 курс</option>
-    </select>
-    <select id="faculty-input" class="w-full px-6 py-4 text-xl rounded-xl border-2 border-gray-300 mb-8">
-      <option value="" disabled selected>Факультет</option>
-      <option value="Лечебный">Лечебный</option>
-      <option value="Педиатрический">Педиатрический</option>
-      <option value="Медико-психологический">Медико-психологический</option>
-      <option value="Медико-диагностический">Медико-диагностический</option>
-    </select>
-    <button onclick="saveUser()" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">
-      Продолжить
-    </button>
+  <!-- Регистрация (из index.html) -->
+  <div class="container" id="register">
+    <h1>Регистрация</h1>
+    <form id="registerForm">
+      <label for="name">Имя:</label>
+      <input type="text" id="name" required>
+      <label for="course">Курс:</label>
+      <select id="course" required>
+        <option value="">Выберите курс</option>
+        <option value="1">1 курс</option>
+        <option value="2">2 курс</option>
+        <option value="3">3 курс</option>
+        <option value="4">4 курс</option>
+        <option value="5">5 курс</option>
+        <option value="6">6 курс</option>
+      </select>
+      <label for="faculty">Факультет:</label>
+      <select id="faculty" required>
+        <option value="">Выберите факультет</option>
+        <option value="Лечебный">Лечебный</option>
+        <option value="Педиатрический">Педиатрический</option>
+        <option value="Медико-психологический">Медико-психологический</option>
+        <option value="Медико-диагностический">Медико-диагностический</option>
+      </select>
+      <button type="submit">Зарегистрироваться</button>
+    </form>
   </div>
 
-  <!-- Главное меню -->
-  <div id="welcome" class="page hidden p-8 text-center flex flex-col justify-center">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">Привет, <span id="welcome-name" class="text-purple-600"></span>!</h1>
-    <p class="text-lg text-gray-700 mb-10" id="welcome-info"></p>
-    <button onclick="navigate('test-selection')" class="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">
-      Начать тест
-    </button>
-    <button onclick="navigate('profile')" class="btn bg-gray-600 text-white px-8 py-4 rounded-xl text-lg font-semibold mb-4 w-full">
-      Профиль
-    </button>
+  <!-- Главное меню (из index.html) -->
+  <div class="container" id="menu" style="display:none;">
+    <h1 id="greeting">Добро пожаловать!</h1>
+    <nav>
+      <button onclick="openModal('testSelectionModal')">Начать тест</button>
+      <button onclick="openModal('settingsModal')">Настройки</button>
+      <button onclick="openModal('profileModal')">Профиль</button>
+      <button onclick="openModal('aboutModal')">О нас</button>
+      <button onclick="openModal('helpModal')">Помощь</button>
+    </nav>
   </div>
 
-  <!-- Настройки теста -->
-  <div id="test-selection" class="page hidden p-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Настройки теста</h2>
-    <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
-      <label class="block text-lg mb-3">Количество вопросов:</label>
-      <input type="number" id="question-count-custom" min="1" placeholder="Любое число" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300">
-      <div class="grid grid-cols-3 gap-2 mt-3 text-sm">
-        <button onclick="document.getElementById('question-count-custom').value=10" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">10</button>
-        <button onclick="document.getElementById('question-count-custom').value=25" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">25</button>
-        <button onclick="document.getElementById('question-count-custom').value=50" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">50</button>
-        <button onclick="document.getElementById('question-count-custom').value=100" class="bg-gray-200 hover:bg-gray-300 py-2 rounded">100</button>
-        <button onclick="document.getElementById('question-count-custom').value=''" class="bg-gray-200 hover:bg-gray-300 py-2 rounded col-span-2">Все</button>
+  <!-- Модальное для настроек теста (адаптировано из index.html) -->
+  <div id="testSelectionModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('testSelectionModal')">&times;</span>
+      <h2>Настройки теста</h2>
+
+      <div style="margin-bottom: 1.5rem; background: white; padding: 1.25rem; border-radius: 0.5rem; border: 2px solid #e5e7eb;">
+        <label style="display: block; font-size: 1.125rem; margin-bottom: 0.75rem;">Количество вопросов:</label>
+        <input type="number" id="question-count-custom" min="1" placeholder="Любое число" style="width: 100%; padding: 0.75rem; border-radius: 0.375rem; border: 2px solid #d1d5db;">
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin-top: 0.75rem;">
+          <button onclick="document.getElementById('question-count-custom').value=10" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">10</button>
+          <button onclick="document.getElementById('question-count-custom').value=25" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">25</button>
+          <button onclick="document.getElementById('question-count-custom').value=50" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">50</button>
+          <button onclick="document.getElementById('question-count-custom').value=100" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">100</button>
+          <button onclick="document.getElementById('question-count-custom').value=''" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; grid-column: span 2;">Все</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem; background: white; padding: 1.25rem; border-radius: 0.5rem; border: 2px solid #e5e7eb;">
+        <label style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 1.125rem;">Таймер</span>
+          <input type="checkbox" id="use-timer" style="height: 1.5rem; width: 1.5rem;">
+        </label>
+        <input type="number" id="timer-minutes" value="30" min="1" max="180" style="width: 100%; margin-top: 0.75rem; padding: 0.75rem; border-radius: 0.375rem; border: 2px solid #d1d5db;" placeholder="Минут">
+      </div>
+
+      <div style="margin-bottom: 1.5rem; background: white; padding: 1.25rem; border-radius: 0.5rem; border: 2px solid #e5e7eb;">
+        <label style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 1.125rem;">Режим «вслепую»</span>
+          <input type="checkbox" id="blind-mode" style="height: 1.5rem; width: 1.5rem;">
+        </label>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
+          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" style="margin-right: 0.75rem; height: 1.5rem; width: 1.5rem;">
+          <span>Все разделы</span>
+        </label>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Разделы</h3>
+      <div id="topics" style="margin-bottom: 2rem; max-height: 24rem; overflow-y: auto;"></div>
+
+      <button onclick="startTest()" style="background: linear-gradient(135deg, #22c55e, #115e59); color: white; padding: 1.25rem; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; width: 100%;">
+        Начать тест
+      </button>
+    </div>
+  </div>
+
+  <!-- Модальное для теста (адаптировано из index.html) -->
+  <div id="testModal" class="modal">
+    <div class="modal-content" style="width: 80%; max-width: 800px;">
+      <span class="close" onclick="closeModal('testModal')">&times;</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <div style="font-size: 0.875rem; color: #4b5563;">
+          Вопрос <span id="current-num">1</span> / <span id="total-num">0</span>
+        </div>
+        <div id="timer" style="display: none;"></div>
+      </div>
+      <div class="progress-bar">
+        <div id="progress" class="progress-fill" style="width: 0%;"></div>
+      </div>
+      <h3 id="question" style="font-size: 1.25rem; font-weight: medium; color: #1f2937; margin-bottom: 1.5rem;"></h3>
+      <div id="options" class="options-container"></div>
+      <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+        <button id="answer-btn" onclick="checkAnswer()" disabled style="background: #9ca3af; color: white; padding: 1rem; border-radius: 0.5rem; font-size: 1.125rem; font-weight: semibold; flex: 1; cursor: not-allowed;">
+          Ответить
+        </button>
+        <button onclick="endTest()" style="background: #dc2626; color: white; padding: 1rem 1.5rem; border-radius: 0.5rem; font-size: 1.125rem; font-weight: semibold;">
+          Завершить
+        </button>
       </div>
     </div>
-    <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
-      <label class="flex items-center justify-between"><span class="text-lg">Таймер</span><input type="checkbox" id="use-timer" class="h-6 w-6 text-purple-600"></label>
-      <input type="number" id="timer-minutes" value="30" min="1" max="180" class="w-full mt-3 px-4 py-3 rounded-lg border-2 border-gray-300">
-    </div>
-    <div class="mb-6 bg-white/90 p-5 rounded-xl border-2 border-gray-200">
-      <label class="flex items-center justify-between"><span class="text-lg">Режим «вслепую»</span><input type="checkbox" id="blind-mode" class="h-6 w-6 text-purple-600"></label>
-    </div>
-    <div class="mb-6">
-      <label class="flex items-center justify-center text-lg"><input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" class="mr-3 h-6 w-6 text-purple-600"><span>Все курсы и факультеты</span></label>
-    </div>
-    <h3 class="text-2xl font-bold mb-4">Темы</h3>
-    <div id="topics" class="space-y-3 mb-8 max-h-96 overflow-y-auto"></div>
-    <button onclick="startTest()" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full">Начать тест</button>
-    <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-3 rounded-xl w-full text-sm mt-3">Назад</button>
   </div>
 
-  <!-- Остальные страницы без изменений -->
-  <div id="test" class="page hidden p-8 flex flex-col flex-1">
-    <div class="flex justify-between items-center mb-4">
-      <div class="text-sm text-gray-600">Вопрос <span id="current-num">1</span> / <span id="total-num">0</span></div>
-      <div id="timer" class="hidden"></div>
-    </div>
-    <div class="w-full bg-gray-300/80 rounded-full h-3 mb-6"><div id="progress" class="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all" style="width:0%"></div></div>
-    <h3 id="question" class="text-xl font-medium text-gray-800 mb-6"></h3>
-    <div id="options" class="space-y-4 flex-1"></div>
-    <div class="flex gap-3 mt-6">
-      <button id="answer-btn" onclick="checkAnswer()" disabled class="btn bg-gray-400 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1 cursor-not-allowed">Ответить</button>
-      <button onclick="endTest()" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-xl text-lg font-semibold">Завершить</button>
+  <!-- Модальное для результатов (адаптировано из index.html) -->
+  <div id="resultsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('resultsModal')">&times;</span>
+      <div class="result-icon">&#x1F3C6;</div>
+      <h2 style="font-size: 2.25rem; font-weight: bold; color: #1f2937; margin-bottom: 1.5rem;">Тест завершён, <span id="results-name"></span>!</h2>
+      <div style="background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <p style="font-size: 3.75rem; font-weight: bold; color: transparent; background-clip: text; background-image: linear-gradient(to right, #2563eb, #7c3aed); margin-bottom: 1rem;">
+          <span id="final-score">0</span> / <span id="final-total">0</span>
+        </p>
+        <p style="font-size: 1.875rem; margin-bottom: 1rem;">Точность: <span id="final-percent">0</span>%</p>
+        <p style="font-size: 1.25rem; color: #4b5563;" id="time-spent"></p>
+      </div>
+      <button onclick="closeModal('resultsModal'); openModal('testSelectionModal')" style="background: linear-gradient(135deg, #22c55e, #115e59); color: white; padding: 1.25rem; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; width: 100%; margin-top: 2rem;">
+        Новый тест
+      </button>
     </div>
   </div>
 
-  <div id="results" class="page hidden p-8 text-center flex flex-col justify-center flex-1">
-    <i class="fas fa-medal text-9xl text-yellow-500 mb-8"></i>
-    <h2 class="text-4xl font-bold text-gray-800 mb-6">Тест завершён, <span id="results-name"></span>!</h2>
-    <div class="bg-white/90 backdrop-blur rounded-2xl p-8 shadow-lg">
-      <p class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4"><span id="final-score">0</span> / <span id="final-total">0</span></p>
-      <p class="text-3xl mb-4">Точность: <span id="final-percent">0</span>%</p>
-      <p class="text-xl text-gray-600" id="time-spent"></p>
+  <!-- Модальное для настроек (из index.html, адаптировано) -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('settingsModal')">&times;</span>
+      <h2>Настройки</h2>
+      <form id="settingsForm">
+        <label>Имя:</label>
+        <input type="text" id="setName">
+        <label>Курс:</label>
+        <select id="setCourse">
+          <option value="1">1 курс</option>
+          <option value="2">2 курс</option>
+          <option value="3">3 курс</option>
+          <option value="4">4 курс</option>
+          <option value="5">5 курс</option>
+          <option value="6">6 курс</option>
+        </select>
+        <label>Факультет:</label>
+        <select id="setFaculty">
+          <option value="Лечебный">Лечебный</option>
+          <option value="Педиатрический">Педиатрический</option>
+          <option value="Медико-психологический">Медико-психологический</option>
+          <option value="Медико-диагностический">Медико-диагностический</option>
+        </select>
+        <button type="submit">Сохранить</button>
+      </form>
     </div>
-    <button onclick="navigate('welcome')" class="btn bg-gradient-to-r from-green-500 to-teal-600 text-white px-8 py-5 rounded-xl text-xl font-bold w-full mt-8">На главную</button>
   </div>
 
-  <div id="profile" class="page hidden p-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Профиль</h2>
-    <div class="bg-white/90 backdrop-blur rounded-2xl p-6 text-left">
-      <p class="text-lg mb-2"><strong>Имя:</strong> <span id="profile-name"></span></p>
-      <p class="text-lg mb-2"><strong>Курс:</strong> <span id="profile-course"></span></p>
-      <p class="text-lg mb-4"><strong>Факультет:</strong> <span id="profile-faculty"></span></p>
-      <hr class="my-4">
-      <p class="text-lg mb-2">Тестов пройдено: <strong id="tests-completed">0</strong></p>
-      <p class="text-lg mb-2">Баллов набрано: <strong id="correct-total">0</strong></p>
-      <p class="text-lg">Точность: <strong id="avg-percent">0</strong>%</p>
+  <!-- Модальное для профиля (из index.html + статистика из index.html) -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('profileModal')">&times;</span>
+      <h2>Профиль</h2>
+      <p id="profileInfo"></p>
+      <hr style="margin: 1rem 0;">
+      <p>Тестов пройдено: <strong id="tests-completed">0</strong></p>
+      <p>Правильных ответов: <strong id="correct-total">0</strong></p>
+      <p>Средняя точность: <strong id="avg-percent">0</strong>%</p>
     </div>
-    <button onclick="navigate('welcome')" class="btn bg-gray-600 text-white px-8 py-5 rounded-xl w-full mt-8">Назад</button>
   </div>
-</div>
 
-<script>
+  <!-- Модальное "О нас" (из index.html) -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+      <h2>О нас</h2>
+      <p>Этот проект создан для удобного прохождения учебных тестов студентами медицинских факультетов. Здесь можно тренироваться, отслеживать прогресс и улучшать знания.</p>
+    </div>
+  </div>
+
+  <!-- Модальное "Помощь" (из index.html) -->
+  <div id="helpModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('helpModal')">&times;</span>
+      <h2>Помощь</h2>
+      <p>Все вопросы, предложения и проблемы пишите в Telegram: <strong>@cblblblblp</strong>.</p>
+    </div>
+  </div>
+
+  <script>
+  // Данные пользователя и статистика
+  let userName = "", userCourse = "", userFaculty = "";
   let user = JSON.parse(localStorage.getItem('medtests_user'));
-  let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, points: 0, totalQuestions: 0 };
-  let allTests = {}, currentTest = [], currentIndex = 0, pointsInSession = 0;
+  let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
+  let allTests = {}; // Будет заполнено после загрузки JSON
+  let currentTest = [], currentIndex = 0, correctInSession = 0;
   let timerInterval, startTime, testSettings = {};
 
-  const courses = ['1','2','3','4','5','6'];
-  const faculties = ['Лечебный','Педиатрический','Медико-психологический','Медико-диагностический'];
-
-  if (!user || !user.name || !user.course || !user.faculty) {
-    document.getElementById('register').classList.remove('hidden');
-  } else {
-    showWelcome(); 
-    loadTests();
+  if (user) {
+    userName = user.name; userCourse = user.course; userFaculty = user.faculty;
+    document.getElementById('register').style.display = "none";
+    document.getElementById('menu').style.display = "block";
+    updateGreeting();
+    updateProfile();
   }
 
-  function saveUser() {
-    const name = document.getElementById('name-input').value.trim();
-    const course = document.getElementById('course-input').value;
-    const faculty = document.getElementById('faculty-input').value;
-    if (!name || !course || !faculty) return alert('Заполните все поля');
-    user = { name, course, faculty };
-    localStorage.setItem('medtests_user', JSON.stringify(user));
-    showWelcome(); 
-    loadTests();
-  }
-
-  function showWelcome() {
-    document.getElementById('welcome-name').textContent = user.name;
-    document.getElementById('welcome-info').textContent = `${user.course} курс • ${user.faculty} факультет`;
-    document.getElementById('results-name').textContent = user.name;
-    document.getElementById('profile-name').textContent = user.name;
-    document.getElementById('profile-course').textContent = user.course + ' курс';
-    document.getElementById('profile-faculty').textContent = user.faculty;
-    navigate('welcome');
-  }
-
-  function navigate(page) {
-    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-    document.getElementById(page).classList.remove('hidden');
-    if (page === 'profile') updateProfile();
-  }
-
+  // Загрузка JSON-файлов динамически
   async function loadTests() {
-    allTests = {};
-    for (const c of courses) {
-      for (const f of faculties) {
-        try {
-          const res = await fetch(`questions/course_${c}/${f}/tests.json?t=${Date.now()}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (Object.keys(data).length > 0) {
-              allTests[c] = allTests[c] || {};
-              allTests[c][f] = data;
-            }
-          }
-        } catch(e) {}
+    const jsonFiles = [
+      'Пропедевтика детских болезней.json',
+      'Радмед.json'
+      // Добавьте больше файлов, если есть, напр. 'Другой раздел.json'
+    ];
+
+    try {
+      for (const file of jsonFiles) {
+        const response = await fetch(file);
+        if (!response.ok) throw new Error(`Ошибка загрузки ${file}`);
+        const data = await response.json();
+        const subject = file.replace('.json', ''); // Имя subject из имени файла
+        allTests[subject] = data; // Добавляем подразделы
       }
+      console.log('Все тесты загружены:', allTests); // Для дебага в консоли
+    } catch (error) {
+      console.error('Ошибка загрузки JSON:', error);
+      alert('Ошибка загрузки тестов. Проверьте файлы и консоль браузера.');
     }
-    buildTopicList();
   }
 
+  // Вызываем загрузку при старте страницы
+  loadTests();
+
+  // Регистрация
+  document.getElementById("registerForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    userName = document.getElementById("name").value.trim();
+    userCourse = document.getElementById("course").value;
+    userFaculty = document.getElementById("faculty").value;
+    if (!userName || !userCourse || !userFaculty) return;
+
+    user = { name: userName, course: userCourse, faculty: userFaculty };
+    localStorage.setItem('medtests_user', JSON.stringify(user));
+
+    document.getElementById("register").style.display = "none";
+    document.getElementById("menu").style.display = "block";
+
+    updateGreeting();
+
+    document.getElementById("setName").value = userName;
+    document.getElementById("setCourse").value = userCourse;
+    document.getElementById("setFaculty").value = userFaculty;
+    updateProfile();
+  });
+
+  function updateGreeting() {
+    const hour = new Date().getHours();
+    let greeting = hour < 12 ? "Доброе утро" : hour < 18 ? "Добрый день" : hour < 23 ? "Добрый вечер" : "Доброй ночи";
+    document.getElementById("greeting").innerText = greeting + ", " + userName + "!";
+  }
+
+  // Функции модальных
+  function openModal(id) {
+    document.getElementById(id).style.display = "block";
+    if (id === 'testSelectionModal') buildTopicList();
+    if (id === 'profileModal') updateProfile();
+  }
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  // Сохранение настроек
+  document.getElementById("settingsForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const newName = document.getElementById("setName").value.trim();
+    const newCourse = document.getElementById("setCourse").value;
+    const newFaculty = document.getElementById("setFaculty").value;
+    if (!newName || !newCourse || !newFaculty) return;
+
+    userName = newName;
+    userCourse = newCourse;
+    userFaculty = newFaculty;
+    user = { name: userName, course: userCourse, faculty: userFaculty };
+    localStorage.setItem('medtests_user', JSON.stringify(user));
+
+    updateGreeting();
+    updateProfile();
+    closeModal('settingsModal');
+  });
+
+  // Логика тестов
   function buildTopicList() {
     const topics = new Set();
-    const showAll = document.getElementById('show-all-toggle')?.checked || false;
+    const showAll = document.getElementById('show-all-toggle').checked;
+    Object.keys(allTests).forEach(subject => {
+      Object.keys(allTests[subject]).forEach(t => topics.add(subject + ": " + t));
+    });
 
-    // свои темы
-    if (allTests[user.course]?.[user.faculty]) {
-      Object.keys(allTests[user.course][user.faculty]).forEach(t => topics.add(t));
-    }
-
-    // все темы, если включено
-    if (showAll) {
-      for (const c in allTests) {
-        for (const f in allTests[c]) {
-          Object.keys(allTests[c][f]).forEach(t => topics.add(t));
-        }
-      }
-    }
-
-    document.getElementById('topics').innerHTML = topics.size === 0 ?
-      '<p class="text-center py-8 text-gray-600">Вопросы не найдены<br><small>Проверьте путь questions/course_X/Факультет/tests.json</small></p>' :
+    document.getElementById('topics').innerHTML = topics.size === 0 ? '<p style="text-align: center; padding: 2rem; color: #4b5563;">Вопросы не найдены</p>' :
       Array.from(topics).sort().map(t => `
-        <label class="flex items-center bg-white/90 p-4 rounded-xl border-2 border-gray-200 cursor-pointer hover:border-purple-400 transition">
-          <input type="checkbox" value="${t}" class="mr-4 h-6 w-6 text-purple-600 rounded">
-          <span class="text-lg">${t}</span>
+        <label class="topic-label">
+          <input type="checkbox" value="${t}" class="topic-checkbox">
+          <span style="font-size: 1.125rem;">${t}</span>
         </label>
       `).join('');
   }
 
   function startTest() {
     const selected = [...document.querySelectorAll('#topics input:checked')].map(el => el.value);
-    if (selected.length === 0) return alert('Выберите хотя бы одну тему!');
+    if (selected.length === 0) return alert('Выберите разделы!');
 
     const customCount = parseInt(document.getElementById('question-count-custom').value) || 0;
 
@@ -227,74 +493,67 @@
       count: customCount > 0 ? customCount : 0,
       timer: document.getElementById('use-timer').checked,
       timerMinutes: parseInt(document.getElementById('timer-minutes').value) || 30,
-      blind: document.getElementById('blind-mode').checked,
-      showAll: document.getElementById('show-all-toggle').checked    // ← ЭТО ГЛАВНОЕ ИСПРАВЛЕНИЕ
+      blind: document.getElementById('blind-mode').checked
     };
 
     currentTest = [];
-
-    for (const c in allTests) {
-      for (const f in allTests[c]) {
-        if (!testSettings.showAll && (c !== user.course || f !== user.faculty)) continue;
-        selected.forEach(topic => {
-          if (allTests[c][f][topic]) {
-            currentTest.push(...allTests[c][f][topic].map(q => ({...q, topic})));
-          }
-        });
+    selected.forEach(fullTopic => {
+      const [subject, topic] = fullTopic.split(": ");
+      if (allTests[subject] && allTests[subject][topic]) {
+        currentTest.push(...allTests[subject][topic].map(q => ({...q, topic})));
       }
-    }
+    });
 
-    if (currentTest.length === 0) return alert('По выбранным темам нет вопросов');
-
+    if (currentTest.length === 0) return alert('Нет вопросов');
     currentTest.sort(() => Math.random() - 0.5);
-    if (testSettings.count > 0 && testSettings.count < currentTest.length) {
-      currentTest = currentTest.slice(0, testSettings.count);
-    }
+    if (testSettings.count > 0 && testSettings.count < currentTest.length) currentTest = currentTest.slice(0, testSettings.count);
 
-    currentIndex = 0; pointsInSession = 0; startTime = Date.now();
-
+    currentIndex = 0; correctInSession = 0; startTime = Date.now();
     if (testSettings.timer) {
-      let s = testSettings.timerMinutes * 60;
+      let seconds = testSettings.timerMinutes * 60;
       timerInterval = setInterval(() => {
-        s--;
-        const m = String(Math.floor(s/60)).padStart(2,'0');
-        const sec = String(s%60).padStart(2,'0');
-        const el = document.getElementById('timer');
-        el.textContent = `${m}:${sec}`;
-        el.className = s < 60 ? 'danger' : s < 300 ? 'warning' : '';
-        if (s <= 0) { clearInterval(timerInterval); endTest(); }
+        seconds--;
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        const timerEl = document.getElementById('timer');
+        timerEl.textContent = `${m}:${s}`;
+        timerEl.style.display = 'block';
+        timerEl.className = seconds < 60 ? 'danger' : seconds < 300 ? 'warning' : '';
+        if (seconds <= 0) { clearInterval(timerInterval); endTest(); }
       }, 1000);
-      document.getElementById('timer').classList.remove('hidden');
     }
-
+    closeModal('testSelectionModal');
     showQuestion();
-    navigate('test');
+    openModal('testModal');
   }
 
   function showQuestion() {
     if (currentIndex >= currentTest.length) { endTest(); return; }
+
     const q = currentTest[currentIndex];
-    document.getElementById('question').innerHTML = q.question || q.q || 'Вопрос не найден';
+    document.getElementById('question').innerHTML = q.question;
     document.getElementById('current-num').textContent = currentIndex + 1;
     document.getElementById('total-num').textContent = currentTest.length;
     document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length) * 100 + '%';
 
-    const multiple = Array.isArray(q.correct);
-    const options = q.options || q.variants || [];
-
-    document.getElementById('options').innerHTML = options.map((opt,i) => `
-      <label class="option flex items-center bg-white/90 p-5 rounded-xl border-2 border-gray-200">
-        <input type="${multiple?'checkbox':'radio'}" name="answer" value="${i}" onchange="toggleAnswerBtn()" class="mr-4 h-6 w-6 text-purple-600 rounded">
-        <span class="text-lg">${opt}</span>
+    const isMultiple = Array.isArray(q.correct);
+    document.getElementById('options').innerHTML = q.options.map((opt, i) => `
+      <label class="option">
+        <input type="${isMultiple ? 'checkbox' : 'radio'}" name="answer" value="${i}"
+               onchange="toggleAnswerBtn()">
+        <span style="font-size: 1.125rem;">${opt}</span>
       </label>
     `).join('');
 
-    document.querySelectorAll('#options label').forEach(l => l.className = 'option flex items-center bg-white/90 p-5 rounded-xl border-2 border-gray-200');
+    document.querySelectorAll('.option').forEach(l => l.style.borderColor = '#e5e7eb');
     document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
-    document.getElementById('answer-btn').disabled = true;
-    document.getElementById('answer-btn').textContent = 'Ответить';
-    document.getElementById('answer-btn').className = 'btn bg-gray-400 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1 cursor-not-allowed';
-    document.getElementById('answer-btn').onclick = checkAnswer;
+
+    const btn = document.getElementById('answer-btn');
+    btn.disabled = true;
+    btn.textContent = 'Ответить';
+    btn.style.background = '#9ca3af';
+    btn.style.cursor = 'not-allowed';
+    btn.onclick = checkAnswer;
   }
 
   function toggleAnswerBtn() {
@@ -302,10 +561,12 @@
     const btn = document.getElementById('answer-btn');
     if (checked) {
       btn.disabled = false;
-      btn.className = 'btn bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1';
+      btn.style.background = 'linear-gradient(135deg, #3b82f6, #6d28d9)';
+      btn.style.cursor = 'pointer';
     } else {
       btn.disabled = true;
-      btn.className = 'btn bg-gray-400 text-white px-8 py-4 rounded-xl text-lg font-semibold flex-1 cursor-not-allowed';
+      btn.style.background = '#9ca3af';
+      btn.style.cursor = 'not-allowed';
     }
   }
 
@@ -313,21 +574,15 @@
     const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
     const q = currentTest[currentIndex];
     const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
-    let score = 0;
-    const hasExtra = selected.some(i => !correct.includes(i));
-    const correctSelected = selected.filter(i => correct.includes(i)).length;
 
-    if (!hasExtra) {
-      if (correctSelected === correct.length) score = 1;
-      else if (correctSelected > correct.length * 0.5) score = 0.5;
-    }
-    pointsInSession += score;
+    if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
 
     if (!testSettings.blind) {
-      document.querySelectorAll('#options label').forEach((l,i) => {
-        const input = l.querySelector('input'); input.disabled = true;
-        if (correct.includes(i)) l.classList.add('bg-green-100','border-green-500');
-        if (selected.includes(i) && !correct.includes(i)) l.classList.add('bg-red-100','border-red-500');
+      document.querySelectorAll('.option').forEach((label, i) => {
+        const input = label.querySelector('input');
+        input.disabled = true;
+        if (correct.includes(i)) label.style.background = '#d1fae5'; label.style.borderColor = '#22c55e';
+        if (selected.includes(i) && !correct.includes(i)) label.style.background = '#fee2e2'; label.style.borderColor = '#ef4444';
       });
     }
 
@@ -338,29 +593,40 @@
 
   function endTest() {
     clearInterval(timerInterval);
-    const maxPoints = currentTest.length;
-    const percent = Math.round((pointsInSession / maxPoints) * 100);
+    const percent = Math.round((correctInSession / currentTest.length) * 100);
     const timeSpent = Math.round((Date.now() - startTime) / 1000);
-    const mins = Math.floor(timeSpent / 60), secs = timeSpent % 60;
+    const mins = Math.floor(timeSpent / 60);
+    const secs = timeSpent % 60;
 
-    document.getElementById('final-score').textContent = pointsInSession.toFixed(1);
-    document.getElementById('final-total').textContent = maxPoints;
+    document.getElementById('final-score').textContent = correctInSession;
+    document.getElementById('final-total').textContent = currentTest.length;
     document.getElementById('final-percent').textContent = percent;
     document.getElementById('time-spent').textContent = `Время: ${mins} мин ${secs} сек`;
 
     stats.tests += 1;
-    stats.points += pointsInSession;
-    stats.totalQuestions += maxPoints;
+    stats.correct += correctInSession;
     localStorage.setItem('medtests_stats', JSON.stringify(stats));
 
-    navigate('results');
+    closeModal('testModal');
+    openModal('resultsModal');
   }
 
+  // Обновление профиля
   function updateProfile() {
+    const info = `Имя: ${userName}<br>Курс: ${userCourse}<br>Факультет: ${userFaculty}`;
+    document.getElementById("profileInfo").innerHTML = info;
     document.getElementById('tests-completed').textContent = stats.tests;
-    document.getElementById('correct-total').textContent = stats.points.toFixed(1);
-    const avg = stats.tests > 0 ? Math.round((stats.points / stats.totalQuestions) * 100) : 0;
+    document.getElementById('correct-total').textContent = stats.correct;
+    const avg = stats.tests > 0 ? Math.round((stats.correct / (stats.tests * (currentTest.length || 1))) * 100) : 0;
     document.getElementById('avg-percent').textContent = avg;
+  }
+
+  // Закрытие модального при клике вне
+  window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      if (event.target === modal) modal.style.display = "none";
+    });
   }
 </script>
 </body>
