@@ -214,27 +214,63 @@
   </div>
 
   <div id="testModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="confirmExit()">&times;</span>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <div style="font-size: 0.875rem; color: #4b5563;">
-          Вопрос <span id="current-num">1</span> / <span id="total-num">0</span>
-        </div>
-        <div id="timer" style="display: none;"></div>
-      </div>
-      <div class="progress-bar">
-        <div id="progress" class="progress-fill" style="width: 0%;"></div>
-      </div>
-      <h3 id="question" style="font-size: 1.25rem; margin-bottom: 1.5rem;"></h3>
-      <div id="options" class="options-container"></div>
+  <div class="modal-content">
+    <span class="close" onclick="confirmExit()">×</span>
 
-      <div class="nav-arrows">
-        <button id="prev-btn" class="nav-btn" style="background: linear-gradient(135deg, #6b7280, #4b5563);" onclick="prevQuestion()" disabled>Назад</button>
-        <button class="nav-btn" style="background: linear-gradient(135deg, #dc2626, #991b1b);" onclick="endTest()">Завершить</button>
-        <button id="answer-btn" class="nav-btn" style="background: linear-gradient(135deg, #3b82f6, #6d28d9);" onclick="submitAnswer()" disabled>Ответить</button>
+    <!-- Верхняя панель: номер вопроса и таймер -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <div style="font-size: 0.875rem; color: #4b5563;">
+        Вопрос <span id="current-num">1</span> / <span id="total-num">0</span>
       </div>
+      <div id="timer" style="display: none; font-weight: 600; color: #dc2626;"></div>
+    </div>
+
+    <!-- Прогресс-бар -->
+    <div class="progress-bar" style="width: 100%; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; margin-bottom: 1.5rem;">
+      <div id="progress" class="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.4s ease;"></div>
+    </div>
+
+    <!-- Сам вопрос (только один раз!) -->
+    <h3 id="question" style="font-size: 1.35rem; margin: 0 0 2rem 0; font-weight: 600; line-height: 1.4;"></h3>
+
+    <!-- Варианты ответа -->
+    <div id="options" class="options-container"></div>
+
+    <!-- Навигация: стрелки + повтор вопроса по центру (опционально) -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 2.5rem 0 1.5rem;">
+      <button
+        onclick="prevQuestion()"
+        id="prev-arrow"
+        style="background:none; border:none; font-size:2.8rem; cursor:pointer; padding:0 0.5rem; opacity:0.6;"
+        disabled>←</button>
+
+      <!-- Если хочешь видеть вопрос ещё раз снизу — можно оставить, но с другим id -->
+      <div style="flex:1; text-align:center; font-size:1.4rem; font-weight:600; color:#1f2937;">
+        <span id="question-bottom"></span>
+      </div>
+
+      <button
+        onclick="nextQuestion()"
+        id="next-arrow"
+        style="background:none; border:none; font-size:2.8rem; cursor:pointer; padding:0 0.5rem; opacity:0.9;">→</button>
+    </div>
+
+    <!-- Кнопки внизу -->
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <button
+        class="nav-btn"
+        style="background: linear-gradient(135deg, #dc2626, #991b1b); flex:1; padding: 1rem; color: white; border: none; border-radius: 0.5rem; font-size: 1.1rem; cursor: pointer;"
+        onclick="endTest()">Завершить</button>
+
+      <button
+        id="answer-btn"
+        class="nav-btn"
+        style="background: linear-gradient(135deg, #3b82f6, #6d28d9); flex:2; padding: 1rem; color: white; border: none; border-radius: 0.5rem; font-size: 1.1rem; cursor: pointer;"
+        onclick="submitAnswer()"
+        disabled>Ответить</button>
     </div>
   </div>
+</div>
 
   <div id="resultsModal" class="modal">
     <div class="modal-content">
@@ -253,6 +289,17 @@
       </button>
     </div>
   </div>
+
+  <div id="exitWarningModal" class="modal">
+  <div class="modal-content" style="text-align:center; max-width:400px;">
+    <h2 style="color:#dc2626; margin-bottom:1rem;">Выйти из теста?</h2>
+    <p style="font-size:1.1rem; color:#666; margin-bottom:2rem;">Весь прогресс будет потерян</p>
+    <div style="display:flex; gap:1rem;">
+      <button onclick="closeModal('exitWarningModal')" style="flex:1; background:#6b7280;">Отмена</button>
+      <button onclick="realExit()" style="flex:1; background:#dc2626;">Выйти</button>
+    </div>
+  </div>
+</div>
 
   <div id="settingsModal" class="modal">
     <div class="modal-content">
@@ -323,11 +370,19 @@
     window.onbeforeunload = () => testInProgress ? "Вы уверены, что хотите покинуть тест?" : null;
 
     function confirmExit() {
-      if (testInProgress && !confirm("Прервать тест? Прогресс будет потерян.")) return;
-      closeModal('testModal');
-      testInProgress = false;
-      clearInterval(timerInterval);
-    }
+  if (testInProgress) {
+    openModal('exitWarningModal');
+  } else {
+    closeModal('testModal');
+  }
+}
+
+function realExit() {
+  testInProgress = false;
+  clearInterval(timerInterval);
+  closeModal('exitWarningModal');
+  closeModal('testModal');
+}
 
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -520,22 +575,38 @@
     }
 
     function submitAnswer() {
-      const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
-      const q = currentTest[currentIndex];
-      const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
+  const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
+  const q = currentTest[currentIndex];
+  const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
 
-      userAnswers[currentIndex] = selected.length ? (selected.length === 1 ? selected[0] : selected) : null;
-      if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
+  userAnswers[currentIndex] = selected.length ? (selected.length === 1 ? selected[0] : selected) : null;
+  if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
 
-      if (!testSettings.blind) {
-        document.querySelectorAll('.option').forEach(label => {
-          const input = label.querySelector('input');
-          const val = +input.value;
-          input.disabled = true;
-          if (correct.includes(val)) { label.style.background = '#d1fae5'; label.style.borderColor = '#22c55e'; }
-          if (input.checked && !correct.includes(val)) { label.style.background = '#fee2e2'; label.style.borderColor = '#ef4444'; }
-        });
-      }
+  if (!testSettings.blind) {
+    document.querySelectorAll('.option').forEach(label => {
+      const input = label.querySelector('input');
+      const val = +input.value;
+      input.disabled = true;
+      if (correct.includes(val)) { label.style.background = '#d1fae5'; label.style.borderColor = '#22c55e'; }
+      if (input.checked && !correct.includes(val)) { label.style.background = '#fee2e2'; label.style.borderColor = '#ef4444'; }
+    });
+  }
+
+  const btn = document.getElementById('answer-btn');
+  btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее';
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.onclick = nextQuestion;
+}
+
+function nextQuestion() {
+  if (currentIndex < currentTest.length - 1) {
+    currentIndex++;
+    showQuestion();
+  } else {
+    endTest();
+  }
+}
 
       const btn = document.getElementById('answer-btn');
       btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее';
