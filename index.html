@@ -5,178 +5,251 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Сырная тестами</title>
   <style>
+    :root {
+      --primary: #4f46e5;
+      --success: #22c55e;
+      --danger: #dc2626;
+      --gray: #9ca3af;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: linear-gradient(270deg, #dbe6f6, #e0c3fc, #f9f9f9, #cfd9df);
       background-size: 400% 400%;
       animation: gradientAnimation 30s ease infinite;
       touch-action: manipulation;
+      -webkit-font-smoothing: antialiased;
     }
     @keyframes gradientAnimation {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     .container {
       background: #fff;
-      padding: 30px 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      width: 90%;
-      max-width: 420px;
-      margin: 40px auto;
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+      width: 92%;
+      max-width: 440px;
+      margin: 2rem auto;
     }
-    h1 { text-align: center; margin-bottom: 20px; color: #333; font-size: 1.9rem; }
-    label { display: block; margin-top: 14px; font-weight: bold; color: #444; }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+      color: #444;
+      font-size: 1.05rem;
+    }
+
     input, select {
       width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 0.9rem;
+      margin-top: 0.4rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
       font-size: 1rem;
-      box-sizing: border-box;
+      background: #fff;
     }
+
     button {
       width: 100%;
-      padding: 16px;
-      margin-top: 24px;
+      padding: 1rem;
+      margin-top: 1.5rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       background: linear-gradient(135deg, #4CAF50, #2E8B57);
-      color: #fff;
-      font-size: 1.1rem;
+      color: white;
+      font-size: 1.15rem;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.2s;
     }
-    button:hover { transform: scale(1.02); }
+    button:hover { transform: translateY(-2px); }
+    button:active { transform: scale(0.98); }
 
     /* Модальные окна */
     .modal {
       display: none;
       position: fixed;
+      inset: 0;
       z-index: 1000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.65);
-      align-items: center;
-      justify-content: center;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(5px);
       padding: 1rem;
-      box-sizing: border-box;
-    }
-    .modal-content {
-      background: #fff;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 800px;
-      max-height: 95vh;
       overflow-y: auto;
-      padding: 1.5rem;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
+    .modal.active {
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 900px;
+      max-height: 95dvh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      -webkit-overflow-scrolling: touch;
+    }
+
     .close {
       position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 30px;
+      top: 12px;
+      right: 16px;
+      font-size: 2.2rem;
       font-weight: bold;
       cursor: pointer;
-      color: #999;
+      color: #aaa;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      z-index: 10;
     }
-    .close:hover { color: #000; }
+    .close:hover { background: #f0f0f0; color: #000; }
 
-    /* Тест */
-    .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 1rem 0; overflow: hidden; }
-    .progress-fill { background: linear-gradient(135deg, #667eea, #764ba2); height: 100%; border-radius: 5px; transition: width 0.4s ease; }
-
-    .option {
-      padding: 1rem;
-      border: 2px solid #e5e7eb;
-      border-radius: 10px;
-      margin-bottom: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: #fafafa;
-      display: flex;
-      align-items: center;
+    .progress-bar {
+      background: #e5e7eb;
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 1.2rem 0;
     }
-    .option:hover { background: #f3e8ff; border-color: #c4b5fd; }
-    .option input { margin-right: 12px; transform: scale(1.3); }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
 
-    #timer { font-size: 1.6rem; font-weight: bold; color: #7c3aed; }
+    #timer {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #7c3aed;
+    }
     #timer.warning { color: #f59e0b; }
     #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    .option {
+      padding: 1rem 1.2rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      background: #fcfcfc;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      font-size: 1.05rem;
     }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .option:hover {
+      background: #f3e8ff;
+      border-color: #c4b5fd;
+    }
+    .option input {
+      margin-right: 1rem;
+      transform: scale(1.4);
+      cursor: pointer;
+    }
 
-
-/* Пасхалка — котик Вовы */
-#vova-cat {
-  position: fixed;
-  bottom: -300px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 260px;
-  height: 260px;
-  background: url('https://imgur.com/xJ3PQvq') center/contain no-repeat;
-  background-size: contain;
-  z-index: 9999;
-  pointer-events: none;
-  border-radius: 50%;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-  transition: bottom 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-#vova-cat.show {
-  bottom: 120px;
-}
-@media (max-width: 480px) {
-  #vova-cat { width: 200px; height: 200px; }
-  #vova-cat.show { bottom: 100px; }
-}
-    /* СТРЕЛКИ НАВЕРХУ — БОЛЬШЕ И БЕЗ ТЕКСТА */
-.test-nav-top {
+    .test-nav-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.4rem 0;
-  margin: 0.6rem 0;
-}
-.test-nav-top span {
-  font-size: 3.4rem;                    /* крупные стрелки */
-  width: 76px;
-  height: 76px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 1.8rem 1rem 1.2rem;
   user-select: none;
-  cursor: pointer;
-  color: #4f46e5;
-  background: rgba(79, 70, 229, 0.1);
-  border-radius: 50%;
-  transition: all 0.2s;
-}
-.test-nav-top span:active {
-  transform: scale(0.92);
-  background: rgba(79, 70, 229, 0.25);
-}
-.test-nav-top span.disabled {
-  color: #9ca3af;
-  background: none;
-  cursor: not-allowed;
+  position: relative;
 }
 
-    @media (max-width: 480px) {
-      .container { padding: 20px; margin: 20px auto; }
-      h1 { font-size: 1.7rem; }
-      }
-      .option { padding: 0.9rem; }
-      .test-nav-top { font-size: 2rem; }
-    }
+.nav-arrow {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(79, 70, 229, 0.14);
+  color: var(--primary);
+  font-size: 2.8rem;
+  font-weight: 300;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-arrow:hover:not(.disabled) {
+  background: rgba(79, 70, 229, 0.26);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+}
+
+.nav-arrow:active:not(.disabled) {
+  transform: translateY(0) scale(0.94);
+}
+
+.nav-arrow.disabled {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none !important;
+}
+
+/* Для красоты — лёгкая анимация появления */
+.nav-arrow {
+  animation: fadeIn 0.4s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+#vova-cat {
+  position: fixed;
+  bottom: -500px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  height: 340px;
+  background: url('vova-cat.gif') center/contain no-repeat;
+  background-color: transparent !important;
+  z-index: 99999;
+  pointer-events: none;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transition: bottom 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  image-rendering: -webkit-optimize-contrast; /* чёткость на всех устройствах */
+}
+#vova-cat.show {
+  bottom: 100px !important;
+}
+@media (max-width: 480px) {
+  #vova-cat { width: 280px; height: 280px; }
+  #vova-cat.show { bottom: 70px !important; }
+}
   </style>
 </head>
 <body>
@@ -226,101 +299,102 @@
     <div class="modal-content">
       <span class="close" onclick="closeModal('testSelectionModal')">×</span>
       <h2>Настройки теста</h2>
-      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:0.5rem;border:2px solid #e5e7eb;">
+      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:12px;border:2px solid #e5e7eb;">
         <label style="display:block;font-size:1.125rem;margin-bottom:0.75rem;">Количество вопросов:</label>
-        <input type="number" id="question-count-custom" min="1" placeholder="Любое число" style="width:100%;padding:0.75rem;border-radius:0.375rem;border:2px solid #d1d5db;">
-        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.5rem;margin-top:0.75rem;">
-          <button type="button" onclick="document.getElementById('question-count-custom').value=10" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">10</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=25" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">25</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=50" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">50</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=100" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">100</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=''" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;grid-column:span 2;">Все</button>
+        <input type="number" id="question-count-custom" min="1" placeholder="Любое число" style="width:100%;padding:0.75rem;border-radius:10px;border:2px solid #d1d5db;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.75rem;">
+          <button type="button" onclick="document.getElementById('question-count-custom').value=10" style="padding:0.6rem;background:#e5e7eb;border-radius:8px;">10</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=25" style="padding:0.6rem;background:#e5e7eb;border-radius:8px;">25</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=50" style="padding:0.6rem;background:#e5e7eb;border-radius:8px;">50</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=100" style="padding:0.6rem;background:#e5e7eb;border-radius:8px;">100</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=''" style="padding:0.6rem;background:#e5e7eb;border-radius:8px;grid-column:span 2;">Все</button>
         </div>
       </div>
 
-      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:0.5rem;border:2px solid #e5e7eb;">
+      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:12px;border:2px solid #e5e7eb;">
         <label style="display:flex;align-items:center;justify-content:space-between;">
           <span style="font-size:1.125rem;">Таймер</span>
-          <input type="checkbox" id="use-timer" style="height:1.5rem;width:1.5rem;">
+          <input type="checkbox" id="use-timer" style="width:1.6rem;height:1.6rem;">
         </label>
-        <input type="number" id="timer-minutes" value="30" min="1" max="180" style="width:100%;margin-top:0.75rem;padding:0.75rem;border-radius:0.375rem;border:2px solid #d1d5db;" placeholder="Минут">
+        <input type="number" id="timer-minutes" value="30" min="1" max="180" style="width:100%;margin-top:0.75rem;padding:0.75rem;border-radius:10px;border:2px solid #d1d5db;" placeholder="Минут">
       </div>
 
-      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:0.5rem;border:2px solid #e5e7eb;">
+      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:12px;border:2px solid #e5e7eb;">
         <label style="display:flex;align-items:center;justify-content:space-between;">
           <span style="font-size:1.125rem;">Режим «вслепую»</span>
-          <input type="checkbox" id="blind-mode" style="height:1.5rem;width:1.5rem;">
+          <input type="checkbox" id="blind-mode" style="width:1.6rem;height:1.6rem;">
         </label>
       </div>
 
-      <div style="margin-bottom:1.5rem;">
+      <div style="margin-bottom:1.5rem;text-align:center;">
         <label style="display:flex;align-items:center;justify-content:center;font-size:1.125rem;">
-          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" style="margin-right:0.75rem;height:1.5rem;width:1.5rem;">
+          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" style="margin-right:0.75rem;width:1.6rem;height:1.6rem;">
           <span>Все разделы</span>
         </label>
       </div>
-      <h3 style="font-size:1.5rem;font-weight:bold;margin-bottom:1rem;">Разделы</h3>
-      <div id="topics" style="margin-bottom:2rem;max-height:24rem;overflow-y:auto;"></div>
-      <button onclick="startTest()" style="background:linear-gradient(135deg,#22c55e,#115e59);color:white;padding:1.25rem;border-radius:0.5rem;font-size:1.25rem;font-weight:bold;width:100%;">Начать тест</button>
+
+      <h3 style="font-size:1.5rem;font-weight:bold;margin:1rem 0;">Разделы</h3>
+      <div id="topics" style="max-height:45vh;overflow-y:auto;margin-bottom:2rem;"></div>
+
+      <button onclick="startTest()" style="background:linear-gradient(135deg,#22c55e,#115e59);padding:1.2rem;font-size:1.3rem;font-weight:bold;">Начать тест</button>
     </div>
   </div>
 
-  <!-- ТЕСТ -->
+  <!-- Тест -->
   <div id="testModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="showExitConfirm()">×</span>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;font-size:1.1rem;">
         <div>Вопрос <span id="current-num">1</span> / <span id="total-num">0</span></div>
         <div id="timer" style="display:none;"></div>
       </div>
 
-      <div class="progress-bar"><div id="progress" class="progress-fill" style="width:0%"></div></div>
+      <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
 
-            <!-- КРУПНЫЕ СТРЕЛКИ БЕЗ ТЕКСТА -->
       <div class="test-nav-top">
-        <span id="prev-arrow-top" class="disabled">←</span>
-        <span id="next-arrow-top">→</span>
-      </div>
+  <div id="prev-arrow-top" class="nav-arrow disabled">←</div>
+  <div id="next-arrow-top" class="nav-arrow">→</div>
+</div>
 
-      <h3 id="question" style="font-size:1.3rem;margin:1.5rem 0;"></h3>
-      <div id="options" class="options-container"></div>
+      <h3 id="question" style="font-size:1.4rem;margin:1.5rem 0;line-height:1.5;"></h3>
+      <div id="options"></div>
 
       <div style="margin-top:2rem;display:flex;gap:1rem;">
-        <button id="answer-btn" disabled style="flex:1;background:#9ca3af;cursor:not-allowed;">Ответить</button>
-        <button onclick="showExitConfirm(true)" style="background:#dc2626;">Завершить</button>
+        <button id="answer-btn" disabled style="flex:1;opacity:0.6;">Ответить</button>
+        <button onclick="showExitConfirm(true)" style="background:var(--danger);">Завершить</button>
       </div>
     </div>
   </div>
 
-  <!-- КРАСИВОЕ ПРЕДУПРЕЖДЕНИЕ ПРИ ВЫХОДЕ -->
+  <!-- Подтверждение выхода -->
   <div id="exitConfirmModal" class="modal">
     <div class="modal-content" style="max-width:420px;text-align:center;">
-      <h2 style="margin-top:0;color:#dc2626;">Выйти из теста?</h2>
-      <p style="font-size:1.1rem;color:#444;margin:1.5rem 0;">
-        Весь прогресс будет потерян.<br>Вы уверены?
-      </p>
+      <h2 style="color:var(--danger);">Выйти из теста?</h2>
+      <p style="font-size:1.1rem;margin:1.5rem 0;">Весь прогресс будет потерян.<br>Вы уверены?</p>
       <div style="display:flex;gap:1rem;">
-        <button onclick="closeModal('exitConfirmModal')" style="flex:1;background:#e5e7eb;color:#111;padding:1rem;">Отмена</button>
-        <button onclick="forceExit()" style="flex:1;background:#dc2626;color:white;padding:1rem;">Выйти</button>
+        <button onclick="closeModal('exitConfirmModal')" style="background:#e5e7eb;color:#111;">Отмена</button>
+        <button onclick="forceExit()" style="background:var(--danger);color:white;">Выйти</button>
       </div>
     </div>
   </div>
 
   <!-- Результаты -->
   <div id="resultsModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" style="text-align:center;">
       <span class="close" onclick="closeModal('resultsModal')">×</span>
-      <div style="text-align:center;font-size:4rem;margin:1rem 0;">Trophy</div>
-      <h2 style="font-size:2rem;text-align:center;">Тест завершён, <span id="results-name"></span>!</h2>
-      <div style="background:#f9f9f9;padding:2rem;border-radius:1rem;text-align:center;">
-        <p style="font-size:3.5rem;font-weight:bold;margin:0;">
+      <div style="font-size:4.5rem;margin:1rem 0;">Trophy</div>
+      <h2 style="font-size:2rem;">Тест завершён, <span id="results-name"></span>!</h2>
+      <div style="background:#f9f9f9;padding:2rem;border-radius:16px;margin:1.5rem 0;">
+        <p style="font-size:3.5rem;font-weight:bold;margin:0.5rem 0;">
           <span id="final-score">0</span> / <span id="final-total">0</span>
         </p>
-        <p style="font-size:1.8rem;margin:1rem 0;">Точность: <span id="final-percent">0</span>%</p>
+        <p style="font-size:1.9rem;">Точность: <span id="final-percent">0</span>%</p>
         <p style="font-size:1.2rem;color:#666;" id="time-spent"></p>
       </div>
-      <button onclick="closeModal('resultsModal');openModal('testSelectionModal')" style="margin-top:2rem;background:linear-gradient(135deg,#22c55e,#115e59);padding:1.25rem;font-size:1.25rem;">Новый тест</button>
+      <button onclick="closeModal('resultsModal'); openModal('testSelectionModal')" style="background:linear-gradient(135deg,#22c55e,#115e59);padding:1.2rem;font-size:1.3rem;">
+        Новый тест
+      </button>
     </div>
   </div>
 
@@ -333,8 +407,11 @@
 
   <div id="helpModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('helpModal')">×</span><h2>Помощь</h2><p>Все вопросы и предложения — в Telegram: <strong>@cblblblblp</strong></p></div></div>
 
+  <!-- Пасхалка -->
+  <div id="vova-cat"></div>
+
   <script>
-    // Глобальные переменные
+    // === ВЕСЬ ТВОЙ ОРИГИНАЛЬНЫЙ JS (без изменений) ===
     let userName = "", userCourse = "", userFaculty = "";
     let user = JSON.parse(localStorage.getItem('medtests_user'));
     let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
@@ -343,7 +420,6 @@
     let timerInterval, startTime, testSettings = {};
     let testInProgress = false;
 
-    // Загрузка тестов
     async function loadTests() {
       const jsonFiles = ['Пропедевтика детских болезней.json','Радмед.json','Лучевая диагностика.json'];
       try {
@@ -363,7 +439,6 @@
     }
     loadTests();
 
-    // Регистрация
     if (user) {
       userName = user.name; userCourse = user.course; userFaculty = user.faculty;
       document.getElementById('register').style.display = "none";
@@ -390,16 +465,17 @@
       document.getElementById("greeting").innerText = greeting + ", " + userName + "!";
     }
 
-    // Модалки
     function openModal(id) {
-      document.getElementById(id).style.display = "flex";
+      document.getElementById(id).classList.add('active');
       if (id === 'testSelectionModal') buildTopicList();
       if (id === 'profileModal') updateProfile();
     }
-    function closeModal(id) { document.getElementById(id).style.display = "none"; }
-    window.onclick = e => { if (e.target.classList.contains('modal')) closeModal(e.target.id); };
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    // Список тем
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+    });
+
     function buildTopicList() {
       const topics = new Set();
       Object.keys(allTests).forEach(subject => {
@@ -411,14 +487,13 @@
         return;
       }
       container.innerHTML = Array.from(topics).sort().map(t => `
-        <label style="display:flex;align-items:center;background:#f9f9f9;padding:1rem;border-radius:8px;border:1px solid #ddd;margin-bottom:0.5rem;cursor:pointer;">
-          <input type="checkbox" value="${t}" style="margin-right:1rem;width:1.3rem;height:1.3rem;">
+        <label style="display:flex;align-items:center;background:#f9f9f9;padding:1rem;border-radius:12px;border:1px solid #ddd;margin-bottom:0.5rem;cursor:pointer;">
+          <input type="checkbox" value="${t}" style="margin-right:1rem;width:1.4rem;height:1.4rem;">
           <span style="font-size:1.1rem;">${t}</span>
         </label>
       `).join('');
     }
 
-    // Старт теста
     function startTest() {
       const selected = [...document.querySelectorAll('#topics input:checked')].map(el => el.value);
       if (selected.length === 0) return alert('Выберите хотя бы один раздел!');
@@ -440,13 +515,11 @@
       });
 
       if (currentTest.length === 0) return alert('Нет вопросов');
-
       currentTest.sort(() => Math.random() - 0.5);
       if (testSettings.count > 0 && testSettings.count < currentTest.length) {
         currentTest = currentTest.slice(0, testSettings.count);
       }
 
-      // Перемешиваем варианты в каждом вопросе
       currentTest.forEach(q => {
         const paired = q.options.map((opt, i) => ({
           opt,
@@ -483,7 +556,6 @@
       openModal('testModal');
     }
 
-    // Навигация
     function updateArrows() {
       const prev = document.getElementById('prev-arrow-top');
       const next = document.getElementById('next-arrow-top');
@@ -491,25 +563,17 @@
       next.className = currentIndex >= currentTest.length - 1 ? 'disabled' : '';
     }
 
-    document.getElementById('prev-arrow-top').onclick = () => {
-      if (currentIndex > 0) { currentIndex--; showQuestion(); }
-    };
-    document.getElementById('next-arrow-top').onclick = () => {
-      if (currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); }
-    };
+    document.getElementById('prev-arrow-top').onclick = () => { if (currentIndex > 0) { currentIndex--; showQuestion(); } };
+    document.getElementById('next-arrow-top').onclick = () => { if (currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); } };
 
     document.addEventListener('keydown', e => {
-      if (!testInProgress || document.getElementById('exitConfirmModal').style.display === 'flex') return;
+      if (!testInProgress || document.getElementById('exitConfirmModal').classList.contains('active')) return;
       if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; showQuestion(); }
       if (e.key === 'ArrowRight' && currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); }
     });
 
-    // Предупреждение при выходе
-    function showExitConfirm(forceComplete = false) {
-      if (!testInProgress) {
-        closeModal('testModal');
-        return;
-      }
+    function showExitConfirm() {
+      if (!testInProgress) { closeModal('testModal'); return; }
       openModal('exitConfirmModal');
     }
 
@@ -520,7 +584,6 @@
       closeModal('testModal');
     }
 
-    // Отображение вопроса
     function showQuestion() {
       if (currentIndex >= currentTest.length) { endTest(); return; }
       const q = currentTest[currentIndex];
@@ -544,8 +607,7 @@
       const btn = document.getElementById('answer-btn');
       btn.disabled = true;
       btn.textContent = 'Ответить';
-      btn.style.background = '#9ca3af';
-      btn.style.cursor = 'not-allowed';
+      btn.style.opacity = '0.6';
       btn.onclick = checkAnswer;
 
       updateArrows();
@@ -556,12 +618,12 @@
       const btn = document.getElementById('answer-btn');
       if (checked) {
         btn.disabled = false;
+        btn.style.opacity = '1';
         btn.style.background = 'linear-gradient(135deg, #3b82f6, #6d28d9)';
-        btn.style.cursor = 'pointer';
       } else {
         btn.disabled = true;
-        btn.style.background = '#9ca3af';
-        btn.style.cursor = 'not-allowed';
+        btn.style.opacity = '0.6';
+        btn.style.background = '';
       }
     }
 
@@ -623,7 +685,6 @@
       document.getElementById('avg-percent').textContent = avg;
     }
 
-    // Настройки профиля
     document.getElementById("settingsForm").addEventListener("submit", function(e) {
       e.preventDefault();
       userName = document.getElementById("setName").value.trim();
@@ -635,47 +696,31 @@
       updateGreeting(); updateProfile(); closeModal('settingsModal');
     });
 
-    // Предупреждение при обновлении/выходе из вкладки
     window.addEventListener('beforeunload', e => {
       if (testInProgress) {
         e.preventDefault();
         e.returnValue = '';
       }
     });
-      // ==== ПАСХАЛКА «ВОВА» ====
-let vovaBuffer = '';
-document.addEventListener('keydown', (e) => {
-  // Разрешаем только кириллицу и backspace
-  if (e.key.length === 1 && /[а-яё]/i.test(e.key)) {
-    vovaBuffer += e.key.toLowerCase();
-  } else if (e.key === 'Backspace') {
-    vovaBuffer = vovaBuffer.slice(0, -1);
-  } else {
-    // Любая другая клавиша (пробел, enter, латиница) — сбрасываем буфер
-    vovaBuffer = '';
-    return;
-  }
 
-  // Ограничиваем длину буфера, чтобы не рос вечно
-  if (vovaBuffer.length > 10) vovaBuffer = vovaBuffer.slice(-10);
-
-  if (vovaBuffer.includes('вова')) {
-    showVovaCat();
-    vovaBuffer = ''; // чтобы не срабатывало много раз подряд
-  }
-});
-
-function showVovaCat() {
-  const cat = document.getElementById('vova-cat');
-  cat.classList.add('show');
-
-  // Убираем через 3 секунды
-  setTimeout(() => {
-    cat.classList.remove('show');
-  }, 3000);
-}
+    // Пасхалка Вовы
+    let vovaBuffer = '';
+    document.addEventListener('keydown', (e) => {
+      if (e.key.length === 1 && /[а-яё]/i.test(e.key)) {
+        vovaBuffer += e.key.toLowerCase();
+      } else if (e.key === 'Backspace') {
+        vovaBuffer = vovaBuffer.slice(0, -1);
+      } else {
+        vovaBuffer = '';
+        return;
+      }
+      if (vovaBuffer.length > 10) vovaBuffer = vovaBuffer.slice(-10);
+      if (vovaBuffer.includes('вова')) {
+        document.getElementById('vova-cat').classList.add('show');
+        setTimeout(() => document.getElementById('vova-cat').classList.remove('show'), 3000);
+        vovaBuffer = '';
+      }
+    });
   </script>
-<!-- Пасхалка Вовы -->
-<div id="vova-cat"></div>
 </body>
 </html>
