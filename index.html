@@ -114,6 +114,30 @@
     }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
 
+
+/* Пасхалка — котик Вовы */
+#vova-cat {
+  position: fixed;
+  bottom: -300px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 260px;
+  background: url('https://imgur.com/xJ3PQvq') center/contain no-repeat;
+  background-size: contain;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 50%;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  transition: bottom 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#vova-cat.show {
+  bottom: 120px;
+}
+@media (max-width: 480px) {
+  #vova-cat { width: 200px; height: 200px; }
+  #vova-cat.show { bottom: 100px; }
+}
     /* СТРЕЛКИ НАВЕРХУ — БОЛЬШЕ И БЕЗ ТЕКСТА */
 .test-nav-top {
   display: flex;
@@ -252,7 +276,7 @@
       </div>
 
       <div class="progress-bar"><div id="progress" class="progress-fill" style="width:0%"></div></div>
-        
+
             <!-- КРУПНЫЕ СТРЕЛКИ БЕЗ ТЕКСТА -->
       <div class="test-nav-top">
         <span id="prev-arrow-top" class="disabled">←</span>
@@ -618,6 +642,40 @@
         e.returnValue = '';
       }
     });
+      // ==== ПАСХАЛКА «ВОВА» ====
+let vovaBuffer = '';
+document.addEventListener('keydown', (e) => {
+  // Разрешаем только кириллицу и backspace
+  if (e.key.length === 1 && /[а-яё]/i.test(e.key)) {
+    vovaBuffer += e.key.toLowerCase();
+  } else if (e.key === 'Backspace') {
+    vovaBuffer = vovaBuffer.slice(0, -1);
+  } else {
+    // Любая другая клавиша (пробел, enter, латиница) — сбрасываем буфер
+    vovaBuffer = '';
+    return;
+  }
+
+  // Ограничиваем длину буфера, чтобы не рос вечно
+  if (vovaBuffer.length > 10) vovaBuffer = vovaBuffer.slice(-10);
+
+  if (vovaBuffer.includes('вова')) {
+    showVovaCat();
+    vovaBuffer = ''; // чтобы не срабатывало много раз подряд
+  }
+});
+
+function showVovaCat() {
+  const cat = document.getElementById('vova-cat');
+  cat.classList.add('show');
+
+  // Убираем через 3 секунды
+  setTimeout(() => {
+    cat.classList.remove('show');
+  }, 3000);
+}
   </script>
+<!-- Пасхалка Вовы -->
+<div id="vova-cat"></div>
 </body>
 </html>
