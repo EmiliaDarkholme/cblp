@@ -9,170 +9,155 @@
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      min-height: 100vh;
       background: linear-gradient(270deg, #dbe6f6, #e0c3fc, #f9f9f9, #cfd9df);
       background-size: 400% 400%;
       animation: gradientAnimation 30s ease infinite;
+      touch-action: manipulation;
     }
     @keyframes gradientAnimation {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .container {
       background: #fff;
-      padding: 30px;
+      padding: 30px 20px;
       border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      width: 400px;
-      margin-top: 40px;
-      animation: fadeIn 1s ease-in-out;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 420px;
+      margin: 40px auto;
     }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-      color: #444;
-    }
-
+    h1 { text-align: center; margin-bottom: 20px; color: #333; font-size: 1.9rem; }
+    label { display: block; margin-top: 14px; font-weight: bold; color: #444; }
     input, select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 6px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      transition: all 0.3s ease;
+      font-size: 1rem;
+      box-sizing: border-box;
     }
-
-    input:focus, select:focus {
-      border-color: #74ebd5;
-      box-shadow: 0 0 8px rgba(116,235,213,0.6);
-      outline: none;
-    }
-
-    /* Единый стиль кнопок */
     button {
       width: 100%;
       padding: 16px;
+      margin-top: 24px;
       border: none;
       border-radius: 8px;
       background: linear-gradient(135deg, #4CAF50, #2E8B57);
       color: #fff;
-      font-size: 16px;
+      font-size: 1.1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+      transition: all 0.2s;
     }
-    button:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      background: linear-gradient(135deg, #45a049, #1e6b43);
-    }
-
-    nav {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
-    }
+    button:hover { transform: scale(1.02); }
 
     /* Модальные окна */
     .modal {
       display: none;
       position: fixed;
       z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.5);
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.65);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
     }
     .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 10px;
-      width: 60%;
-      max-width: 600px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      animation: fadeIn 0.3s ease-in-out;
+      background: #fff;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 95vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     .close {
-      color: #aaa;
-      float: right;
-      font-size: 24px;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 30px;
       font-weight: bold;
       cursor: pointer;
+      color: #999;
     }
-    .close:hover {
-      color: #000;
+    .close:hover { color: #000; }
+
+    /* Тест */
+    .progress-bar { background: #e0e0e0; height: 10px; border-radius: 5px; margin: 1rem 0; overflow: hidden; }
+    .progress-fill { background: linear-gradient(135deg, #667eea, #764ba2); height: 100%; border-radius: 5px; transition: width 0.4s ease; }
+
+    .option {
+      padding: 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
     }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    /* Стили для тестовой системы (адаптированные из index.html без Tailwind) */
-    .page { flex: 1; padding: 1.5rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-    .page::-webkit-scrollbar { display: none; }
-    .page { -ms-overflow-style: none; scrollbar-width: none; }
-
-    .btn { transition: all 0.2s; }
-    .btn:active { transform: scale(0.95); }
-
-    .option { transition: all 0.2s; cursor: pointer; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 0.5rem; }
-    .option:hover { background-color: #f3e8ff; }
-    .option:active { background-color: #e0d4ff; }
+    .option:hover { background: #f3e8ff; border-color: #c4b5fd; }
+    .option input { margin-right: 12px; transform: scale(1.3); }
 
     #timer { font-size: 1.6rem; font-weight: bold; color: #7c3aed; }
     #timer.warning { color: #f59e0b; }
     #timer.danger { color: #dc2626; animation: pulse 1s infinite; }
+    }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
 
-    /* Уменьшаем отступы и шрифты на маленьких экранах */
+    /* СТРЕЛКИ НАВЕРХУ — БОЛЬШЕ И БЕЗ ТЕКСТА */
+.test-nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 0;
+  margin: 0.6rem 0;
+}
+.test-nav-top span {
+  font-size: 3.4rem;                    /* крупные стрелки */
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.1);
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.test-nav-top span:active {
+  transform: scale(0.92);
+  background: rgba(79, 70, 229, 0.25);
+}
+.test-nav-top span.disabled {
+  color: #9ca3af;
+  background: none;
+  cursor: not-allowed;
+}
+
     @media (max-width: 480px) {
-      .page { padding: 1rem; }
-      h1 { font-size: 1.8rem; }
-      h2 { font-size: 1.5rem; }
-      h3 { font-size: 1.2rem; }
-      .text-xl { font-size: 1.1rem; }
-      .text-lg { font-size: 1rem; }
-      .text-6xl { font-size: 3.5rem; }
-      .text-3xl { font-size: 1.8rem; }
-      .py-4 { padding-top: 0.8rem; padding-bottom: 0.8rem; }
-      .px-8 { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .space-y-4 > * + * { margin-top: 0.75rem; }
+      .container { padding: 20px; margin: 20px auto; }
+      h1 { font-size: 1.7rem; }
+      }
+      .option { padding: 0.9rem; }
+      .test-nav-top { font-size: 2rem; }
     }
-
-    /* Прогресс-бар */
-    .progress-bar { background: #ddd; height: 8px; border-radius: 4px; margin-bottom: 1rem; }
-    .progress-fill { background: linear-gradient(135deg, #667eea, #764ba2); height: 100%; border-radius: 4px; transition: width 0.3s; }
-
-    /* Опции для теста */
-    .options-container { margin-bottom: 1rem; }
-    .result-icon { font-size: 4rem; margin-bottom: 1rem; }
-
-    /* Темы и чекбоксы */
-    .topic-label { display: flex; align-items: center; background: #f9f9f9; padding: 1rem; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 0.5rem; cursor: pointer; }
-    .topic-label:hover { border-color: #74ebd5; }
-    .topic-checkbox { margin-right: 1rem; width: 1.2rem; height: 1.2rem; }
   </style>
 </head>
 <body>
-  <!-- Регистрация (из index.html) -->
+
+  <!-- Регистрация -->
   <div class="container" id="register">
     <h1>Регистрация</h1>
     <form id="registerForm">
@@ -200,10 +185,10 @@
     </form>
   </div>
 
-  <!-- Главное меню (из index.html) -->
+  <!-- Меню -->
   <div class="container" id="menu" style="display:none;">
     <h1 id="greeting">Добро пожаловать!</h1>
-    <nav>
+    <nav style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
       <button onclick="openModal('testSelectionModal')">Начать тест</button>
       <button onclick="openModal('settingsModal')">Настройки</button>
       <button onclick="openModal('profileModal')">Профиль</button>
@@ -212,423 +197,427 @@
     </nav>
   </div>
 
-  <!-- Модальное для настроек теста (адаптировано из index.html) -->
+  <!-- Выбор теста -->
   <div id="testSelectionModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal('testSelectionModal')">&times;</span>
+      <span class="close" onclick="closeModal('testSelectionModal')">×</span>
       <h2>Настройки теста</h2>
-
-      <div style="margin-bottom: 1.5rem; background: white; padding: 1.25rem; border-radius: 0.5rem; border: 2px solid #e5e7eb;">
-        <label style="display: block; font-size: 1.125rem; margin-bottom: 0.75rem;">Количество вопросов:</label>
-        <input type="number" id="question-count-custom" min="1" placeholder="Любое число" style="width: 100%; padding: 0.75rem; border-radius: 0.375rem; border: 2px solid #d1d5db;">
-        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin-top: 0.75rem;">
-          <button onclick="document.getElementById('question-count-custom').value=10" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">10</button>
-          <button onclick="document.getElementById('question-count-custom').value=25" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">25</button>
-          <button onclick="document.getElementById('question-count-custom').value=50" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">50</button>
-          <button onclick="document.getElementById('question-count-custom').value=100" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;">100</button>
-          <button onclick="document.getElementById('question-count-custom').value=''" style="background: #e5e7eb; padding: 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; grid-column: span 2;">Все</button>
+      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:0.5rem;border:2px solid #e5e7eb;">
+        <label style="display:block;font-size:1.125rem;margin-bottom:0.75rem;">Количество вопросов:</label>
+        <input type="number" id="question-count-custom" min="1" placeholder="Любое число" style="width:100%;padding:0.75rem;border-radius:0.375rem;border:2px solid #d1d5db;">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.5rem;margin-top:0.75rem;">
+          <button type="button" onclick="document.getElementById('question-count-custom').value=10" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">10</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=25" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">25</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=50" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">50</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=100" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;">100</button>
+          <button type="button" onclick="document.getElementById('question-count-custom').value=''" style="background:#e5e7eb;padding:0.5rem;border-radius:0.25rem;grid-column:span 2;">Все</button>
         </div>
       </div>
 
-      <div style="margin-bottom: 1.5rem; background: white; padding: 1.25rem; border-radius: 0.5rem; border: 2px solid #e5e7eb;">
-        <label style="display: flex; align-items: center; justify-content: space-between;">
-          <span style="font-size: 1.125rem;">Таймер</span>
-          <input type="checkbox" id="use-timer" style="height: 1.5rem; width: 1.5rem;">
+      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:0.5rem;border:2px solid #e5e7eb;">
+        <label style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:1.125rem;">Таймер</span>
+          <input type="checkbox" id="use-timer" style="height:1.5rem;width:1.5rem;">
         </label>
-        <input type="number" id="timer-minutes" value="30" min="1" max="180" style="width: 100%; margin-top: 0.75rem; padding: 0.75rem; border-radius: 0.375rem; border: 2px solid #d1d5db;" placeholder="Минут">
+        <input type="number" id="timer-minutes" value="30" min="1" max="180" style="width:100%;margin-top:0.75rem;padding:0.75rem;border-radius:0.375rem;border:2px solid #d1d5db;" placeholder="Минут">
       </div>
 
-      <div style="margin-bottom: 1.5rem; background: white; padding: 1.25rem; border-radius: 0.5rem; border: 2px solid #e5e7eb;">
-        <label style="display: flex; align-items: center; justify-content: space-between;">
-          <span style="font-size: 1.125rem;">Режим «вслепую»</span>
-          <input type="checkbox" id="blind-mode" style="height: 1.5rem; width: 1.5rem;">
+      <div style="margin-bottom:1.5rem;background:white;padding:1.25rem;border-radius:0.5rem;border:2px solid #e5e7eb;">
+        <label style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:1.125rem;">Режим «вслепую»</span>
+          <input type="checkbox" id="blind-mode" style="height:1.5rem;width:1.5rem;">
         </label>
       </div>
 
-      <div style="margin-bottom: 1.5rem;">
-        <label style="display: flex; align-items: center; justify-content: center; font-size: 1.125rem;">
-          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" style="margin-right: 0.75rem; height: 1.5rem; width: 1.5rem;">
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:flex;align-items:center;justify-content:center;font-size:1.125rem;">
+          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()" style="margin-right:0.75rem;height:1.5rem;width:1.5rem;">
           <span>Все разделы</span>
         </label>
       </div>
-
-      <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">Разделы</h3>
-      <div id="topics" style="margin-bottom: 2rem; max-height: 24rem; overflow-y: auto;"></div>
-
-      <button onclick="startTest()" style="background: linear-gradient(135deg, #22c55e, #115e59); color: white; padding: 1.25rem; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; width: 100%;">
-        Начать тест
-      </button>
+      <h3 style="font-size:1.5rem;font-weight:bold;margin-bottom:1rem;">Разделы</h3>
+      <div id="topics" style="margin-bottom:2rem;max-height:24rem;overflow-y:auto;"></div>
+      <button onclick="startTest()" style="background:linear-gradient(135deg,#22c55e,#115e59);color:white;padding:1.25rem;border-radius:0.5rem;font-size:1.25rem;font-weight:bold;width:100%;">Начать тест</button>
     </div>
   </div>
 
-  <!-- Модальное для теста (адаптировано из index.html) -->
+  <!-- ТЕСТ -->
   <div id="testModal" class="modal">
-    <div class="modal-content" style="width: 80%; max-width: 800px;">
-      <span class="close" onclick="closeModal('testModal')">&times;</span>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <div style="font-size: 0.875rem; color: #4b5563;">
-          Вопрос <span id="current-num">1</span> / <span id="total-num">0</span>
-        </div>
-        <div id="timer" style="display: none;"></div>
+    <div class="modal-content">
+      <span class="close" onclick="showExitConfirm()">×</span>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <div>Вопрос <span id="current-num">1</span> / <span id="total-num">0</span></div>
+        <div id="timer" style="display:none;"></div>
       </div>
-      <div class="progress-bar">
-        <div id="progress" class="progress-fill" style="width: 0%;"></div>
+
+      <div class="progress-bar"><div id="progress" class="progress-fill" style="width:0%"></div></div>
+        
+            <!-- КРУПНЫЕ СТРЕЛКИ БЕЗ ТЕКСТА -->
+      <div class="test-nav-top">
+        <span id="prev-arrow-top" class="disabled">←</span>
+        <span id="next-arrow-top">→</span>
       </div>
-      <h3 id="question" style="font-size: 1.25rem; font-weight: medium; color: #1f2937; margin-bottom: 1.5rem;"></h3>
+
+      <h3 id="question" style="font-size:1.3rem;margin:1.5rem 0;"></h3>
       <div id="options" class="options-container"></div>
-      <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
-        <button id="answer-btn" onclick="checkAnswer()" disabled style="background: #9ca3af; color: white; padding: 1rem; border-radius: 0.5rem; font-size: 1.125rem; font-weight: semibold; flex: 1; cursor: not-allowed;">
-          Ответить
-        </button>
-        <button onclick="endTest()" style="background: #dc2626; color: white; padding: 1rem 1.5rem; border-radius: 0.5rem; font-size: 1.125rem; font-weight: semibold;">
-          Завершить
-        </button>
+
+      <div style="margin-top:2rem;display:flex;gap:1rem;">
+        <button id="answer-btn" disabled style="flex:1;background:#9ca3af;cursor:not-allowed;">Ответить</button>
+        <button onclick="showExitConfirm(true)" style="background:#dc2626;">Завершить</button>
       </div>
     </div>
   </div>
 
-  <!-- Модальное для результатов (адаптировано из index.html) -->
+  <!-- КРАСИВОЕ ПРЕДУПРЕЖДЕНИЕ ПРИ ВЫХОДЕ -->
+  <div id="exitConfirmModal" class="modal">
+    <div class="modal-content" style="max-width:420px;text-align:center;">
+      <h2 style="margin-top:0;color:#dc2626;">Выйти из теста?</h2>
+      <p style="font-size:1.1rem;color:#444;margin:1.5rem 0;">
+        Весь прогресс будет потерян.<br>Вы уверены?
+      </p>
+      <div style="display:flex;gap:1rem;">
+        <button onclick="closeModal('exitConfirmModal')" style="flex:1;background:#e5e7eb;color:#111;padding:1rem;">Отмена</button>
+        <button onclick="forceExit()" style="flex:1;background:#dc2626;color:white;padding:1rem;">Выйти</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Результаты -->
   <div id="resultsModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal('resultsModal')">&times;</span>
-      <div class="result-icon">&#x1F3C6;</div>
-      <h2 style="font-size: 2.25rem; font-weight: bold; color: #1f2937; margin-bottom: 1.5rem;">Тест завершён, <span id="results-name"></span>!</h2>
-      <div style="background: white; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-        <p style="font-size: 3.75rem; font-weight: bold; color: transparent; background-clip: text; background-image: linear-gradient(to right, #2563eb, #7c3aed); margin-bottom: 1rem;">
+      <span class="close" onclick="closeModal('resultsModal')">×</span>
+      <div style="text-align:center;font-size:4rem;margin:1rem 0;">Trophy</div>
+      <h2 style="font-size:2rem;text-align:center;">Тест завершён, <span id="results-name"></span>!</h2>
+      <div style="background:#f9f9f9;padding:2rem;border-radius:1rem;text-align:center;">
+        <p style="font-size:3.5rem;font-weight:bold;margin:0;">
           <span id="final-score">0</span> / <span id="final-total">0</span>
         </p>
-        <p style="font-size: 1.875rem; margin-bottom: 1rem;">Точность: <span id="final-percent">0</span>%</p>
-        <p style="font-size: 1.25rem; color: #4b5563;" id="time-spent"></p>
+        <p style="font-size:1.8rem;margin:1rem 0;">Точность: <span id="final-percent">0</span>%</p>
+        <p style="font-size:1.2rem;color:#666;" id="time-spent"></p>
       </div>
-      <button onclick="closeModal('resultsModal'); openModal('testSelectionModal')" style="background: linear-gradient(135deg, #22c55e, #115e59); color: white; padding: 1.25rem; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; width: 100%; margin-top: 2rem;">
-        Новый тест
-      </button>
+      <button onclick="closeModal('resultsModal');openModal('testSelectionModal')" style="margin-top:2rem;background:linear-gradient(135deg,#22c55e,#115e59);padding:1.25rem;font-size:1.25rem;">Новый тест</button>
     </div>
   </div>
 
-  <!-- Модальное для настроек (из index.html, адаптировано) -->
-  <div id="settingsModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('settingsModal')">&times;</span>
-      <h2>Настройки</h2>
-      <form id="settingsForm">
-        <label>Имя:</label>
-        <input type="text" id="setName">
-        <label>Курс:</label>
-        <select id="setCourse">
-          <option value="1">1 курс</option>
-          <option value="2">2 курс</option>
-          <option value="3">3 курс</option>
-          <option value="4">4 курс</option>
-          <option value="5">5 курс</option>
-          <option value="6">6 курс</option>
-        </select>
-        <label>Факультет:</label>
-        <select id="setFaculty">
-          <option value="Лечебный">Лечебный</option>
-          <option value="Педиатрический">Педиатрический</option>
-          <option value="Медико-психологический">Медико-психологический</option>
-          <option value="Медико-диагностический">Медико-диагностический</option>
-        </select>
-        <button type="submit">Сохранить</button>
-      </form>
-    </div>
-  </div>
+  <!-- Остальные модалки -->
+  <div id="settingsModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('settingsModal')">×</span><h2>Настройки</h2><form id="settingsForm"><label>Имя:</label><input type="text" id="setName"><label>Курс:</label><select id="setCourse"><option value="1">1 курс</option><option value="2">2 курс</option><option value="3">3 курс</option><option value="4">4 курс</option><option value="5">5 курс</option><option value="6">6 курс</option></select><label>Факультет:</label><select id="setFaculty"><option value="Лечебный">Лечебный</option><option value="Педиатрический">Педиатрический</option><option value="Медико-психологический">Медико-психологический</option><option value="Медико-диагностический">Медико-диагностический</option></select><button type="submit">Сохранить</button></form></div></div>
 
-  <!-- Модальное для профиля (из index.html + статистика из index.html) -->
-  <div id="profileModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('profileModal')">&times;</span>
-      <h2>Профиль</h2>
-      <p id="profileInfo"></p>
-      <hr style="margin: 1rem 0;">
-      <p>Тестов пройдено: <strong id="tests-completed">0</strong></p>
-      <p>Правильных ответов: <strong id="correct-total">0</strong></p>
-      <p>Средняя точность: <strong id="avg-percent">0</strong>%</p>
-    </div>
-  </div>
+  <div id="profileModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('profileModal')">×</span><h2>Профиль</h2><p id="profileInfo"></p><hr><p>Тестов пройдено: <strong id="tests-completed">0</strong></p><p>Правильных ответов: <strong id="correct-total">0</strong></p><p>Средняя точность: <strong id="avg-percent">0</strong>%</p></div></div>
 
-  <!-- Модальное "О нас" (из index.html) -->
-  <div id="aboutModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('aboutModal')">&times;</span>
-      <h2>О нас</h2>
-      <p>Этот проект создан для удобного прохождения учебных тестов студентами медицинских факультетов. Здесь можно тренироваться, отслеживать прогресс и улучшать знания.</p>
-    </div>
-  </div>
+  <div id="aboutModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('aboutModal')">×</span><h2>О нас</h2><p>Этот проект создан для удобного прохождения учебных тестов студентами медицинских факультетов.</p></div></div>
 
-  <!-- Модальное "Помощь" (из index.html) -->
-  <div id="helpModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('helpModal')">&times;</span>
-      <h2>Помощь</h2>
-      <p>Все вопросы, предложения и проблемы пишите в Telegram: <strong>@cblblblblp</strong>.</p>
-    </div>
-  </div>
+  <div id="helpModal" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('helpModal')">×</span><h2>Помощь</h2><p>Все вопросы и предложения — в Telegram: <strong>@cblblblblp</strong></p></div></div>
 
   <script>
-  // Данные пользователя и статистика
-  let userName = "", userCourse = "", userFaculty = "";
-  let user = JSON.parse(localStorage.getItem('medtests_user'));
-  let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
-  let allTests = {}; // Будет заполнено после загрузки JSON
-  let currentTest = [], currentIndex = 0, correctInSession = 0;
-  let timerInterval, startTime, testSettings = {};
+    // Глобальные переменные
+    let userName = "", userCourse = "", userFaculty = "";
+    let user = JSON.parse(localStorage.getItem('medtests_user'));
+    let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
+    let allTests = {};
+    let currentTest = [], currentIndex = 0, correctInSession = 0;
+    let timerInterval, startTime, testSettings = {};
+    let testInProgress = false;
 
-  if (user) {
-    userName = user.name; userCourse = user.course; userFaculty = user.faculty;
-    document.getElementById('register').style.display = "none";
-    document.getElementById('menu').style.display = "block";
-    updateGreeting();
-    updateProfile();
-  }
-
-  // Загрузка JSON-файлов динамически
-  async function loadTests() {
-    const jsonFiles = [
-      'Пропедевтика детских болезней.json',
-      'Радмед.json',
-      'Лучевая диагностика.json'
-      // Добавьте больше файлов, если есть, напр. 'Другой раздел.json'
-    ];
-
-    try {
-      for (const file of jsonFiles) {
-        const response = await fetch(file);
-        if (!response.ok) throw new Error(`Ошибка загрузки ${file}`);
-        const data = await response.json();
-        const subject = file.replace('.json', ''); // Имя subject из имени файла
-        allTests[subject] = data; // Добавляем подразделы
+    // Загрузка тестов
+    async function loadTests() {
+      const jsonFiles = ['Пропедевтика детских болезней.json','Радмед.json','Лучевая диагностика.json'];
+      try {
+        for (const file of jsonFiles) {
+          const response = await fetch(file);
+          if (!response.ok) throw new Error(`Ошибка загрузки ${file}`);
+          const data = await response.json();
+          const subject = file.replace('.json', '');
+          allTests[subject] = data;
+        }
+        console.log('Тесты загружены');
+        buildTopicList();
+      } catch (e) {
+        console.error(e);
+        alert('Не удалось загрузить тесты. Проверьте наличие JSON-файлов.');
       }
-      console.log('Все тесты загружены:', allTests); // Для дебага в консоли
-    } catch (error) {
-      console.error('Ошибка загрузки JSON:', error);
-      alert('Ошибка загрузки тестов. Проверьте файлы и консоль браузера.');
     }
-  }
+    loadTests();
 
-  // Вызываем загрузку при старте страницы
-  loadTests();
+    // Регистрация
+    if (user) {
+      userName = user.name; userCourse = user.course; userFaculty = user.faculty;
+      document.getElementById('register').style.display = "none";
+      document.getElementById('menu').style.display = "block";
+      updateGreeting(); updateProfile();
+    }
 
-  // Регистрация
-  document.getElementById("registerForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    userName = document.getElementById("name").value.trim();
-    userCourse = document.getElementById("course").value;
-    userFaculty = document.getElementById("faculty").value;
-    if (!userName || !userCourse || !userFaculty) return;
-
-    user = { name: userName, course: userCourse, faculty: userFaculty };
-    localStorage.setItem('medtests_user', JSON.stringify(user));
-
-    document.getElementById("register").style.display = "none";
-    document.getElementById("menu").style.display = "block";
-
-    updateGreeting();
-
-    document.getElementById("setName").value = userName;
-    document.getElementById("setCourse").value = userCourse;
-    document.getElementById("setFaculty").value = userFaculty;
-    updateProfile();
-  });
-
-  function updateGreeting() {
-    const hour = new Date().getHours();
-    let greeting = hour < 12 ? "Доброе утро" : hour < 18 ? "Добрый день" : hour < 23 ? "Добрый вечер" : "Доброй ночи";
-    document.getElementById("greeting").innerText = greeting + ", " + userName + "!";
-  }
-
-  // Функции модальных
-  function openModal(id) {
-    document.getElementById(id).style.display = "block";
-    if (id === 'testSelectionModal') buildTopicList();
-    if (id === 'profileModal') updateProfile();
-  }
-  function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-  }
-
-  // Сохранение настроек
-  document.getElementById("settingsForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const newName = document.getElementById("setName").value.trim();
-    const newCourse = document.getElementById("setCourse").value;
-    const newFaculty = document.getElementById("setFaculty").value;
-    if (!newName || !newCourse || !newFaculty) return;
-
-    userName = newName;
-    userCourse = newCourse;
-    userFaculty = newFaculty;
-    user = { name: userName, course: userCourse, faculty: userFaculty };
-    localStorage.setItem('medtests_user', JSON.stringify(user));
-
-    updateGreeting();
-    updateProfile();
-    closeModal('settingsModal');
-  });
-
-  // Логика тестов
-  function buildTopicList() {
-    const topics = new Set();
-    const showAll = document.getElementById('show-all-toggle').checked;
-    Object.keys(allTests).forEach(subject => {
-      Object.keys(allTests[subject]).forEach(t => topics.add(subject + ": " + t));
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      userName = document.getElementById("name").value.trim();
+      userCourse = document.getElementById("course").value;
+      userFaculty = document.getElementById("faculty").value;
+      if (!userName || !userCourse || !userFaculty) return;
+      user = { name: userName, course: userCourse, faculty: userFaculty };
+      localStorage.setItem('medtests_user', JSON.stringify(user));
+      document.getElementById("register").style.display = "none";
+      document.getElementById("menu").style.display = "block";
+      updateGreeting(); updateProfile();
     });
 
-    document.getElementById('topics').innerHTML = topics.size === 0 ? '<p style="text-align: center; padding: 2rem; color: #4b5563;">Вопросы не найдены</p>' :
-      Array.from(topics).sort().map(t => `
-        <label class="topic-label">
-          <input type="checkbox" value="${t}" class="topic-checkbox">
-          <span style="font-size: 1.125rem;">${t}</span>
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      const greeting = hour < 12 ? "Доброе утро" : hour < 18 ? "Добрый день" : hour < 23 ? "Добрый вечер" : "Доброй ночи";
+      document.getElementById("greeting").innerText = greeting + ", " + userName + "!";
+    }
+
+    // Модалки
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+      if (id === 'testSelectionModal') buildTopicList();
+      if (id === 'profileModal') updateProfile();
+    }
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    window.onclick = e => { if (e.target.classList.contains('modal')) closeModal(e.target.id); };
+
+    // Список тем
+    function buildTopicList() {
+      const topics = new Set();
+      Object.keys(allTests).forEach(subject => {
+        Object.keys(allTests[subject]).forEach(t => topics.add(subject + ": " + t));
+      });
+      const container = document.getElementById('topics');
+      if (topics.size === 0) {
+        container.innerHTML = '<p style="text-align:center;padding:2rem;color:#666;">Вопросы не найдены</p>';
+        return;
+      }
+      container.innerHTML = Array.from(topics).sort().map(t => `
+        <label style="display:flex;align-items:center;background:#f9f9f9;padding:1rem;border-radius:8px;border:1px solid #ddd;margin-bottom:0.5rem;cursor:pointer;">
+          <input type="checkbox" value="${t}" style="margin-right:1rem;width:1.3rem;height:1.3rem;">
+          <span style="font-size:1.1rem;">${t}</span>
         </label>
       `).join('');
-  }
+    }
 
-  function startTest() {
-    const selected = [...document.querySelectorAll('#topics input:checked')].map(el => el.value);
-    if (selected.length === 0) return alert('Выберите разделы!');
+    // Старт теста
+    function startTest() {
+      const selected = [...document.querySelectorAll('#topics input:checked')].map(el => el.value);
+      if (selected.length === 0) return alert('Выберите хотя бы один раздел!');
 
-    const customCount = parseInt(document.getElementById('question-count-custom').value) || 0;
+      const customCount = parseInt(document.getElementById('question-count-custom').value) || 0;
+      testSettings = {
+        count: customCount > 0 ? customCount : 0,
+        timer: document.getElementById('use-timer').checked,
+        timerMinutes: parseInt(document.getElementById('timer-minutes').value) || 30,
+        blind: document.getElementById('blind-mode').checked
+      };
 
-    testSettings = {
-      count: customCount > 0 ? customCount : 0,
-      timer: document.getElementById('use-timer').checked,
-      timerMinutes: parseInt(document.getElementById('timer-minutes').value) || 30,
-      blind: document.getElementById('blind-mode').checked
+      currentTest = [];
+      selected.forEach(fullTopic => {
+        const [subject, topic] = fullTopic.split(": ");
+        if (allTests[subject] && allTests[subject][topic]) {
+          currentTest.push(...allTests[subject][topic].map(q => ({...q, topic})));
+        }
+      });
+
+      if (currentTest.length === 0) return alert('Нет вопросов');
+
+      currentTest.sort(() => Math.random() - 0.5);
+      if (testSettings.count > 0 && testSettings.count < currentTest.length) {
+        currentTest = currentTest.slice(0, testSettings.count);
+      }
+
+      // Перемешиваем варианты в каждом вопросе
+      currentTest.forEach(q => {
+        const paired = q.options.map((opt, i) => ({
+          opt,
+          correct: Array.isArray(q.correct) ? q.correct.includes(i) : q.correct === i
+        }));
+        paired.sort(() => Math.random() - 0.5);
+        q.options = paired.map(p => p.opt);
+        if (Array.isArray(q.correct)) {
+          q.correct = paired.map((p, idx) => p.correct ? idx : -1).filter(x => x !== -1);
+        } else {
+          q.correct = paired.findIndex(p => p.correct);
+        }
+      });
+
+      currentIndex = 0; correctInSession = 0; startTime = Date.now();
+      testInProgress = true;
+
+      if (testSettings.timer) {
+        let seconds = testSettings.timerMinutes * 60;
+        timerInterval = setInterval(() => {
+          seconds--;
+          const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const s = String(seconds % 60).padStart(2, '0');
+          const el = document.getElementById('timer');
+          el.textContent = `${m}:${s}`;
+          el.style.display = 'block';
+          el.className = seconds < 60 ? 'danger' : seconds < 300 ? 'warning' : '';
+          if (seconds <= 0) { clearInterval(timerInterval); endTest(); }
+        }, 1000);
+      }
+
+      closeModal('testSelectionModal');
+      showQuestion();
+      openModal('testModal');
+    }
+
+    // Навигация
+    function updateArrows() {
+      const prev = document.getElementById('prev-arrow-top');
+      const next = document.getElementById('next-arrow-top');
+      prev.className = currentIndex === 0 ? 'disabled' : '';
+      next.className = currentIndex >= currentTest.length - 1 ? 'disabled' : '';
+    }
+
+    document.getElementById('prev-arrow-top').onclick = () => {
+      if (currentIndex > 0) { currentIndex--; showQuestion(); }
+    };
+    document.getElementById('next-arrow-top').onclick = () => {
+      if (currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); }
     };
 
-    currentTest = [];
-    selected.forEach(fullTopic => {
-      const [subject, topic] = fullTopic.split(": ");
-      if (allTests[subject] && allTests[subject][topic]) {
-        currentTest.push(...allTests[subject][topic].map(q => ({...q, topic})));
-      }
+    document.addEventListener('keydown', e => {
+      if (!testInProgress || document.getElementById('exitConfirmModal').style.display === 'flex') return;
+      if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; showQuestion(); }
+      if (e.key === 'ArrowRight' && currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); }
     });
 
-    if (currentTest.length === 0) return alert('Нет вопросов');
-    currentTest.sort(() => Math.random() - 0.5);
-    if (testSettings.count > 0 && testSettings.count < currentTest.length) currentTest = currentTest.slice(0, testSettings.count);
-
-    currentIndex = 0; correctInSession = 0; startTime = Date.now();
-    if (testSettings.timer) {
-      let seconds = testSettings.timerMinutes * 60;
-      timerInterval = setInterval(() => {
-        seconds--;
-        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-        const s = String(seconds % 60).padStart(2, '0');
-        const timerEl = document.getElementById('timer');
-        timerEl.textContent = `${m}:${s}`;
-        timerEl.style.display = 'block';
-        timerEl.className = seconds < 60 ? 'danger' : seconds < 300 ? 'warning' : '';
-        if (seconds <= 0) { clearInterval(timerInterval); endTest(); }
-      }, 1000);
+    // Предупреждение при выходе
+    function showExitConfirm(forceComplete = false) {
+      if (!testInProgress) {
+        closeModal('testModal');
+        return;
+      }
+      openModal('exitConfirmModal');
     }
-    closeModal('testSelectionModal');
-    showQuestion();
-    openModal('testModal');
-  }
 
-  function showQuestion() {
-    if (currentIndex >= currentTest.length) { endTest(); return; }
+    function forceExit() {
+      testInProgress = false;
+      clearInterval(timerInterval);
+      closeModal('exitConfirmModal');
+      closeModal('testModal');
+    }
 
-    const q = currentTest[currentIndex];
-    document.getElementById('question').innerHTML = q.question;
-    document.getElementById('current-num').textContent = currentIndex + 1;
-    document.getElementById('total-num').textContent = currentTest.length;
-    document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length) * 100 + '%';
+    // Отображение вопроса
+    function showQuestion() {
+      if (currentIndex >= currentTest.length) { endTest(); return; }
+      const q = currentTest[currentIndex];
 
-    const isMultiple = Array.isArray(q.correct);
-    document.getElementById('options').innerHTML = q.options.map((opt, i) => `
-      <label class="option">
-        <input type="${isMultiple ? 'checkbox' : 'radio'}" name="answer" value="${i}"
-               onchange="toggleAnswerBtn()">
-        <span style="font-size: 1.125rem;">${opt}</span>
-      </label>
-    `).join('');
+      document.getElementById('question').innerHTML = q.question;
+      document.getElementById('current-num').textContent = currentIndex + 1;
+      document.getElementById('total-num').textContent = currentTest.length;
+      document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length * 100) + '%';
 
-    document.querySelectorAll('.option').forEach(l => l.style.borderColor = '#e5e7eb');
-    document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
+      const isMultiple = Array.isArray(q.correct);
+      document.getElementById('options').innerHTML = q.options.map((opt, i) => `
+        <label class="option">
+          <input type="${isMultiple ? 'checkbox' : 'radio'}" name="answer" value="${i}" onchange="toggleAnswerBtn()">
+          <span>${opt}</span>
+        </label>
+      `).join('');
 
-    const btn = document.getElementById('answer-btn');
-    btn.disabled = true;
-    btn.textContent = 'Ответить';
-    btn.style.background = '#9ca3af';
-    btn.style.cursor = 'not-allowed';
-    btn.onclick = checkAnswer;
-  }
+      document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
+      document.querySelectorAll('.option').forEach(l => { l.style.background = ''; l.style.borderColor = '#e5e7eb'; });
 
-  function toggleAnswerBtn() {
-    const checked = document.querySelector('#options input:checked');
-    const btn = document.getElementById('answer-btn');
-    if (checked) {
-      btn.disabled = false;
-      btn.style.background = 'linear-gradient(135deg, #3b82f6, #6d28d9)';
-      btn.style.cursor = 'pointer';
-    } else {
+      const btn = document.getElementById('answer-btn');
       btn.disabled = true;
+      btn.textContent = 'Ответить';
       btn.style.background = '#9ca3af';
       btn.style.cursor = 'not-allowed';
-    }
-  }
+      btn.onclick = checkAnswer;
 
-  function checkAnswer() {
-    const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
-    const q = currentTest[currentIndex];
-    const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
-
-    if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
-
-    if (!testSettings.blind) {
-      document.querySelectorAll('.option').forEach((label, i) => {
-        const input = label.querySelector('input');
-        input.disabled = true;
-        if (correct.includes(i)) label.style.background = '#d1fae5'; label.style.borderColor = '#22c55e';
-        if (selected.includes(i) && !correct.includes(i)) label.style.background = '#fee2e2'; label.style.borderColor = '#ef4444';
-      });
+      updateArrows();
     }
 
-    const btn = document.getElementById('answer-btn');
-    btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее';
-    btn.onclick = () => { currentIndex++; showQuestion(); };
-  }
+    function toggleAnswerBtn() {
+      const checked = document.querySelector('#options input:checked');
+      const btn = document.getElementById('answer-btn');
+      if (checked) {
+        btn.disabled = false;
+        btn.style.background = 'linear-gradient(135deg, #3b82f6, #6d28d9)';
+        btn.style.cursor = 'pointer';
+      } else {
+        btn.disabled = true;
+        btn.style.background = '#9ca3af';
+        btn.style.cursor = 'not-allowed';
+      }
+    }
 
-  function endTest() {
-    clearInterval(timerInterval);
-    const percent = Math.round((correctInSession / currentTest.length) * 100);
-    const timeSpent = Math.round((Date.now() - startTime) / 1000);
-    const mins = Math.floor(timeSpent / 60);
-    const secs = timeSpent % 60;
+    function checkAnswer() {
+      const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
+      const q = currentTest[currentIndex];
+      const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
 
-    document.getElementById('final-score').textContent = correctInSession;
-    document.getElementById('final-total').textContent = currentTest.length;
-    document.getElementById('final-percent').textContent = percent;
-    document.getElementById('time-spent').textContent = `Время: ${mins} мин ${secs} сек`;
+      if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
 
-    stats.tests += 1;
-    stats.correct += correctInSession;
-    localStorage.setItem('medtests_stats', JSON.stringify(stats));
+      if (!testSettings.blind) {
+        document.querySelectorAll('.option').forEach((label, i) => {
+          const input = label.querySelector('input');
+          input.disabled = true;
+          if (correct.includes(i)) {
+            label.style.background = '#d1fae5';
+            label.style.borderColor = '#22c55e';
+          }
+          if (selected.includes(i) && !correct.includes(i)) {
+            label.style.background = '#fee2e2';
+            label.style.borderColor = '#ef4444';
+          }
+        });
+      }
 
-    closeModal('testModal');
-    openModal('resultsModal');
-  }
+      const btn = document.getElementById('answer-btn');
+      btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее →';
+      btn.onclick = () => { currentIndex++; showQuestion(); };
+    }
 
-  // Обновление профиля
-  function updateProfile() {
-    const info = `Имя: ${userName}<br>Курс: ${userCourse}<br>Факультет: ${userFaculty}`;
-    document.getElementById("profileInfo").innerHTML = info;
-    document.getElementById('tests-completed').textContent = stats.tests;
-    document.getElementById('correct-total').textContent = stats.correct;
-    const avg = stats.tests > 0 ? Math.round((stats.correct / (stats.tests * (currentTest.length || 1))) * 100) : 0;
-    document.getElementById('avg-percent').textContent = avg;
-  }
+    function endTest() {
+      testInProgress = false;
+      clearInterval(timerInterval);
 
-  // Закрытие модального при клике вне
-  window.onclick = function(event) {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-      if (event.target === modal) modal.style.display = "none";
+      const percent = Math.round((correctInSession / currentTest.length) * 100);
+      const timeSpent = Math.round((Date.now() - startTime) / 1000);
+      const mins = Math.floor(timeSpent / 60), secs = timeSpent % 60;
+
+      document.getElementById('results-name').textContent = userName;
+      document.getElementById('final-score').textContent = correctInSession;
+      document.getElementById('final-total').textContent = currentTest.length;
+      document.getElementById('final-percent').textContent = percent;
+      document.getElementById('time-spent').textContent = `Время: ${mins} мин ${secs} сек`;
+
+      stats.tests += 1;
+      stats.correct += correctInSession;
+      localStorage.setItem('medtests_stats', JSON.stringify(stats));
+
+      closeModal('testModal');
+      openModal('resultsModal');
+      updateProfile();
+    }
+
+    function updateProfile() {
+      document.getElementById("profileInfo").innerHTML = `Имя: ${userName}<br>Курс: ${userCourse}<br>Факультет: ${userFaculty}`;
+      document.getElementById('tests-completed').textContent = stats.tests;
+      document.getElementById('correct-total').textContent = stats.correct;
+      const avg = stats.tests > 0 ? Math.round((stats.correct / (stats.tests * 50)) * 100) : 0;
+      document.getElementById('avg-percent').textContent = avg;
+    }
+
+    // Настройки профиля
+    document.getElementById("settingsForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      userName = document.getElementById("setName").value.trim();
+      userCourse = document.getElementById("setCourse").value;
+      userFaculty = document.getElementById("setFaculty").value;
+      if (!userName || !userCourse || !userFaculty) return;
+      user = { name: userName, course: userCourse, faculty: userFaculty };
+      localStorage.setItem('medtests_user', JSON.stringify(user));
+      updateGreeting(); updateProfile(); closeModal('settingsModal');
     });
-  }
-</script>
+
+    // Предупреждение при обновлении/выходе из вкладки
+    window.addEventListener('beforeunload', e => {
+      if (testInProgress) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  </script>
 </body>
 </html>
