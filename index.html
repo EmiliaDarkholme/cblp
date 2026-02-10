@@ -1,799 +1,616 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Сырная тестами</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Comfortaa:wght@700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #6366f1;
-      --primary-light: #818cf8;
-      --success: #10b981;
-      --danger: #ef4444;
-      --gray: #6b7280;
-      --light: #f8fafc;
-      --border: #e2e8f0;
-      --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Будь моей валентинкой!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-gradient);
-      min-height: 100dvh;
-      color: #1e293b;
-      line-height: 1.6;
-      padding: 1rem;
-    }
+        body {
+            background-color: #ffe6ea;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image:
+                radial-gradient(#ffccd5 2px, transparent 2px),
+                radial-gradient(#ffccd5 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
 
-    .container {
-      max-width: 460px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 24px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-      animation: slideUp 0.7s ease-out;
-    }
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #ff4d6d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .heart-decoration {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 24px;
+            opacity: 0.7;
+        }
 
-    h1 {
-      text-align: center;
-      font-family: 'Comfortaa', cursive;
-      font-size: 2.7rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-    }
+        .heart-1 { top: 15px; left: 15px; }
+        .heart-2 { top: 15px; right: 15px; }
+        .heart-3 { bottom: 15px; left: 15px; }
+        .heart-4 { bottom: 15px; right: 15px; }
 
-    label {
-      display: block;
-      margin-top: 1.2rem;
-      font-weight: 600;
-      color: #374151;
-      font-size: 1.05rem;
-    }
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #ffccd5;
+            padding: 0 10px;
+            line-height: 1.2;
+        }
 
-    input, select {
-      width: 100%;
-      padding: 1rem;
-      margin-top: 0.5rem;
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      font-size: 1.05rem;
-      transition: all 0.3s;
-    }
+        .success-message {
+            font-size: 2.2rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 0 #ffccd5;
+            display: none;
+            padding: 0 20px;
+            text-align: center;
+            min-height: 40px;
+        }
 
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 5px rgba(99,102,241,0.15);
-    }
+        .main-content {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    button {
-      width: 100%;
-      padding: 1.1rem;
-      margin-top: 1.5rem;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 6px 20px rgba(99,102,241,0.3);
-    }
+        .gif-main-container {
+            width: 100%;
+            max-width: 400px;
+            height: 300px; /* Фиксированная высота */
+            margin: 10px 0 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+        }
 
-    button:hover {
-      background: var(--primary-light);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(99,102,241,0.4);
-    }
+        .gif-main-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Сохраняет пропорции и заполняет контейнер */
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
 
-    button:active { transform: translateY(0); }
+        .buttons-wrapper {
+            width: 100%;
+            margin-top: 5px;
+        }
 
-    /* Модальные окна */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 120px;
+            max-width: 600px;
+            flex-wrap: wrap;
+        }
 
-    .modal.active {
-      display: flex;
-      animation: fadeIn 0.4s ease-out;
-    }
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.4rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 rgba(0, 0, 0, 0.2);
+        }
 
-    .modal-content {
-      background: white;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 520px;
-      max-height: 95dvh;
-      overflow-y: auto;
-      padding: 2rem;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.18);
-      position: relative;
-      animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+        }
 
-    @keyframes pop {
-      from { transform: scale(0.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+        .yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            min-width: 150px;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
 
-    .close {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      width: 48px;
-      height: 48px;
-      background: #fee2e2;
-      color: var(--danger);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+        .yes-btn:hover {
+            background-color: #ff3355;
+        }
 
-    .close:hover {
-      background: var(--danger);
-      color: white;
-      transform: rotate(90deg);
-    }
+        .no-btn {
+            background-color: #4d79ff;
+            color: white;
+            min-width: 150px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
 
-    .progress-bar {
-      height: 12px;
-      background: #e2e8f0;
-      border-radius: 8px;
-      overflow: hidden;
-      margin: 1.5rem 0;
-    }
+        .no-btn:hover {
+            background-color: #3366ff;
+        }
 
-    .progress-fill {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, var(--primary), #a78bfa);
-      border-radius: 8px;
-      transition: width 0.6s ease;
-    }
+        .no-btn.moving {
+            position: absolute;
+        }
 
-    #timer {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--primary);
-      text-align: center;
-    }
+        .footer-note {
+            margin-top: 25px;
+            color: #999;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 0 20px;
+        }
 
-    #timer.danger {
-      color: var(--danger);
-      animation: pulse 1s infinite;
-    }
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
 
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
+            .success-message {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
 
-    .option {
-      padding: 1.1rem 1.3rem;
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 0.9rem;
-      cursor: pointer;
-      background: #fcfcfc;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      font-size: 1.05rem;
-    }
+            .container {
+                padding: 30px 20px;
+                margin: 15px 0;
+            }
 
-    .option:hover {
-      border-color: var(--primary);
-      background: #f0f5ff;
-      transform: translateX(6px);
-    }
+            .gif-main-container {
+                max-width: 350px;
+                height: 260px; /* Уменьшенная фиксированная высота для планшетов */
+                margin: 5px 0 20px;
+            }
 
-    .option input {
-      margin-right: 1rem;
-      transform: scale(1.4);
-      accent-color: var(--primary);
-    }
+            .buttons-container {
+                gap: 25px;
+                flex-direction: column;
+                min-height: 180px;
+            }
 
-    .test-nav-top {
-      display: flex;
-      justify-content: space-between;
-      margin: 1.5rem 0;
-    }
+            .btn {
+                padding: 10px 25px;
+                font-size: 1.3rem;
+                min-width: 140px;
+            }
+        }
 
-    .nav-arrow {
-      width: 68px;
-      height: 68px;
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 2.2rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 8px 25px rgba(99,102,241,0.35);
-    }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
 
-    .nav-arrow:hover:not(.disabled) {
-      transform: scale(1.12);
-      background: var(--primary-light);
-    }
+            .success-message {
+                font-size: 1.6rem;
+            }
 
-    .nav-arrow.disabled {
-      background: #cbd5e1;
-      cursor: not-allowed;
-    }
+            .container {
+                padding: 25px 15px;
+                border-width: 6px;
+            }
 
-    #vova-cat {
-      position: fixed;
-      bottom: -500px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 340px;
-      height: 340px;
-      background: url('https://media1.tenor.com/m/KshIPrRS1aAAAAAd/cat-orange-cat.gif') center/contain no-repeat;
-      pointer-events: none;
-      z-index: 99999;
-      transition: bottom 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      filter: drop-shadow(0 15px 40px rgba(0,0,0,0.3));
-    }
+            .gif-main-container {
+                max-width: 300px;
+                height: 220px; /* Уменьшенная фиксированная высота для телефонов */
+                margin: 5px 0 15px;
+            }
 
-    #vova-cat.show {
-      bottom: 100px;
-    }
+            .btn {
+                padding: 8px 20px;
+                font-size: 1.1rem;
+                min-width: 120px;
+            }
 
-    @media (max-width: 480px) {
-      #vova-cat { width: 280px; height: 280px; }
-      #vova-cat.show { bottom: 70px; }
-      .container { margin: 1rem auto; padding: 1.5rem; }
-      h1 { font-size: 2.3rem; }
-    }
-  </style>
+            .buttons-container {
+                gap: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="heart-decoration heart-1">❤</div>
+        <div class="heart-decoration heart-2">❤</div>
+        <div class="heart-decoration heart-3">❤</div>
+        <div class="heart-decoration heart-4">❤</div>
 
-  
-  <div class="container" id="register">
-    <h1>Сырная тестами</h1>
-    <form id="registerForm">
-      <label for="name">Имя:</label>
-      <input type="text" id="name" required placeholder="Как к тебе обращаться?">
-      <label for="course">Курс:</label>
-      <select id="course" required>
-        <option value="">Выберите курс</option>
-        <option value="1">1 курс</option>
-        <option value="2">2 курс</option>
-        <option value="3">3 курс</option>
-        <option value="4">4 курс</option>
-        <option value="5">5 курс</option>
-        <option value="6">6 курс</option>
-      </select>
-      <label for="faculty">Факультет:</label>
-      <select id="faculty" required>
-        <option value="">Выберите факультет</option>
-        <option value="Лечебный">Лечебный</option>
-        <option value="Педиатрический">Педиатрический</option>
-        <option value="Медико-психологический">Медико-психологический</option>
-        <option value="Медико-диагностический">Медико-диагностический</option>
-      </select>
-      <button type="submit">Зарегистрироваться</button>
-    </form>
-  </div>
+        <h1>Ты будешь моей валентинкой?</h1>
 
-  <!-- Меню -->
-  <div class="container" id="menu" style="display:none;">
-    <h1 id="greeting">Привет!</h1>
-    <div style="display:grid; gap:1rem; margin-top:2rem;">
-      <button onclick="openModal('testSelectionModal')">Начать тест</button>
-      <button onclick="openModal('settingsModal')">Настройки</button>
-      <button onclick="openModal('profileModal')">Профиль</button>
-      <button onclick="openModal('aboutModal')">О проекте</button>
-      <button onclick="openModal('helpModal')">Помощь</button>
-    </div>
-  </div>
+        <div class="success-message" id="successMessage">Урааааа! ❤️❤️❤️</div>
 
-  <!-- Выбор теста -->
-  <div id="testSelectionModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('testSelectionModal')">×</span>
-      <h2>Настройки теста</h2>
-      <div style="margin-bottom:1.5rem;background:#f8fafc;padding:1.25rem;border-radius:16px;">
-        <label style="display:block;font-size:1.125rem;margin-bottom:0.75rem;">Количество вопросов:</label>
-        <input type="number" id="question-count-custom" min="1" placeholder="Любое число">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.75rem;">
-          <button type="button" onclick="document.getElementById('question-count-custom').value=10">10</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=25">25</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=50">50</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=100">100</button>
-          <button type="button" onclick="document.getElementById('question-count-custom').value=''">Все</button>
+        <div class="main-content">
+            <div class="gif-main-container">
+                <img id="mainGif" src="" alt="Милая валентинка">
+            </div>
+
+            <div class="buttons-wrapper">
+                <div class="buttons-container" id="buttonsContainer">
+                    <button class="btn yes-btn" id="yesBtn">ДА!</button>
+                    <button class="btn no-btn" id="noBtn">Нет</button>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div style="margin-bottom:1.5rem;background:#f8fafc;padding:1.25rem;border-radius:16px;">
-        <label style="display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:1.125rem;">Таймер</span>
-          <input type="checkbox" id="use-timer">
-        </label>
-        <input type="number" id="timer-minutes" value="30" min="1" max="180" placeholder="Минут" style="margin-top:0.75rem;">
-      </div>
-
-      <div style="margin-bottom:1.5rem;background:#f8fafc;padding:1.25rem;border-radius:16px;">
-        <label style="display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:1.125rem;">Режим «вслепую»</span>
-          <input type="checkbox" id="blind-mode">
-        </label>
-      </div>
-
-      <div style="margin-bottom:1rem;text-align:center;">
-        <label style="display:flex;align-items:center;justify-content:center;">
-          <input type="checkbox" id="show-all-toggle" onchange="buildTopicList()">
-          <span style="margin-left:0.5rem;font-size:1.125rem;">Все разделы</span>
-        </label>
-      </div>
-
-      <h3 style="font-size:1.5rem;margin:1.5rem 0 1rem;">Разделы</h3>
-      <div id="topics" style="max-height:45vh;overflow-y:auto;margin-bottom:2rem;"></div>
-
-      <button onclick="startTest()" style="background:var(--success);">Начать тест</button>
+        <div class="footer-note">️</div>
     </div>
-  </div>
 
-  <!-- Тест -->
-  <div id="testModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="showExitConfirm()">×</span>
+    <script>
+        // ============================================
+        // НАСТРОЙКИ ГИФОК - ЗАМЕНИТЕ ССЫЛКИ НА СВОИ!
+        // ============================================
+        const GIF_SETTINGS = {
+            // Основная гифка (показывается при загрузке)
+            mainGif: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3RtZWRvNGduY3A2c2E4azJicmczNjAxMmtiMmV3azN6NTJpbTV4NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qFmdpUKAFZ6rMobzzu/giphy.gif",
 
-      <div style="text-align:center;margin-bottom:1rem;">
-        <div style="font-size:1.1rem;">Вопрос <span id="current-num">1</span> / <span id="total-num">0</span></div>
-        <div id="timer" style="display:none;margin-top:0.5rem;"></div>
-      </div>
+            // Гифки при нажатии "Нет" (меняются по очереди)
+            noGifs: [
+                "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemVqdmVpMXR0YTg1cWNiNTBmNHp0bHByNW4yanVsaWJod2NudmVvMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VVNQZ0ExDd5RjYKiTs/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExajU5aGUyaGl2czJ0N3d4MGtsMGtnOW1wdDQ5eGc1OTVmM2o4MXVqYyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NgdYARNcpEd0WsMExy/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZWJiNHYxa2p0MHdieGM3bDh6M2FwdnRycmx3N2hqbDBmdmRxa2xleCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/JC18kVGLrm38gvhIf1/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3N2NzeWk3ZnRkaDlrZXpuZ25veXcydjBjZHkxNGd2djNzNG0zd3JnNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/eEq8SAwQDAKZm9nyQZ/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZWJiNHYxa2p0MHdieGM3bDh6M2FwdnRycmx3N2hqbDBmdmRxa2xleCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xXqpuURrhGEyZr1BGj/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZW00dGF0emY4ZmhxN2NiODgyMTF2MjdhNTZpNGpiaGJ5MnBsdHRzaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/LAqYF8Nyk9w54oyOQj/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3MG9xYXY2enR5dTB4cDhyZ3FlaGFvdGNtaGxyNnlia3NvOGNqdGl4byZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3HoD5P4FOOIMJppHeS/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3MWY0NXk2aWRwbXBmczMxNzZlZTJrYjk5MDc4Z3poanNxODNod3RzdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/cFZyW6aWwV1kPs4h3Z/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YnR1andoNTJpd3U5N3lkZGQ2cXM4NjJpc3MwZmFraXRkNHluZnlsbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Y4gYNdUV3twZYy9jAG/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXNnbGpybm92djl3a284cXZhc3NydXVzcG9hN2lyenNoY3doZ29tbCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/c2IZ3fB0rmRXy/giphy.gif"
+            ],
 
-      <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
+            // Праздничная гифка (при нажатии ДА)
+            celebrationGif: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGtuM3gwZmRibzBkaDFlemhvNnkxOWhjMGQzamc1NDA4amw5NDZteCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Rik9n81Vda3rzr5F8h/giphy.gif",
 
-      <div class="test-nav-top">
-        <div id="prev-arrow-top" class="nav-arrow disabled">←</div>
-        <div id="next-arrow-top" class="nav-arrow">→</div>
-      </div>
+            // Альтернативная праздничная гифка (если нужна замена)
+            altCelebrationGif: "https://media.giphy.com/media/26tknCqiJrBQG6DrC/giphy.gif"
+        };
 
-      <h3 id="question" style="font-size:1.45rem;margin:1.8rem 0;line-height:1.6;"></h3>
-      <div id="options"></div>
+        // ============================================
+        // ОСНОВНОЙ КОД
+        // ============================================
 
-      <div style="margin-top:2rem;">
-        <button id="answer-btn" disabled style="opacity:0.6;">Ответить</button>
-        <button onclick="showExitConfirm(true)" style="background:var(--danger);margin-top:0.8rem;">Завершить тест</button>
-      </div>
-    </div>
-  </div>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mainGif = document.getElementById('mainGif');
+        const successMessage = document.getElementById('successMessage');
+        const buttonsContainer = document.getElementById('buttonsContainer');
 
-  <!-- Подтверждение выхода -->
-  <div id="exitConfirmModal" class="modal">
-    <div class="modal-content" style="max-width:420px;text-align:center;">
-      <h2 style="color:var(--danger);">Выйти из теста?</h2>
-      <p style="margin:1.5rem 0;font-size:1.1rem;">Весь прогресс будет потерян.</p>
-      <div style="display:flex;gap:1rem;">
-        <button onclick="closeModal('exitConfirmModal')" style="background:#e2e8f0;color:#111;">Отмена</button>
-        <button onclick="forceExit()" style="background:var(--danger);">Выйти</button>
-      </div>
-    </div>
-  </div>
+        // Список текстов для кнопки "Нет"
+        const noButtonTexts = [
+            "Подумай ещё",
+            "Неправильный ответ",
+            "Ты уверена?",
+            "Пожалуйста!",
+            "Не торопись",
+            "Ещё раз подумай",
+            "Это ошибка!",
+            "Давай по-хорошему",
+            "Я буду грустить",
+            "Точно нет?"
+        ];
 
-  <!-- Результаты -->
-  <div id="resultsModal" class="modal">
-    <div class="modal-content" style="text-align:center;">
-      <span class="close" onclick="closeModal('resultsModal')">×</span>
-      <div style="font-size:5rem;margin:1.5rem 0;">Trophy</div>
-      <h2 style="font-size:2.1rem;">Тест завершён, <span id="results-name"></span>!</h2>
-      <div style="background:#f8fafc;padding:2rem;border-radius:20px;margin:2rem 0;">
-        <p style="font-size:3.5rem;font-weight:bold;margin:0.5rem 0;">
-          <span id="final-score">0</span> / <span id="final-total">0</span>
-        </p>
-        <p style="font-size:1.9rem;">Точность: <span id="final-percent">0</span>%</p>
-        <p style="font-size:1.2rem;color:#666;" id="time-spent"></p>
-      </div>
-      <button onclick="closeModal('resultsModal'); openModal('testSelectionModal')" style="background:var(--success);">
-        Новый тест
-      </button>
-    </div>
-  </div>
+        let noClickCount = 0;
+        let yesSize = 1;
+        let isFirstClick = true;
+        let noBtnRemoved = false;
+        let yesBtnRect = null;
+        let currentNoGifIndex = 0;
 
-  <!-- Остальные модалки -->
-  <div id="settingsModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('settingsModal')">×</span>
-      <h2>Настройки</h2>
-      <form id="settingsForm">
-        <label>Имя:</label>
-        <input type="text" id="setName">
-        <label>Курс:</label>
-        <select id="setCourse">
-          <option value="1">1 курс</option>
-          <option value="2">2 курс</option>
-          <option value="3">3 курс</option>
-          <option value="4">4 курс</option>
-          <option value="5">5 курс</option>
-          <option value="6">6 курс</option>
-        </select>
-        <label>Факультет:</label>
-        <select id="setFaculty">
-          <option value="Лечебный">Лечебный</option>
-          <option value="Педиатрический">Педиатрический</option>
-          <option value="Медико-психологический">Медико-психологический</option>
-          <option value="Медико-диагностический">Медико-диагностический</option>
-        </select>
-        <button type="submit">Сохранить</button>
-      </form>
-    </div>
-  </div>
+        // Инициализация гифок
+        function initializeGifs() {
+            // Устанавливаем основную гифку
+            mainGif.src = GIF_SETTINGS.mainGif;
+            mainGif.style.display = 'block';
 
-  <div id="profileModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('profileModal')">×</span>
-      <h2>Профиль</h2>
-      <div id="profileInfo" style="margin-bottom:1.5rem;font-size:1.1rem;line-height:1.8;"></div>
-      <hr style="margin:1.5rem 0;">
-      <p>Тестов пройдено: <strong id="tests-completed">0</strong></p>
-      <p>Правильных ответов: <strong id="correct-total">0</strong></p>
-      <p>Средняя точность: <strong id="avg-percent">0</strong>%</p>
-    </div>
-  </div>
-
-  <div id="aboutModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('aboutModal')">×</span>
-      <h2>О проекте</h2>
-      <p style="line-height:1.7;">Сырная тестами — удобный тренажёр для студентов-медиков.<br>Все вопросы взяты из официальных баз.</p>
-    </div>
-  </div>
-
-  <div id="helpModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('helpModal')">×</span>
-      <h2>Помощь</h2>
-      <p>По всем вопросам — Telegram: <strong>@cblblblblp</strong></p>
-    </div>
-  </div>
-
-  <!-- Пасхалка -->
-  <div id="vova-cat"></div>
-
-  <script>
-    // === ВЕСЬ ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ JAVASCRIPT ===
-    let userName = "", userCourse = "", userFaculty = "";
-    let user = JSON.parse(localStorage.getItem('medtests_user'));
-    let stats = JSON.parse(localStorage.getItem('medtests_stats')) || { tests: 0, correct: 0 };
-    let allTests = {};
-    let currentTest = [], currentIndex = 0, correctInSession = 0;
-    let timerInterval, startTime, testSettings = {};
-    let testInProgress = false;
-
-    async function loadTests() {
-      const jsonFiles = ['Пропедевтика детских болезней.json','Радиационная и экологическая медицина.json','Лучевая диагностика.json'];
-      try {
-        for (const file of jsonFiles) {
-          const response = await fetch(file);
-          if (!response.ok) throw new Error(`Ошибка загрузки ${file}`);
-          const data = await response.json();
-          const subject = file.replace('.json', '');
-          allTests[subject] = data;
+            console.log("Гифки загружены:");
+            console.log("- Основная гифка:", GIF_SETTINGS.mainGif);
+            console.log("- Гифки при 'Нет':", GIF_SETTINGS.noGifs.length, "штук");
+            console.log("- Праздничная гифка:", GIF_SETTINGS.celebrationGif);
+            console.log("Чтобы заменить гифки, измените ссылки в разделе GIF_SETTINGS");
         }
-        console.log('Тесты загружены');
-        buildTopicList();
-      } catch (e) {
-        console.error(e);
-        alert('Не удалось загрузить тесты. Проверьте наличие JSON-файлов.');
-      }
-    }
-    loadTests();
 
-    if (user) {
-      userName = user.name; userCourse = user.course; userFaculty = user.faculty;
-      document.getElementById('register').style.display = "none";
-      document.getElementById('menu').style.display = "block";
-      updateGreeting(); updateProfile();
-    }
+        // Показать гифку при нажатии "Нет"
+        function showNoGif() {
+            // Берем следующую гифку из списка
+            const gifUrl = GIF_SETTINGS.noGifs[currentNoGifIndex % GIF_SETTINGS.noGifs.length];
+            mainGif.src = gifUrl;
 
-    document.getElementById("registerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      userName = document.getElementById("name").value.trim();
-      userCourse = document.getElementById("course").value;
-      userFaculty = document.getElementById("faculty").value;
-      if (!userName || !userCourse || !userFaculty) return;
-      user = { name: userName, course: userCourse, faculty: userFaculty };
-      localStorage.setItem('medtests_user', JSON.stringify(user));
-      document.getElementById("register").style.display = "none";
-      document.getElementById("menu").style.display = "block";
-      updateGreeting(); updateProfile();
-    });
+            // Увеличиваем индекс для следующего раза
+            currentNoGifIndex++;
 
-    function updateGreeting() {
-      const hour = new Date().getHours();
-      const greeting = hour < 12 ? "Доброе утро" : hour < 18 ? "Добрый день" : hour < 23 ? "Добрый вечер" : "Доброй ночи";
-      document.getElementById("greeting").innerText = greeting + ", " + userName + "!";
-    }
+            // Добавляем небольшую анимацию
+            mainGif.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                mainGif.style.transform = 'scale(1)';
+                mainGif.style.transition = 'transform 0.3s ease';
+            }, 100);
 
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-      if (id === 'testSelectionModal') buildTopicList();
-      if (id === 'profileModal') updateProfile();
-    }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    document.querySelectorAll('.modal').forEach(m => {
-      m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
-    });
-
-    function buildTopicList() {
-      const topics = new Set();
-      Object.keys(allTests).forEach(subject => {
-        Object.keys(allTests[subject]).forEach(t => topics.add(subject + ": " + t));
-      });
-      const container = document.getElementById('topics');
-      if (topics.size === 0) {
-        container.innerHTML = '<p style="text-align:center;padding:2rem;color:#666;">Вопросы не найдены</p>';
-        return;
-      }
-      container.innerHTML = Array.from(topics).sort().map(t => `
-        <label style="display:flex;align-items:center;background:#f8fafc;padding:1rem;border-radius:14px;border:2px solid var(--border);margin-bottom:0.7rem;cursor:pointer;">
-          <input type="checkbox" value="${t}" style="margin-right:1rem;transform:scale(1.4);">
-          <span style="font-size:1.1rem;">${t}</span>
-        </label>
-      `).join('');
-    }
-
-    function startTest() {
-      const selected = [...document.querySelectorAll('#topics input:checked')].map(el => el.value);
-      if (selected.length === 0) return alert('Выберите хотя бы один раздел!');
-
-      const customCount = parseInt(document.getElementById('question-count-custom').value) || 0;
-      testSettings = {
-        count: customCount > 0 ? customCount : 0,
-        timer: document.getElementById('use-timer').checked,
-        timerMinutes: parseInt(document.getElementById('timer-minutes').value) || 30,
-        blind: document.getElementById('blind-mode').checked
-      };
-
-      currentTest = [];
-      selected.forEach(fullTopic => {
-        const [subject, topic] = fullTopic.split(": ");
-        if (allTests[subject] && allTests[subject][topic]) {
-          currentTest.push(...allTests[subject][topic].map(q => ({...q, topic})));
+            console.log("Показана гифка для 'Нет':", gifUrl);
         }
-      });
 
-      if (currentTest.length === 0) return alert('Нет вопросов');
-      currentTest.sort(() => Math.random() - 0.5);
-      if (testSettings.count > 0 && testSettings.count < currentTest.length) {
-        currentTest = currentTest.slice(0, testSettings.count);
-      }
+        // Показать праздничную гифку
+        function showCelebrationGif() {
+            mainGif.src = GIF_SETTINGS.celebrationGif;
 
-      currentTest.forEach(q => {
-        const paired = q.options.map((opt, i) => ({
-          opt,
-          correct: Array.isArray(q.correct) ? q.correct.includes(i) : q.correct === i
-        }));
-        paired.sort(() => Math.random() - 0.5);
-        q.options = paired.map(p => p.opt);
-        if (Array.isArray(q.correct)) {
-          q.correct = paired.map((p, idx) => p.correct ? idx : -1).filter(x => x !== -1);
-        } else {
-          q.correct = paired.findIndex(p => p.correct);
+            // Анимация появления
+            mainGif.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                mainGif.style.transform = 'scale(1)';
+                mainGif.style.transition = 'transform 0.5s ease';
+            }, 200);
+
+            console.log("Показана праздничная гифка:", GIF_SETTINGS.celebrationGif);
         }
-      });
 
-      currentIndex = 0; correctInSession = 0; startTime = Date.now();
-      testInProgress = true;
-
-      if (testSettings.timer) {
-        let seconds = testSettings.timerMinutes * 60;
-        timerInterval = setInterval(() => {
-          seconds--;
-          const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-          const s = String(seconds % 60).padStart(2, '0');
-          const el = document.getElementById('timer');
-          el.textContent = `${m}:${s}`;
-          el.style.display = 'block';
-          el.className = seconds < 60 ? 'danger' : seconds < 300 ? 'warning' : '';
-          if (seconds <= 0) { clearInterval(timerInterval); endTest(); }
-        }, 1000);
-      }
-
-      closeModal('testSelectionModal');
-      showQuestion();
-      openModal('testModal');
-    }
-
-    function updateArrows() {
-      const prev = document.getElementById('prev-arrow-top');
-      const next = document.getElementById('next-arrow-top');
-      prev.className = currentIndex === 0 ? 'nav-arrow disabled' : 'nav-arrow';
-      next.className = currentIndex >= currentTest.length - 1 ? 'nav-arrow disabled' : 'nav-arrow';
-    }
-
-    document.getElementById('prev-arrow-top').onclick = () => { if (currentIndex > 0) { currentIndex--; showQuestion(); } };
-    document.getElementById('next-arrow-top').onclick = () => { if (currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); } };
-
-    document.addEventListener('keydown', e => {
-      if (!testInProgress || document.getElementById('exitConfirmModal').classList.contains('active')) return;
-      if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; showQuestion(); }
-      if (e.key === 'ArrowRight' && currentIndex < currentTest.length - 1) { currentIndex++; showQuestion(); }
-    });
-
-    function showExitConfirm() {
-      if (!testInProgress) { closeModal('testModal'); return; }
-      openModal('exitConfirmModal');
-    }
-
-    function forceExit() {
-      testInProgress = false;
-      clearInterval(timerInterval);
-      closeModal('exitConfirmModal');
-      closeModal('testModal');
-    }
-
-    function showQuestion() {
-      if (currentIndex >= currentTest.length) { endTest(); return; }
-      const q = currentTest[currentIndex];
-
-      document.getElementById('question').innerHTML = q.question;
-      document.getElementById('current-num').textContent = currentIndex + 1;
-      document.getElementById('total-num').textContent = currentTest.length;
-      document.getElementById('progress').style.width = ((currentIndex + 1) / currentTest.length * 100) + '%';
-
-      const isMultiple = Array.isArray(q.correct);
-      document.getElementById('options').innerHTML = q.options.map((opt, i) => `
-        <label class="option">
-          <input type="${isMultiple ? 'checkbox' : 'radio'}" name="answer" value="${i}" onchange="toggleAnswerBtn()">
-          <span>${opt}</span>
-        </label>
-      `).join('');
-
-      document.querySelectorAll('#options input').forEach(i => { i.checked = false; i.disabled = false; });
-      document.querySelectorAll('.option').forEach(l => { l.style.background = ''; l.style.borderColor = '#e2e8f0'; });
-
-      const btn = document.getElementById('answer-btn');
-      btn.disabled = true;
-      btn.textContent = 'Ответить';
-      btn.style.opacity = '0.6';
-      btn.onclick = checkAnswer;
-
-      updateArrows();
-    }
-
-    function toggleAnswerBtn() {
-      const checked = document.querySelector('#options input:checked');
-      const btn = document.getElementById('answer-btn');
-      if (checked) {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.style.background = 'var(--primary)';
-      } else {
-        btn.disabled = true;
-        btn.style.opacity = '0.6';
-        btn.style.background = '';
-      }
-    }
-
-    function checkAnswer() {
-      const selected = [...document.querySelectorAll('#options input:checked')].map(el => +el.value);
-      const q = currentTest[currentIndex];
-      const correct = Array.isArray(q.correct) ? q.correct : [q.correct];
-
-      if (correct.length === selected.length && correct.every(v => selected.includes(v))) correctInSession++;
-
-      if (!testSettings.blind) {
-        document.querySelectorAll('.option').forEach((label, i) => {
-          const input = label.querySelector('input');
-          input.disabled = true;
-          if (correct.includes(i)) {
-            label.style.background = '#ecfdf5';
-            label.style.borderColor = '#10b981';
-          }
-          if (selected.includes(i) && !correct.includes(i)) {
-            label.style.background = '#fef2f2';
-            label.style.borderColor = '#ef4444';
-          }
+        // Показать гифку сразу при загрузке
+        window.addEventListener('load', function() {
+            initializeGifs();
+            // Получаем позицию кнопки "Да"
+            updateYesButtonPosition();
         });
-      }
 
-      const btn = document.getElementById('answer-btn');
-      btn.textContent = currentIndex + 1 === currentTest.length ? 'Завершить' : 'Далее →';
-      btn.onclick = () => { currentIndex++; showQuestion(); };
-    }
+        // Обновляем позицию кнопки "Да" при ресайзе
+        window.addEventListener('resize', updateYesButtonPosition);
 
-    function endTest() {
-      testInProgress = false;
-      clearInterval(timerInterval);
+        // Обработчик для кнопки "Да"
+        yesBtn.addEventListener('click', function() {
+            if (noBtnRemoved) {
+                // Если кнопка "Нет" удалена (после 10 нажатий)
+                successMessage.textContent = "Правильный ответ ❤️";
+            } else {
+                successMessage.textContent = "Правильный ответ ❤️";
+            }
 
-      const percent = Math.round((correctInSession / currentTest.length) * 100);
-      const timeSpent = Math.round((Date.now() - startTime) / 1000);
-      const mins = Math.floor(timeSpent / 60), secs = timeSpent % 60;
+            // Показать сообщение
+            successMessage.style.display = 'block';
 
-      document.getElementById('results-name').textContent = userName;
-      document.getElementById('final-score').textContent = correctInSession;
-      document.getElementById('final-total').textContent = currentTest.length;
-      document.getElementById('final-percent').textContent = percent;
-      document.getElementById('time-spent').textContent = `Время: ${mins} мин ${secs} сек`;
+            // Показать праздничную гифку
+            showCelebrationGif();
 
-      stats.tests += 1;
-      stats.correct += correctInSession;
-      localStorage.setItem('medtests_stats', JSON.stringify(stats));
+            // Спрятать кнопки
+            yesBtn.style.display = 'none';
+            if (!noBtnRemoved) {
+                noBtn.style.display = 'none';
+            }
 
-      closeModal('testModal');
-      openModal('resultsModal');
-      updateProfile();
-    }
+            // Добавить праздничные стили
+            document.body.style.backgroundImage = "none";
+            document.body.style.backgroundColor = "#ffebee";
 
-    function updateProfile() {
-      document.getElementById("profileInfo").innerHTML = `Имя: ${userName}<br>Курс: ${userCourse}<br>Факультет: ${userFaculty}`;
-      document.getElementById('tests-completed').textContent = stats.tests;
-      document.getElementById('correct-total').textContent = stats.correct;
-      const avg = stats.tests > 0 ? Math.round((stats.correct / (stats.tests * 50)) * 100) : 0;
-      document.getElementById('avg-percent').textContent = avg;
-    }
+            // Создать падающие сердца
+            createFallingHearts();
+        });
 
-    document.getElementById("settingsForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      userName = document.getElementById("setName").value.trim();
-      userCourse = document.getElementById("setCourse").value;
-      userFaculty = document.getElementById("setFaculty").value;
-      if (!userName || !userCourse || !userFaculty) return;
-      user = { name: userName, course: userCourse, faculty: userFaculty };
-      localStorage.setItem('medtests_user', JSON.stringify(user));
-      updateGreeting(); updateProfile(); closeModal('settingsModal');
-    });
+        // Обработчик для кнопки "Нет"
+        noBtn.addEventListener('mouseover', function() {
+            if (isFirstClick) {
+                return; // Не перемещаем при первом наведении
+            }
+            moveNoButton();
+        });
 
-    window.addEventListener('beforeunload', e => {
-      if (testInProgress) {
-        e.preventDefault();
-        e.returnValue = '';
-      }
-    });
+        noBtn.addEventListener('click', function() {
+            noClickCount++;
 
-    // Пасхалка Вовы
-    let vovaBuffer = '';
-    document.addEventListener('keydown', (e) => {
-      if (e.key.length === 1 && /[а-яё]/i.test(e.key)) {
-        vovaBuffer += e.key.toLowerCase();
-      } else if (e.key === 'Backspace') {
-        vovaBuffer = vovaBuffer.slice(0, -1);
-      } else {
-        vovaBuffer = '';
-        return;
-      }
-      if (vovaBuffer.length > 10) vovaBuffer = vovaBuffer.slice(-10);
-      if (vovaBuffer.includes('вова')) {
-        document.getElementById('vova-cat').classList.add('show');
-        setTimeout(() => document.getElementById('vova-cat').classList.remove('show'), 3500);
-        vovaBuffer = '';
-      }
-    });
-  </script>
+            // Меняем гифку при каждом нажатии "Нет"
+            showNoGif();
+
+            if (noClickCount === 1) {
+                // После первого нажатия кнопка "Нет" начинает перемещаться
+                isFirstClick = false;
+                noBtn.classList.add('moving');
+                moveNoButton();
+                changeNoButtonText();
+                increaseYesButton();
+                return;
+            }
+
+            if (noClickCount < 10) {
+                // Обычное поведение: перемещение, смена текста, увеличение "Да"
+                moveNoButton();
+                changeNoButtonText();
+                increaseYesButton();
+            } else if (noClickCount === 10) {
+                // После 10 нажатий удаляем кнопку "Нет" и меняем текст "Да"
+                removeNoButton();
+                changeYesButtonText();
+            }
+        });
+
+        // Функция для обновления позиции кнопки "Да"
+        function updateYesButtonPosition() {
+            const rect = yesBtn.getBoundingClientRect();
+            const containerRect = buttonsContainer.getBoundingClientRect();
+
+            yesBtnRect = {
+                left: rect.left - containerRect.left,
+                top: rect.top - containerRect.top,
+                right: rect.right - containerRect.left,
+                bottom: rect.bottom - containerRect.top,
+                width: rect.width,
+                height: rect.height
+            };
+        }
+
+        // Функция для перемещения кнопки "Нет"
+        function moveNoButton() {
+            if (!noBtn.classList.contains('moving')) return;
+
+            const containerWidth = buttonsContainer.offsetWidth;
+            const containerHeight = buttonsContainer.offsetHeight;
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
+
+            // Безопасная зона вокруг кнопки "Да"
+            const safeZonePadding = 20;
+
+            let randomX, randomY;
+            let attempts = 0;
+            const maxAttempts = 100;
+
+            do {
+                // Генерируем случайные координаты в пределах контейнера
+                const maxX = containerWidth - buttonWidth;
+                const maxY = containerHeight - buttonHeight;
+
+                randomX = Math.floor(Math.random() * Math.max(0, maxX));
+                randomY = Math.floor(Math.random() * Math.max(0, maxY));
+
+                attempts++;
+
+                // Проверяем, не пересекается ли позиция с кнопкой "Да"
+                const noBtnLeft = randomX;
+                const noBtnRight = randomX + buttonWidth;
+                const noBtnTop = randomY;
+                const noBtnBottom = randomY + buttonHeight;
+
+                const yesBtnLeft = yesBtnRect.left - safeZonePadding;
+                const yesBtnRight = yesBtnRect.right + safeZonePadding;
+                const yesBtnTop = yesBtnRect.top - safeZonePadding;
+                const yesBtnBottom = yesBtnRect.bottom + safeZonePadding;
+
+                // Проверка пересечения
+                const isOverlapping = !(
+                    noBtnRight < yesBtnLeft ||
+                    noBtnLeft > yesBtnRight ||
+                    noBtnBottom < yesBtnTop ||
+                    noBtnTop > yesBtnBottom
+                );
+
+                // Если не пересекается, выходим из цикла
+                if (!isOverlapping) break;
+
+            } while (attempts < maxAttempts);
+
+            // Устанавливаем новую позицию кнопки
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+        }
+
+        // Функция для изменения текста кнопки "Нет"
+        function changeNoButtonText() {
+            const randomIndex = Math.floor(Math.random() * noButtonTexts.length);
+            noBtn.textContent = noButtonTexts[randomIndex];
+        }
+
+        // Функция для увеличения кнопки "Да"
+        function increaseYesButton() {
+            yesSize += 0.15;
+            yesBtn.style.transform = `scale(${yesSize})`;
+
+            // Обновляем позицию после увеличения
+            setTimeout(updateYesButtonPosition, 50);
+        }
+
+        // Функция для удаления кнопки "Нет"
+        function removeNoButton() {
+            noBtnRemoved = true;
+
+            // Анимация исчезновения кнопки "Нет"
+            noBtn.style.opacity = '0';
+            noBtn.style.pointerEvents = 'none';
+            noBtn.style.transition = 'opacity 0.5s ease';
+
+            // Через 0.5 секунд полностью удаляем кнопку
+            setTimeout(() => {
+                noBtn.style.display = 'none';
+            }, 500);
+        }
+
+        // Функция для изменения текста кнопки "Да"
+        function changeYesButtonText() {
+            yesBtn.textContent = "У тебя уже нет выбора";
+            yesBtn.style.fontSize = '1.2rem';
+            yesBtn.style.padding = '10px 25px';
+
+            // Делаем кнопку "Да" еще больше
+            yesSize += 0.3;
+            yesBtn.style.transform = `scale(${yesSize})`;
+
+            // Обновляем позицию после изменения
+            setTimeout(updateYesButtonPosition, 50);
+        }
+
+        // Функция для создания падающих сердечек
+        function createFallingHearts() {
+            const colors = ['#ff4d6d', '#ff8fa3', '#ffb3c1', '#ffccd5'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤';
+                    heart.style.position = 'fixed';
+                    heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.fontSize = Math.floor(Math.random() * 30 + 20) + 'px';
+                    heart.style.left = Math.floor(Math.random() * 100) + 'vw';
+                    heart.style.top = '-50px';
+                    heart.style.zIndex = '9999';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.opacity = '0.7';
+
+                    document.body.appendChild(heart);
+
+                    // Анимация падения
+                    const animation = heart.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 0.7 },
+                        { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 3000 + 2000,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+
+                    // Удалить сердечко после анимации
+                    animation.onfinish = () => {
+                        document.body.removeChild(heart);
+                    };
+                }, i * 100);
+            }
+        }
+    </script>
 </body>
 </html>
-
-
-
-
-
