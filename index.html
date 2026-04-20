@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тестер — Гибкие настройки</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Сырная тестами v0.4</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -87,10 +87,43 @@
       font-size: 20px;
     }
 
+        /* Новый блок: ввод числа + ползунок */
+    .number-input-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .number-input {
+      width: 90px;
+      padding: 12px 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      color: #1e293b;
+      background: white;
+      transition: border-color 0.2s;
+      -moz-appearance: textfield;
+    }
+
+    .number-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .number-input::-webkit-outer-spin-button,
+    .number-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     .slider-container {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 16px;
     }
 
     .slider-container input {
@@ -100,16 +133,127 @@
       accent-color: #667eea;
     }
 
-    .slider-value {
-      min-width: 100px;
-      text-align: center;
-      background: white;
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 600;
-      color: #667eea;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      font-size: 16px;
+    /* Мобильная адаптация */
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .app-container {
+        border-radius: 24px;
+      }
+
+      .setup-screen {
+        padding: 24px 16px;
+      }
+
+      .setup-header h1 {
+        font-size: 24px;
+      }
+
+      .settings-card {
+        padding: 20px 16px;
+      }
+
+      .setting-label {
+        font-size: 16px;
+      }
+
+      .number-input {
+        width: 80px;
+        padding: 10px 8px;
+        font-size: 16px;
+      }
+
+      .toggle-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .toggle-switch {
+        align-self: flex-end;
+      }
+
+      .test-header {
+        padding: 16px 20px;
+      }
+
+      .test-header h2 {
+        font-size: 18px;
+      }
+
+      .test-content {
+        padding: 20px 16px;
+      }
+
+      .question-text {
+        font-size: 20px;
+      }
+
+      .option {
+        padding: 14px 16px;
+      }
+
+      .option-letter {
+        width: 32px;
+        height: 32px;
+      }
+
+      .option-text {
+        font-size: 15px;
+      }
+
+      .test-footer {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .nav-buttons {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .result-screen {
+        padding: 24px 20px;
+      }
+
+      .score-display {
+        font-size: 56px;
+      }
+
+      .result-message {
+        font-size: 20px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .question-header {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .progress-bar-container {
+        padding: 16px 20px;
+      }
+
+      .progress-dot {
+        height: 6px;
+      }
+
+      .progress-dot.active {
+        height: 8px;
+      }
     }
 
     .total-available {
@@ -536,11 +680,20 @@
       gap: 12px;
       margin-top: 32px;
     }
+        .option.missed-correct {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .option.missed-correct .option-letter {
+      background: #f59e0b;
+      color: white;
+    }
   </style>
 </head>
 <body>
 <div class="app-container">
-  <!-- Экран настройки -->
+
   <div class="setup-screen" id="setupScreen">
     <div class="setup-header">
       <h1>
@@ -551,14 +704,17 @@
     </div>
     
     <div class="settings-card">
-      <div class="setting-item">
+            <div class="setting-item">
         <div class="setting-label">
           <i class="fas fa-list-ol"></i>
           <span>Количество вопросов</span>
         </div>
+        <div class="number-input-container">
+          <input type="number" id="questionNumberInput" class="number-input" min="1" max="14" value="10" step="1">
+          <span style="color: #64748b; font-size: 14px;">вопросов</span>
+        </div>
         <div class="slider-container">
           <input type="range" id="questionSlider" min="1" max="14" value="10" step="1">
-          <span class="slider-value" id="sliderValue">10</span>
         </div>
         <div class="total-available">
           <i class="fas fa-database"></i> Всего доступно: <span id="totalAvailable">14</span> вопросов
@@ -568,14 +724,14 @@
       <div class="setting-item">
         <div class="setting-label">
           <i class="fas fa-eye-slash"></i>
-          <span>Отображение ответов</span>
+          <span>Дополнительные опции</span>
         </div>
         <div class="toggle-container">
           <div class="toggle-info">
             <i class="fas fa-mask"></i>
             <div>
               <span>Показывать правильные ответы</span>
-              <small>После нажатия "Ответить" будут показаны правильные ответы</small>
+              <small>После ответа выделит правильные (зелёный), неправильные (красный) и пропущенные правильные (жёлтый)</small>
             </div>
           </div>
           <div class="toggle-switch" id="showAnswersToggle">
@@ -590,7 +746,7 @@
     </button>
   </div>
 
-  <!-- Экран тестирования -->
+
   <div class="test-screen" id="testScreen">
     <div class="test-header">
       <h2>
@@ -1868,11 +2024,8 @@ const questionBank = [
     testFinished: false
   };
 
-  const setupScreen = document.getElementById('setupScreen');
-  const testScreen = document.getElementById('testScreen');
-  const resultScreen = document.getElementById('resultScreen');
-  const questionSlider = document.getElementById('questionSlider');
-  const sliderValue = document.getElementById('sliderValue');
+    const questionSlider = document.getElementById('questionSlider');
+  const questionNumberInput = document.getElementById('questionNumberInput');
   const totalAvailable = document.getElementById('totalAvailable');
   const showAnswersToggle = document.getElementById('showAnswersToggle');
   const startBtn = document.getElementById('startBtn');
@@ -1883,9 +2036,34 @@ const questionBank = [
 
   totalAvailable.textContent = questionBank.length;
   questionSlider.max = questionBank.length;
-  
+  questionNumberInput.max = questionBank.length;
+
+  // Синхронизация: ползунок → поле ввода
   questionSlider.addEventListener('input', (e) => {
-    sliderValue.textContent = e.target.value;
+    const val = parseInt(e.target.value);
+    questionNumberInput.value = val;
+  });
+
+  // Синхронизация: поле ввода → ползунок
+  questionNumberInput.addEventListener('input', (e) => {
+    let val = parseInt(e.target.value);
+
+    // Валидация
+    if (isNaN(val) || val < 1) val = 1;
+    if (val > questionBank.length) val = questionBank.length;
+
+    questionNumberInput.value = val;
+    questionSlider.value = val;
+  });
+
+  // Дополнительная защита от пустого значения при потере фокуса
+  questionNumberInput.addEventListener('blur', (e) => {
+    let val = parseInt(e.target.value);
+    if (isNaN(val) || val < 1) {
+      val = 1;
+      questionNumberInput.value = val;
+      questionSlider.value = val;
+    }
   });
 
   showAnswersToggle.addEventListener('click', () => {
@@ -1896,7 +2074,7 @@ const questionBank = [
   startBtn.addEventListener('click', startTest);
 
   function startTest() {
-    state.totalQuestions = parseInt(questionSlider.value);
+    state.totalQuestions = parseInt(questionNumberInput.value);
     state.questions = prepareQuestions(state.totalQuestions);
     state.answers = new Array(state.totalQuestions).fill(null);
     state.answered = new Array(state.totalQuestions).fill(false);
@@ -2004,19 +2182,40 @@ const questionBank = [
             classes += ' selected';
           }
         }
-      } else {
+                  } else {
         classes += ' disabled';
-        if (q.correct.includes(idx)) {
-          classes += ' correct';
-        } else if ((q.multiple && userAnswers && userAnswers.includes(idx)) || (!q.multiple && userAnswers === idx)) {
-          if (!q.correct.includes(idx)) classes += ' wrong';
+        // Показываем правильные/неправильные только если включена настройка showAnswers
+        if (state.showAnswers) {
+          if (q.correct.includes(idx)) {
+            // Если это правильный ответ, но пользователь его НЕ выбрал — жёлтый
+            const isSelected = q.multiple
+              ? (userAnswers && userAnswers.includes(idx))
+              : (userAnswers === idx);
+
+            if (!isSelected) {
+              classes += ' missed-correct';
+            } else {
+              classes += ' correct';
+            }
+          } else if ((q.multiple && userAnswers && userAnswers.includes(idx)) || (!q.multiple && userAnswers === idx)) {
+            if (!q.correct.includes(idx)) classes += ' wrong';
+          }
         }
       }
       
-      let icon = '';
+                  let icon = '';
       if (isAnswered && state.showAnswers) {
         if (q.correct.includes(idx)) {
-          icon = '<i class="fas fa-check-circle option-icon" style="color: #10b981;"></i>';
+          const isSelected = q.multiple
+            ? (userAnswers && userAnswers.includes(idx))
+            : (userAnswers === idx);
+
+          if (!isSelected) {
+            // Неотмеченный правильный — жёлтый восклицательный знак
+            icon = '<i class="fas fa-exclamation-circle option-icon" style="color: #f59e0b;"></i>';
+          } else {
+            icon = '<i class="fas fa-check-circle option-icon" style="color: #10b981;"></i>';
+          }
         } else if ((q.multiple && userAnswers && userAnswers.includes(idx)) || (!q.multiple && userAnswers === idx)) {
           icon = '<i class="fas fa-times-circle option-icon" style="color: #ef4444;"></i>';
         }
