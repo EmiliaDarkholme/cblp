@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Сырная тестами v0.4</title>
+  <title>Сырная тестами v0.5</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -689,9 +689,160 @@
       background: #f59e0b;
       color: white;
     }
+        /* Кнопка выхода из теста */
+    .exit-test-btn {
+      background: transparent;
+      border: 2px solid #ef4444;
+      color: #ef4444;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exit-test-btn:hover {
+      background: #ef4444;
+      color: white;
+    }
+
+    /* Модальное окно */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal-header i {
+      font-size: 28px;
+      color: #f59e0b;
+    }
+
+    .modal-header h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1f36;
+    }
+
+    .modal-body {
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .modal-btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .modal-btn-cancel {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .modal-btn-cancel:hover {
+      background: #e2e8f0;
+    }
+
+    .modal-btn-confirm {
+      background: #ef4444;
+      color: white;
+    }
+
+    .modal-btn-confirm:hover {
+      background: #dc2626;
+    }
+
+    @media (max-width: 640px) {
+      .exit-test-btn span {
+        display: none;
+      }
+
+      .exit-test-btn {
+        padding: 8px 12px;
+      }
+    }
+        body.modal-open {
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
+<!-- Модальное окно подтверждения выхода -->
+<div class="modal-overlay" id="exitModal">
+  <div class="modal">
+    <div class="modal-header">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h3>Завершить тест?</h3>
+    </div>
+    <div class="modal-body">
+      <p>Вы уверены, что хотите выйти? Весь прогресс будет потерян, и вы не увидите результаты.</p>
+      <p style="margin-top: 12px;">
+        <strong>Отвечено вопросов:</strong> <span id="modalAnsweredCount">0</span> из <span id="modalTotalCount">10</span>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn modal-btn-cancel" id="modalCancelBtn">
+        <i class="fas fa-times"></i> Продолжить тест
+      </button>
+      <button class="modal-btn modal-btn-confirm" id="modalConfirmBtn">
+        <i class="fas fa-sign-out-alt"></i> Выйти
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="app-container">
 
   <div class="setup-screen" id="setupScreen">
@@ -748,11 +899,15 @@
 
 
   <div class="test-screen" id="testScreen">
-    <div class="test-header">
+        <div class="test-header">
       <h2>
         <i class="fas fa-question-circle" style="color: #667eea;"></i>
         Вопрос <span id="currentQ">1</span>/<span id="totalQ">10</span>
       </h2>
+      <button class="exit-test-btn" id="exitTestBtn">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Завершить</span>
+      </button>
     </div>
     
     <div class="progress-bar-container">
@@ -2039,9 +2194,8 @@ const questionBank = [
   questionNumberInput.max = questionBank.length;
 
   // Синхронизация: ползунок → поле ввода
-  questionSlider.addEventListener('input', (e) => {
-    const val = parseInt(e.target.value);
-    questionNumberInput.value = val;
+    document.getElementById('backToSetupBtn').addEventListener('click', () => {
+    returnToSetup();
   });
 
   // Синхронизация: поле ввода → ползунок
@@ -2395,6 +2549,92 @@ const questionBank = [
     setupScreen.style.display = 'block';
     testScreen.style.display = 'none';
     resultScreen.style.display = 'none';
+  });
+    // Работа с модальным окном выхода
+  const exitModal = document.getElementById('exitModal');
+  const exitTestBtn = document.getElementById('exitTestBtn');
+  const modalCancelBtn = document.getElementById('modalCancelBtn');
+  const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+  const modalAnsweredCount = document.getElementById('modalAnsweredCount');
+  const modalTotalCount = document.getElementById('modalTotalCount');
+
+  // Открытие модального окна
+  exitTestBtn.addEventListener('click', () => {
+    const answeredCount = state.answered.filter(a => a).length;
+    modalAnsweredCount.textContent = answeredCount;
+    modalTotalCount.textContent = state.totalQuestions;
+    exitModal.style.display = 'flex';
+  });
+
+  // Закрытие модального окна (отмена)
+  modalCancelBtn.addEventListener('click', () => {
+    exitModal.style.display = 'none';
+  });
+
+  // Подтверждение выхода
+  modalConfirmBtn.addEventListener('click', () => {
+    exitModal.style.display = 'none';
+    returnToSetup();
+  });
+
+  // Закрытие по клику на оверлей
+  exitModal.addEventListener('click', (e) => {
+    if (e.target === exitModal) {
+      exitModal.style.display = 'none';
+    }
+  });
+
+  // Закрытие по Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && exitModal.style.display === 'flex') {
+      exitModal.style.display = 'none';
+    }
+  });
+
+  // Функция возврата к настройкам
+  function returnToSetup() {
+    setupScreen.style.display = 'block';
+    testScreen.style.display = 'none';
+    resultScreen.style.display = 'none';
+
+    // Сброс состояния
+    state.questions = [];
+    state.answers = [];
+    state.answered = [];
+    state.currentIndex = 0;
+    state.testFinished = false;
+  }
+    exitTestBtn.addEventListener('click', () => {
+    const answeredCount = state.answered.filter(a => a).length;
+    modalAnsweredCount.textContent = answeredCount;
+    modalTotalCount.textContent = state.totalQuestions;
+    exitModal.style.display = 'flex';
+    document.body.classList.add('modal-open');
+  });
+
+  modalCancelBtn.addEventListener('click', () => {
+    exitModal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  });
+
+  modalConfirmBtn.addEventListener('click', () => {
+    exitModal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+    returnToSetup();
+  });
+
+  exitModal.addEventListener('click', (e) => {
+    if (e.target === exitModal) {
+      exitModal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && exitModal.style.display === 'flex') {
+      exitModal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
   });
 </script>
 </body>
